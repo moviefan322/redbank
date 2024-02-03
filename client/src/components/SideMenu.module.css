@@ -1,0 +1,49 @@
+.sideMenu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 50%;
+  margin: 3rem 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sideMenu.open {
+  transform: translateX(0%);
+}
+
+.customList {
+  font-size: 0.8rem;
+  list-style-type: none;
+  padding-left: 0;
+  font-weight: bolder;
+}
+
+.customList li,
+.customList button {
+  font-size: 0.8rem;
+  list-style-type: none;
+  font-weight: bolder;
+  margin-bottom: 0.3rem;
+}
+
+.donateButt {
+  background-color: #f47536;
+  color: white;
+  padding: 0.3rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.noStyleLi {
+  text-decoration: none;
+  list-style-type: none;
+  color: inherit;
+  margin-left: -1rem;
+}
+
+.noStyleLink {
+  text-decoration: none;
+  color: inherit;
+}

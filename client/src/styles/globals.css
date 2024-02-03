@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bs-light);
+  color: #333;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.noStyleButt {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.carousel-indicators {
+  display: none;
+}
+
+.greenButt {
+  background-color: #3dcc00;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 200;
+  margin-top: 1rem;
+  border-radius: .3rem;
+}
+
+.orangeButt {
+  background-color: #f47536;
+  color: white;
+  padding: 0.3rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 200;
+  margin-top: 1rem;
+  z-index: 2;
+  border-radius: .3rem;
+}
+
+.blueButt {
+  background-color: #36a5f4;
+  color: white;
+  padding: 0.3rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 200;
+  margin-top: 1rem;
+  z-index: 2;
+  border-radius: .3rem;
+}

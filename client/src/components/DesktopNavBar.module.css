@@ -1,0 +1,62 @@
+.donateButt {
+  background-color: #f47536;
+  color: white;
+  padding: 0.3rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 300;
+  border-radius: 0.3rem;
+}
+
+.menu {
+  align-self: center;
+}
+
+.dropHead {
+  position: relative;
+  font-weight: bolder;
+  margin: 0 1.5rem;
+}
+
+.dropdown {
+  position: absolute;
+  top: 95%; /* Start just below the button */
+  left: 0;
+  width: 17rem;
+  background-color: var(--bs-light);
+  border-radius: 0.3rem;
+  padding-top: 1rem;
+  visibility: hidden; /* Initially hidden */
+  opacity: 0; /* Initially transparent */
+  z-index: 20;
+  line-height: 2rem;
+  transition: visibility 0.2s, opacity 0.2s, top 0.2s; /* Transition for animation */
+}
+
+.dropHead button:hover {
+  cursor: pointer;
+  color: rgb(45, 212, 45);
+}
+
+.dropHead:hover .dropdown {
+  visibility: visible; /* Show on hover */
+  opacity: 1; /* Make it opaque */
+  top: 120%; /* Drop down to final position */
+}
+
+.noStyleLi {
+  width: fit-content;
+  text-decoration: none;
+  list-style-type: none;
+  color: inherit;
+  font-weight: bolder;
+}
+
+.noStyleLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.noStyleLi li:hover {
+  color: rgb(45, 212, 45);
+  cursor: pointer;
+}

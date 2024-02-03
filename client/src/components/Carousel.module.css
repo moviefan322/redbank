@@ -1,0 +1,54 @@
+.carousel {
+  position: relative;
+}
+
+.carouselItem1 {
+  height: 90vh;
+  background: #151515 url("../assets/asb1.jpeg") no-repeat center center;
+  background-size: cover;
+  background-attachment:scroll;
+}
+
+.carouselItem2 {
+  height: 90vh;
+  background: #151515 url("../assets/asb2.jpeg") no-repeat center center;
+  background-size: cover;
+  background-attachment:scroll;
+}
+
+.carouselItem3 {
+  height: 90vh;
+  background: #151515 url("../assets/asb3.jpeg") no-repeat center center;
+  background-size: cover;
+  background-attachment:scroll;
+}
+
+.matte {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.carouselItem1 h1,
+.carouselItem2 h1,
+.carouselItem3 h1 {
+  z-index: 2;
+}
+
+.carousel h1 {
+  margin: 0;
+}
+
+.carouselButt {
+  background-color: #f47536;
+  color: white;
+  padding: 0.3rem 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  z-index: 2;
+}

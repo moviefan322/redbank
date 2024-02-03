@@ -1,0 +1,27 @@
+.textBody {
+  font-size: 0.8rem;
+  font-weight: 200;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  margin: 0 1.3rem;
+}
+
+.textHead {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  margin: 0 1rem 1rem 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .textBody {
+    font-size: 1rem;
+  }
+
+  .textHead {
+    font-size: 2rem;
+  }
+}

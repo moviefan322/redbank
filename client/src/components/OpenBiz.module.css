@@ -1,0 +1,39 @@
+.imageWrapper {
+  position: relative;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.business {
+  border-radius: 100%;
+  max-width: 500px;
+}
+
+.h3biz {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fa6c00;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.textOverlay {
+  margin-top: -2rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .h3biz {
+    font-size: 3rem; /* Adjusted for better scaling */
+  }
+
+  .textOverlay {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  /* Additional styles for larger screens */
+}

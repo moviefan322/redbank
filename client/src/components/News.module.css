@@ -1,0 +1,32 @@
+.newsh4 {
+  font-weight: 400;
+  color: rgb(80, 80, 238);
+}
+
+.newsHead {
+  font-weight: 400;
+  color: rgb(80, 80, 238);
+  text-align: left;
+}
+
+.imageWrapper {
+  position: relative;
+}
+
+.overlayText {
+  position: absolute;
+  top: 15%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  color: black;
+  background-color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  padding: 0.2rem .2rem;
+  line-height: .9;
+}
+
+.overlayText span {
+  font-size: 2.2rem;
+}
