@@ -6,7 +6,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "server": "nodemon server.js",
+    "server": "nodemon server/server.js",
     "dev": "npm run server"
   },
   "keywords": [],
