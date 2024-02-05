@@ -6,6 +6,7 @@ import Upcoming from "@/components/Upcoming";
 import OpenBiz from "@/components/OpenBiz";
 import Subscribe from "@/components/Subscribe";
 import Foot from "@/components/Foot";
+import { CldImage } from "next-cloudinary";
 
 export default function Home() {
   useEffect(() => {
