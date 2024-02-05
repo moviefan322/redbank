@@ -5,7 +5,7 @@ const Greetings = () => {
   return (
     <div className="container d-flex flex-column justify-content-center align-items-center pt-4">
       <h2 className={`${styles.textHead} font-weight-light text-center`}>
-        Greetings From Asbury Park!!!
+        Greetings From Asbury Park!
       </h2>
       <p className={`${styles.textBody} text-center`}>
         Asbury Park Downtown is a lively and eclectic neighborhood, boasting a
