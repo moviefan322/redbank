@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 
 const carouselItemSchema = mongoose.Schema(
   {
@@ -10,15 +9,24 @@ const carouselItemSchema = mongoose.Schema(
     linkText: {
       type: String,
       required: true,
-      unqiue: false,
+      unique: false, // Note: Corrected typo from "unqiue" to "unique"
     },
     urlPhoto: {
       type: String,
       required: true,
     },
     link: {
-      type: String,
-      required: false,
+      type: String, // Consider if this should also have `default: ''` if it's optional but you want to avoid `null`
+    },
+    sequenceNo: {
+      type: Number,
+      unique: true,
+      validate: {
+        validator: Number.isInteger,
+        message: "{VALUE} is not an integer value",
+      },
+      min: [1, "Sequence number must be greater than 0"], // ensures the value is greater than 0
+      // Removed the `required: true` to make it optional
     },
   },
   {
@@ -26,18 +34,29 @@ const carouselItemSchema = mongoose.Schema(
   }
 );
 
+// Pre-save hook to handle default sequenceNo
 carouselItemSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
+  if (this.isNew) {
+    if (this.sequenceNo !== undefined) {
+      // An explicit sequence number is provided.
+      // Increment sequenceNo of existing items that have sequenceNo >= provided sequenceNo.
+      await mongoose
+        .model("CarouselItem")
+        .updateMany(
+          { sequenceNo: { $gte: this.sequenceNo } },
+          { $inc: { sequenceNo: 1 } }
+        );
+    } else {
+      // No sequenceNo provided, find the highest and add 1 (or set to 1 if no items exist).
+      const lastItem = await mongoose
+        .model("CarouselItem")
+        .findOne()
+        .sort({ sequenceNo: -1 });
+      this.sequenceNo = lastItem ? lastItem.sequenceNo + 1 : 1;
+    }
   }
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
-
-carouselItemSchema.methods.matchPasswords = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
 
 const CarouselItem = mongoose.model("CarouselItem", carouselItemSchema);
 

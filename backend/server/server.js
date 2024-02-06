@@ -9,6 +9,7 @@ import connectDB from "./config/db.js";
 const port = process.env.PORT || 3000;
 import userRoutes from "./routes/userRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
+import carouselItemRoutes from "./routes/carouselItemRoutes.js";
 
 connectDB();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/test", testRoutes);
+app.use("/api/carouselItems", carouselItemRoutes);
 
 // if (process.env.NODE_ENV === "production") {
 //   const __dirname = path.resolve();
