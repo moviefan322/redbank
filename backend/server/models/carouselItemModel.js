@@ -16,6 +16,10 @@ const carouselItemSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    link: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
