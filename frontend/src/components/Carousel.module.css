@@ -2,27 +2,6 @@
   position: relative;
 }
 
-.carouselItem1 {
-  height: 90vh;
-  background: #151515 url("../assets/asb1.jpeg") no-repeat center center;
-  background-size: cover;
-  background-attachment:scroll;
-}
-
-.carouselItem2 {
-  height: 90vh;
-  background: #151515 url("../assets/asb2.jpeg") no-repeat center center;
-  background-size: cover;
-  background-attachment:scroll;
-}
-
-.carouselItem3 {
-  height: 90vh;
-  background: #151515 url("../assets/asb3.jpeg") no-repeat center center;
-  background-size: cover;
-  background-attachment:scroll;
-}
-
 .matte {
   position: absolute;
   top: 0;
@@ -33,9 +12,7 @@
   z-index: 1;
 }
 
-.carouselItem1 h1,
-.carouselItem2 h1,
-.carouselItem3 h1 {
+.carouselItem h1 {
   z-index: 2;
 }
 
@@ -51,4 +28,5 @@
   font-weight: bold;
   margin-top: 1rem;
   z-index: 2;
+  text-decoration: none;
 }

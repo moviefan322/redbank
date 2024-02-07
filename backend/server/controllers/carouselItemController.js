@@ -6,10 +6,9 @@ import CarouselItem from "../models/carouselItemModel.js";
 // @access  Public
 
 const getCarouselItems = asyncHandler(async (req, res) => {
-  const carouselItems = await CarouselItem.find({});
+  const carouselItems = await CarouselItem.find({}).sort({ sequenceNo: 1 });
   res.json(carouselItems);
 });
-
 // @desc    get single carousel item
 // @route   GET /api/carouselItem/:_id
 // @access  Public

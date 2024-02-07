@@ -1,72 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS
 import styles from "./Carousel.module.css";
+import Link from "next/link";
+
+interface CarouselItem {
+  _id: string;
+  link: string;
+  urlPhoto: string;
+  title: string;
+  linkText: string;
+  createdAt: string;
+  updatedAt: string;
+  sequenceNo: number;
+  _v: number;
+}
 
 function CustomCarousel() {
+  const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
   if (typeof window !== "undefined") {
     require("bootstrap/dist/js/bootstrap.bundle.min");
   }
+  const fetchCarouselItems = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/carouselItems`
+      );
+      const data = await response.json();
+      setCarouselItems(data);
+    } catch (error) {
+      console.error("Error fetching carousel items: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCarouselItems();
+  }, []);
+
+  console.log("carouselItems: ", carouselItems);
+
+  if (!carouselItems.length) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section id="testimonials" className="text-white">
       <Carousel id="myCarousel" slide>
-        <Carousel.Item interval={5000}>
-          <div
-            className={`${styles.carouselItem1} d-flex flex-column justify-content-center align-items-center`}
-            style={{
-              height: "90vh",
-              background:
-                '#151515 url("../assets/asb1.jpeg") no-repeat center center',
-              backgroundSize: "cover",
-              backgroundAttachment: "scroll",
-            }}
-          >
-            <div className={`${styles.matte}`}></div>
-            <h1>Annual Town Hall</h1>
-            <h1>Wed Feb 7</h1>
-            <h1>6:30pm</h1>
-            <button className={`noStyleButt ${styles.carouselButt}`}>
-              RSVP
-            </button>
-          </div>
-        </Carousel.Item>
-        <Carousel.Item interval={5000}>
-          <div
-            className={`${styles.carouselItem2} d-flex flex-column justify-content-center align-items-center`}
-            style={{
-              height: "90vh",
-              background:
-                '#151515 url("../assets/asb2.jpeg") no-repeat center center',
-              backgroundSize: "cover",
-              backgroundAttachment: "scroll",
-            }}
-          >
-            <div className={`${styles.matte}`}></div>
-            <h1>Boardwalk</h1>
-            <h1>Gift Certificates</h1>
-            <button className={`noStyleButt ${styles.carouselButt}`}>
-              PURCHASE
-            </button>
-          </div>
-        </Carousel.Item>
-        <Carousel.Item interval={5000}>
-          <div
-            className={`${styles.carouselItem3} d-flex flex-column justify-content-center align-items-center`}
-            style={{
-              height: "90vh",
-              background:
-                '#151515 url("../assets/asb3.jpeg") no-repeat center center',
-              backgroundSize: "cover",
-              backgroundAttachment: "scroll",
-            }}
-          >
-            <div className={`${styles.matte}`}></div>
-            <h1>Shop Local</h1>
-            <button className={`noStyleButt ${styles.carouselButt}`}>
-              DIRECTORY
-            </button>
-          </div>
-        </Carousel.Item>
+        {carouselItems.map((item, index) => {
+          return (
+            <Carousel.Item key={index} interval={5000}>
+              <div
+                className={`${styles.carouselItem} d-flex flex-column justify-content-center align-items-center`}
+                style={{
+                  height: "90vh",
+                  background: `#151515 url("${item.urlPhoto}") no-repeat center center`,
+                  backgroundSize: "cover",
+                  backgroundAttachment: "scroll",
+                }}
+              >
+                <div className={`${styles.matte}`}></div>
+                <h1>{item.title}</h1>
+                <Link href={item.link} className={`${styles.carouselButt}`}>
+                  {item.linkText}
+                </Link>
+              </div>
+            </Carousel.Item>
+          );
+        })}
       </Carousel>
     </section>
   );
