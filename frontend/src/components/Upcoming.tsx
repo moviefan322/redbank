@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Upcoming.module.css";
 import Link from "next/link";
-import Image from "next/image";
 
 interface Event {
   _id: number;
@@ -64,7 +63,9 @@ const Upcoming = () => {
               <div className="d-flex flex-column align-items-center">
                 <h4>{event.title}</h4>
                 <p>{event.descriptionShort}</p>
-                <p className="text-primary align-self-start">Read More →</p>
+                <Link href="/dummy">
+                  <p className="text-primary align-self-start">Read More →</p>
+                </Link>
               </div>
             </div>
           );

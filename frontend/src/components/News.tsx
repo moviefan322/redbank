@@ -1,95 +1,70 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./News.module.css";
-import Image from "next/image";
+import Link from "next/link";
+
+interface News {
+  _id: number;
+  title: string;
+  urlPhoto: string;
+  link: string;
+  descriptionShort: string;
+  description: string;
+}
 
 const News = () => {
+  const [news, setNews] = useState<News[]>([]);
+
+  const fetchNews = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/news`
+      );
+      const data = await res.json();
+      setNews(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  if (news.length < 1) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div className="container d-flex flex-column align-items-center pb-5">
-      <h4 className={`${styles.newsh4} my-4 fw-bold`}>NEWS AND PROMOTIONS</h4>
-      <div className="row mx-auto mt-3">
-        <div className="col-12 col-md-3 mb-4 d-flex flex-column align-items-center">
-          <Image
-            className="mb-2 align-self-center"
-            src="/artisan.jpeg"
-            height={250}
-            width={290}
-            alt="artisan crafting"
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto"
-            }} />
-          <h4 className={styles.newsHead}>
-            ASBURY PARK'S CREATIVE COLLECTIVE POP-UP CALENDAR FOR JAN/FEB IS NOW
-            AVAILABLE
-          </h4>
-          <p>
-            Vendor Opportunity: Reserve your spot at Asbury Park's Creative
-            Collective Pop-Up
-          </p>
-          <p className="text-primary align-self-start">Read More →</p>
-        </div>
-        <div className="col-12 col-md-3 mb-4 d-flex flex-column align-items-center">
-          <Image
-            className="mb-2 align-self-center"
-            src="/njcoffee.jpeg"
-            height={250}
-            width={290}
-            alt="jersey coffee"
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto"
-            }} />
-          <h4 className={styles.newsHead}>
-            BOARDWALK BEANS LISTED AMONG NJ.COM'S BEST COFFEE SHOPS IN NJ
-          </h4>
-          <p>Kudos to Boardwalk Beans for making the list!</p>
-          <p className="text-primary align-self-start">Read More →</p>
-        </div>
-        <div className="col-12 col-md-3 mb-4 d-flex flex-column align-items-center">
-          <Image
-            className="mb-2 align-self-center"
-            src="/flower.jpeg"
-            height={250}
-            width={290}
-            alt="artisan crafting"
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto"
-            }} />
-          <h4 className={styles.newsHead}>
-            SEASIDE GREENERY CELEBRATES ITS GRAND OPENING ON FRI DEC 1ST
-          </h4>
-          <p>Join the celebration at Seaside Greenery's GRAND OPENING!</p>
-          <p className="text-primary align-self-start">Read More →</p>
-        </div>
-        <div className="col-12 col-md-3 mb-4 d-flex flex-column align-items-center">
-          <Image
-            className="mb-2 align-self-center"
-            src="/sword.jpeg"
-            height={250}
-            width={290}
-            alt="artisan crafting"
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto"
-            }} />
-          <h4 className={styles.newsHead}>
-            ASBURY PARK WELCOMES THE CREATIVE COLLECTIVE
-          </h4>
-          <p>
-            The Creative Collective in Asbury Park will host an exclusive
-            preview of their innovative new space.
-          </p>
-          <p className="text-primary align-self-start">Read More →</p>
-        </div>
+      <h4 className={`${styles.newsh4} my-4 fw-bold`}>NEWS</h4>
+      <div className="row d-flex flex-row justify-content-around mx-auto mt-3">
+        {news.map((news, index) => {
+          return (
+            <div
+              key={index}
+              className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
+            >
+              <div
+                className={styles.imageWrapper}
+                style={{
+                  background: `#151515 url("${news.urlPhoto}") no-repeat center center`,
+                  backgroundSize: "cover",
+                  backgroundAttachment: "scroll",
+                }}
+              ></div>
+              <div className="d-flex flex-column align-items-center">
+                <h4>{news.title}</h4>
+                <p>{news.descriptionShort}</p>
+                <Link href="/dummy">
+                  <p className="text-primary align-self-start">Read More →</p>
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div>
-        <button className={`noStyleButt greenButt`}> ALL NEWS & PROMOTIONS</button>
+        <button className={`noStyleButt greenButt`}> ALL EVENTS</button>
       </div>
     </div>
   );
