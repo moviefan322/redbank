@@ -1,9 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./News.module.css";
 import Image from "next/image";
 
+interface Event {
+  _id: number;
+  title: string;
+  date: string;
+  descriptionShort: string;
+  description: string;
+  image: string;
+}
+
 const Upcoming = () => {
+  const [events, setEvents] = useState([]);
   return (
     <div className="container d-flex flex-column align-items-center pb-5">
       <h4 className={`${styles.newsh4} my-4 fw-bold`}>UPCOMING EVENTS</h4>
@@ -19,8 +29,9 @@ const Upcoming = () => {
               sizes="100vw"
               style={{
                 width: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
             <p className={styles.overlayText}>
               JAN <br />
               <span>27</span>
@@ -47,8 +58,9 @@ const Upcoming = () => {
               sizes="100vw"
               style={{
                 width: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
             <p className={styles.overlayText}>
               FEB <br />
               <span>10</span>
@@ -74,8 +86,9 @@ const Upcoming = () => {
               sizes="100vw"
               style={{
                 width: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
             <p className={styles.overlayText}>
               FEB <br />
               <span>21</span>
@@ -102,19 +115,19 @@ const Upcoming = () => {
               sizes="100vw"
               style={{
                 width: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
             <p className={styles.overlayText}>
               FEB <br />
               <span>25</span>
             </p>
           </div>
 
-          <h4 className={styles.newsHead}>
-          Pittie Love Cocktail Party
-          </h4>
+          <h4 className={styles.newsHead}>Pittie Love Cocktail Party</h4>
           <p>
-          Fundraiser For Pitties & Pals Rescue Featuring An Open Bar & Light Fare, DJ, Raffles And Baskets!
+            Fundraiser For Pitties & Pals Rescue Featuring An Open Bar & Light
+            Fare, DJ, Raffles And Baskets!
           </p>
           <p className="text-primary align-self-start">Read More →</p>
         </div>

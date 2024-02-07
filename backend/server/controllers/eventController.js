@@ -45,7 +45,8 @@ const deleteEvent = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const createEvent = asyncHandler(async (req, res) => {
-  const { title, date, time, urlPhoto, link } = req.body;
+  const { title, date, time, urlPhoto, link, description, descriptionShort } =
+    req.body;
 
   const event = new Event({
     title,
@@ -53,6 +54,8 @@ const createEvent = asyncHandler(async (req, res) => {
     time,
     urlPhoto,
     link,
+    description,
+    descriptionShort,
   });
 
   const createdEvent = await event.save();
@@ -64,7 +67,8 @@ const createEvent = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateEvent = asyncHandler(async (req, res) => {
-  const { title, date, time, urlPhoto, link } = req.body;
+  const { title, date, time, urlPhoto, link, description, descriptionShort } =
+    req.body;
 
   const event = await Event.findById(req.params._id);
 
@@ -74,6 +78,9 @@ const updateEvent = asyncHandler(async (req, res) => {
     if (time !== undefined) event.time = time;
     if (urlPhoto !== undefined) event.urlPhoto = urlPhoto;
     if (link !== undefined) event.link = link;
+    if (description !== undefined) event.description = description;
+    if (descriptionShort !== undefined)
+      event.descriptionShort = descriptionShort;
 
     const updatedEvent = await event.save();
     res.json(updatedEvent);
