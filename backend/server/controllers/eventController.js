@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import Event from "../models/eventModel";
+import Event from "../models/eventModel.js";
 
 // @desc    get all events
 // @route   GET /api/events
