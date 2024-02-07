@@ -30,10 +30,9 @@ export default function Home() {
   return (
     <>
       <Carousel />
-      <Greetings />
       <hr className="w-75 mx-auto" />
-      <News />
       <Upcoming />
+      <News />
       <hr className="w-75 mx-auto" />
       <OpenBiz />
       <Subscribe />
