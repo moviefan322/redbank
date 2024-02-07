@@ -69,11 +69,11 @@ const updateEvent = asyncHandler(async (req, res) => {
   const event = await Event.findById(req.params._id);
 
   if (event) {
-    event.title = title;
-    event.date = date;
-    event.time = time;
-    event.urlPhoto = urlPhoto;
-    event.link = link;
+    if (title !== undefined) event.title = title;
+    if (date !== undefined) event.date = date;
+    if (time !== undefined) event.time = time;
+    if (urlPhoto !== undefined) event.urlPhoto = urlPhoto;
+    if (link !== undefined) event.link = link;
 
     const updatedEvent = await event.save();
     res.json(updatedEvent);
@@ -83,4 +83,22 @@ const updateEvent = asyncHandler(async (req, res) => {
   }
 });
 
-export { getEvents, getEventById, deleteEvent, createEvent, updateEvent };
+const deleteAllEvents = asyncHandler(async (req, res) => {
+  const deletedEvents = await Event.deleteMany({});
+
+  if (deletedEvents) {
+    res.json({ message: "All events removed" });
+  } else {
+    res.status(404);
+    throw new Error("Events not found");
+  }
+});
+
+export {
+  getEvents,
+  getEventById,
+  deleteEvent,
+  createEvent,
+  updateEvent,
+  deleteAllEvents,
+};

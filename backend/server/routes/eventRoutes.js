@@ -6,10 +6,15 @@ import {
   deleteEvent,
   createEvent,
   updateEvent,
+  deleteAllEvents,
 } from "../controllers/eventController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
-router.route("/").get(getEvents).post(protect, createEvent);
+router
+  .route("/")
+  .get(getEvents)
+  .post(protect, createEvent)
+  .delete(protect, deleteAllEvents);
 router
   .route("/:_id")
   .get(getEventById)
