@@ -13,14 +13,14 @@ const EventSchema = mongoose.Schema(
     time: {
       type: String,
       required: true,
-      unique: false, // Note: Corrected typo from "unqiue" to "unique"
+      unique: false,
     },
     urlPhoto: {
       type: String,
       required: true,
     },
     link: {
-      type: String, // Consider if this should also have `default: ''` if it's optional but you want to avoid `null`
+      type: String,
     },
   },
   {
