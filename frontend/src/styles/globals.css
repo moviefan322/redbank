@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--bs-light);
   color: #333;
   font-size: 16px;
@@ -34,7 +33,7 @@ body {
   font-size: 1.1rem;
   font-weight: 200;
   margin-top: 1rem;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
 }
 
 .orangeButt {
@@ -45,7 +44,7 @@ body {
   font-weight: 200;
   margin-top: 1rem;
   z-index: 2;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
 }
 
 .blueButt {
@@ -56,5 +55,11 @@ body {
   font-weight: 200;
   margin-top: 1rem;
   z-index: 2;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
+}
+
+.btn-admin {
+  background-color: rgb(64, 255, 47);
+  color: black;
+  font-weight: bolder;
 }

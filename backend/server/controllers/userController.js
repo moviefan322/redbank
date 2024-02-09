@@ -81,6 +81,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   const user = {
     _id: req.user._id,
     username: req.user.username,
+    isLoggedIn: true,
   };
   res.status(200).json(user);
 });

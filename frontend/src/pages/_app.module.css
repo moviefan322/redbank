@@ -5,3 +5,13 @@
 .pageContainer.slide {
   transform: translateX(-55%);
 }
+
+.admin {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: black;
+  font-family: monospace;
+  color: rgb(64, 255, 47);
+}

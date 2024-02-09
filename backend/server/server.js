@@ -17,9 +17,14 @@ connectDB();
 
 const app = express();
 
+const corsOptions = {
+  origin: process.env.FRONTEND_ORIGIN, // Use environment variable for flexibility
+  credentials: true,
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
