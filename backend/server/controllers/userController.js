@@ -25,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
+  console.log(user);
 
   if (user && (await user.matchPasswords(password))) {
     generateToken(res, user._id);
@@ -78,6 +79,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
+  console.log(req);
   const user = {
     _id: req.user._id,
     username: req.user.username,

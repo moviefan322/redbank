@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AdminPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -8,52 +9,56 @@ const AdminPage = () => {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        }
+        { username, password }
       );
-      if (!response.ok) {
-        console.log(response);
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json(); // Use .text() if the response is not JSON
-      console.log(data);
+      console.log(response.data);
       setIsLoggedIn(true);
     } catch (error) {
       console.error("There was an error fetching the data:", error);
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        if (!response.ok) {
-          console.log(response);
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json(); // Use .text() if the response is not JSON
-        console.log(data);
-        setIsLoggedIn(data.isLoggedIn);
-      } catch (error) {
-        console.error("User is Not Logged In");
-      }
-    };
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`,
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setIsLoggedIn(response.data.isLoggedIn);
+    } catch (error) {
+      console.error("User is Not Logged In");
+    }
+  };
 
-    fetchData();
-  }, []);
+  const testCookieSet = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/test/cookieSet`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("There was an error fetching the data:", error);
+    }
+  };
+
+  const testCookieCheck = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/test/cookieCheck`,
+        { withCredentials: true }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("There was an error fetching the data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [isLoggedIn]);
 
   console.log(isLoggedIn);
   return (
@@ -89,6 +94,15 @@ const AdminPage = () => {
             </form>
           </div>
         )}
+        <button className="btn-admin" onClick={testCookieSet}>
+          Test Set
+        </button>
+        <button className="btn-admin" onClick={testCookieCheck}>
+          Test Check
+        </button>
+        <button className="btn-admin" onClick={fetchUser}>
+          Test User
+        </button>
       </div>
     </>
   );
