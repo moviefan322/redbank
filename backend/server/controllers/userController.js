@@ -1,6 +1,14 @@
 import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+
+// Generate token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 //@desc     get all users
 //@route    GET /api/users
@@ -22,13 +30,33 @@ const getUsers = asyncHandler(async (req, res) => {
 // @access  Public
 
 const authUser = asyncHandler(async (req, res) => {
+  console.log(req.body);
   const { username, password } = req.body;
 
-  const user = await User.findOne({ username });
+  if (!username || !password) {
+    res.status(400);
+    throw new Error("Please fill out all fields");
+  }
 
-  if (user && (await user.matchPasswords(password))) {
-    generateToken(res, user._id);
-    res.status(201).json({ _id: user._id, username: user.username });
+  const user = await User.findOne({ username });
+  if (!user) {
+    res.status(400);
+    throw new Error("Invalid username or password");
+  }
+
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    res.status(400);
+    throw new Error("Invalid username or password");
+  }
+
+  if (user && checkPassword) {
+    res.json({
+      _id: user._id,
+      username: user.username,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(401);
     throw new Error("Invalid credentials");
@@ -49,11 +77,27 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  const user = await User.create({ username, password });
+  if (!username || !password) {
+    res.status(400);
+    throw new Error("Please fill out all fields");
+  }
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  // Create new user
+  const user = await User.create({
+    username,
+    password: hashedPassword,
+  });
 
   if (user) {
-    generateToken(res, user._id);
-    res.status(201).json({ _id: user._id, username: user.username });
+    res.status(201).json({
+      _id: user._id,
+      username: user.username,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
@@ -78,12 +122,30 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = {
-    _id: req.user._id,
-    username: req.user.username,
-    isLoggedIn: true,
-  };
-  res.status(200).json(user);
+  const authorizationHeader = req.headers.authorization;
+  if (!authorizationHeader) {
+    res.status(401);
+    throw new Error("Authorization header missing");
+  }
+
+  const token = authorizationHeader.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select("-password");
+    if (user) {
+      res.status(200).json({
+        _id: user._id,
+        username: user.name,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  } catch (err) {
+    res.status(401);
+    throw new Error("Invalid token");
+  }
 });
 
 // @desc    Update user profile
@@ -96,8 +158,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.username = req.body.username || user.username;
 
+    // Check if a new password is provided
     if (req.body.password) {
-      user.password = req.body.password;
+      // Hash the new password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+      // Update the user's password with the hashed password
+      user.password = hashedPassword;
     }
 
     const updatedUser = await user.save();
@@ -105,6 +173,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(200).json({
       _id: updatedUser._id,
       username: updatedUser.username,
+      token: generateToken(updatedUser._id), // Optionally regenerate the token if needed
     });
   } else {
     res.status(404);

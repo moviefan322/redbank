@@ -9,6 +9,8 @@ import SideMenu from "@/components/SideMenu";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import styles from "./_app.module.css";
+import store from "../store/configureStore";
+import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -47,34 +49,38 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (admin) {
     return (
-      <div className={styles.admin}>
-        <Component {...pageProps} />
-      </div>
+      <Provider store={store}>
+        <div className={styles.admin}>
+          <Component {...pageProps} />
+        </div>
+      </Provider>
     );
   }
 
   return (
     <>
       <Head>
-        <title>Asbury Park Downtown</title>
+        <title>Redbank</title>
         <meta name="description" content="Description of my page" />
         <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
 
         {/* You can add more tags here as needed */}
       </Head>
-      <div
-        className={`${styles.pageContainer} ${
-          menuOpen ? `${styles.slide}` : ""
-        }`}
-      >
-        {windowWidth > 868 ? (
-          <DesktopNavBar />
-        ) : (
-          <MobileNavBar toggleMenu={toggleMenu} isMenuOpen={menuOpen} />
-        )}
-        <Component {...pageProps} />
-      </div>
-      {windowWidth < 868 ? <SideMenu isOpen={menuOpen} /> : null}
+      <Provider store={store}>
+        <div
+          className={`${styles.pageContainer} ${
+            menuOpen ? `${styles.slide}` : ""
+          }`}
+        >
+          {windowWidth > 868 ? (
+            <DesktopNavBar />
+          ) : (
+            <MobileNavBar toggleMenu={toggleMenu} isMenuOpen={menuOpen} />
+          )}
+          <Component {...pageProps} />
+        </div>
+        {windowWidth < 868 ? <SideMenu isOpen={menuOpen} /> : null}
+      </Provider>
     </>
   );
 }

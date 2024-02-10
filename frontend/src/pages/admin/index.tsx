@@ -1,61 +1,48 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { loginUser } from "../../features/auth/authActions";
+import { setCredentials } from "../../features/auth/authSlice";
+import { useGetUserDetailsQuery } from "@/services/auth/authService";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import { RootState } from "../../store/configureStore";
+import LoginData from "../../types/LoginData";
 
 const AdminPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch() as ThunkDispatch<RootState, null, AnyAction>;
+
+  const state = useSelector((state: any) => state.auth, shallowEqual);
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+
+  const { data, error, refetch } = useGetUserDetailsQuery("userDetails", {
+    refetchOnMountOrArgChange: true,
+    skip: !state.token,
+  });
+
+  useEffect(() => {
+    if (state.token && data) {
+      dispatch(setCredentials(data));
+    }
+  }, [state.token, data, dispatch]);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        }
-      );
-      if (!response.ok) {
-        console.log(response);
-        throw new Error("Network response was not ok");
+      if (username && [password]) {
+        const packageData: LoginData = {
+          username,
+          password,
+        };
+
+        dispatch(loginUser(packageData));
       }
-      const data = await response.json(); // Use .text() if the response is not JSON
-      console.log(data);
-      setIsLoggedIn(true);
     } catch (error) {
       console.error("There was an error fetching the data:", error);
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        if (!response.ok) {
-          console.log(response);
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json(); // Use .text() if the response is not JSON
-        console.log(data);
-        setIsLoggedIn(data.isLoggedIn);
-      } catch (error) {
-        console.error("User is Not Logged In");
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  console.log(isLoggedIn);
+  console.log(data);
   return (
     <>
       <div className="d-flex flex-column align-self-center">

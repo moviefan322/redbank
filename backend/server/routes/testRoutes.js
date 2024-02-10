@@ -1,14 +1,13 @@
 import express from "express";
 const router = express.Router();
-import {getTest} from "../controllers/testController.js";
-// import {
-//   authUser,
-//   registerUser,
-//   logoutUser,
-//   getUserProfile,
-//   updateUserProfile,
-// } from "../controllers/userController.js";
+import {
+  getTest,
+  cookieCheck,
+  cookieSet,
+} from "../controllers/testController.js";
 
 router.get("/", getTest);
+router.get("/cookieSet", cookieSet);
+router.get("/cookieCheck", cookieCheck);
 
 export default router;
