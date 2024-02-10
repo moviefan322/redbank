@@ -1,16 +1,30 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { loginUser } from "../../features/auth/authActions";
+import { setCredentials } from "../../features/auth/authSlice";
+import { useGetUserDetailsQuery } from "@/services/auth/authService";
 import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/configureStore";
 import LoginData from "../../types/LoginData";
-import axios from "axios";
 
 const AdminPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch() as ThunkDispatch<RootState, null, AnyAction>;
+
+  const state = useSelector((state: any) => state.auth, shallowEqual);
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+
+  const { data, error, refetch } = useGetUserDetailsQuery("userDetails", {
+    refetchOnMountOrArgChange: true,
+    skip: !state.token,
+  });
+
+  useEffect(() => {
+    if (state.token && data) {
+      dispatch(setCredentials(data));
+    }
+  }, [state.token, data, dispatch]);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -22,54 +36,13 @@ const AdminPage = () => {
         };
 
         dispatch(loginUser(packageData));
-        setIsLoggedIn(true);
       }
     } catch (error) {
       console.error("There was an error fetching the data:", error);
     }
   };
 
-  const fetchUser = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`,
-        { withCredentials: true }
-      );
-      console.log(response.data);
-      setIsLoggedIn(response.data.isLoggedIn);
-    } catch (error) {
-      console.error("User is Not Logged In");
-    }
-  };
-
-  const testCookieSet = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/test/cookieSet`
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error("There was an error fetching the data:", error);
-    }
-  };
-
-  const testCookieCheck = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/test/cookieCheck`,
-        { withCredentials: true }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error("There was an error fetching the data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, [isLoggedIn]);
-
-  console.log(isLoggedIn);
+  console.log(data);
   return (
     <>
       <div className="d-flex flex-column align-self-center">
@@ -103,15 +76,6 @@ const AdminPage = () => {
             </form>
           </div>
         )}
-        <button className="btn-admin" onClick={testCookieSet}>
-          Test Set
-        </button>
-        <button className="btn-admin" onClick={testCookieCheck}>
-          Test Check
-        </button>
-        <button className="btn-admin" onClick={fetchUser}>
-          Test User
-        </button>
       </div>
     </>
   );

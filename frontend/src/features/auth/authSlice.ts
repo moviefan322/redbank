@@ -2,10 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUser } from "./authActions";
 import AuthState from "../../types/AuthState";
 
+let token;
+if (typeof localStorage !== "undefined") {
+  token = localStorage.getItem("admintoken") ?? null;
+}
+
 const initialState: AuthState = {
   loading: false,
   username: null,
-  token: null,
+  token,
   error: null,
   success: false,
   isLoggedIn: false,
@@ -54,6 +59,7 @@ const authSlice = createSlice({
         state.username = payload.username;
         state.token = payload.token;
         state.isLoggedIn = true;
+        localStorage.setItem("admintoken", payload.token);
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.loading = false;
