@@ -1,20 +1,29 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../../features/auth/authActions";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import { RootState } from "../../store/configureStore";
+import LoginData from "../../types/LoginData";
 import axios from "axios";
 
 const AdminPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch() as ThunkDispatch<RootState, null, AnyAction>;
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth`,
-        { username, password }
-      );
-      console.log(response.data);
-      setIsLoggedIn(true);
+      if (username && [password]) {
+        const packageData: LoginData = {
+          username,
+          password,
+        };
+
+        dispatch(loginUser(packageData));
+        setIsLoggedIn(true);
+      }
     } catch (error) {
       console.error("There was an error fetching the data:", error);
     }

@@ -49,9 +49,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (admin) {
     return (
-      <div className={styles.admin}>
-        <Component {...pageProps} />
-      </div>
+      <Provider store={store}>
+        <div className={styles.admin}>
+          <Component {...pageProps} />
+        </div>
+      </Provider>
     );
   }
 
