@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { loginUser } from "../../features/auth/authActions";
 import { setCredentials } from "../../features/auth/authSlice";
@@ -51,6 +52,28 @@ const AdminPage = () => {
         {isLoggedIn ? (
           <div>
             <h2 className="text-center mx-auto mt-5">Welcome, Admin</h2>
+            <h3>What would you like to do?</h3>
+            <div className="d-flex flex-column w-100 align-items-center my-5">
+              {" "}
+              <Link
+                className="btn-admin admin-link fs-4 border border-2 border-light w-75 my-2"
+                href="/admin/ManageCarousel"
+              >
+                Manage Carousel
+              </Link>
+              <Link
+                className="btn-admin admin-link fs-4 border border-2 border-light w-75 my-2"
+                href="/admin/ManageNews"
+              >
+                Manage News
+              </Link>
+              <Link
+                className="btn-admin admin-link fs-4 border border-2 border-light w-75 my-2"
+                href="/admin/ManageEvents"
+              >
+                Manage Events
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="d-flex flex-column my-5">
