@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { getAllCarouselItems } from "@/features/carousel/carouselActions";
 import { shallowEqual } from "react-redux";
-import Modal from "@/components/Modal";
+import Modal from "@/components/modals/Modal";
 import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
 import CustomCarousel from "@/components/Carousel";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";

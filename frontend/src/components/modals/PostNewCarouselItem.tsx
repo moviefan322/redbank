@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../Modal";
+import Modal from "./Modal";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { PostCarouselItem } from "@/features/carousel/carouselActions";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
