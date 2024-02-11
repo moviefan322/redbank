@@ -14,7 +14,7 @@ const ManageCarousel = () => {
   const [linkText, setLinkText] = useState("");
   const [link, setLink] = useState("");
   const [sequenceNo, setSequenceNo] = useState(0);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
   const attributes = {
     title,
     linkText,
@@ -22,11 +22,12 @@ const ManageCarousel = () => {
     sequenceNo,
   };
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const openPreviewModal = () => setPreviewModalOpen(true);
+  const closePreviewModal = () => setPreviewModalOpen(false);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const { isLoggedIn } = useAppSelector(
     (state: any) => state.auth,
     shallowEqual
@@ -77,7 +78,7 @@ const ManageCarousel = () => {
           Carousel Management Desk
         </h1>
         <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
-          <button className="btn-primary btn" onClick={openModal}>
+          <button className="btn-primary btn" onClick={openPreviewModal}>
             View Carousel
           </button>
           <button className="btn-success btn">Add New Item</button>
@@ -204,7 +205,7 @@ const ManageCarousel = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
         <CustomCarousel />
       </Modal>
     </>

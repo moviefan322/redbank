@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import LoginData from "../../types/LoginData";
-import LoginRes from "../../types/LoginRes";
+import CarouselItem from "../../types/CarouselItem";
 
 let backendUrl: string;
 if (process.env.NODE_ENV === "development") {
@@ -15,25 +14,19 @@ const config = {
   },
 };
 
-export const loginUser = createAsyncThunk<LoginRes, LoginData>(
-  "auth/loginUser",
-  async ({ username, password }, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        `${backendUrl}/api/users/auth`,
-        { username, password },
-        config
-      );
-
-      const { data } = response;
-
-      return data;
-    } catch (error: any) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
-      } else {
-        return rejectWithValue(error.message);
-      }
+export const getAllCarouselItems = createAsyncThunk<
+  CarouselItem[],
+  void,
+  { rejectValue: string }
+>("carouselItems/getAll", async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`${backendUrl}/api/carouselItems`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message);
+    } else {
+      return rejectWithValue(error.message || "An unknown error occurred");
     }
   }
-);
+});
