@@ -9,7 +9,7 @@ import SideMenu from "@/components/SideMenu";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import styles from "./_app.module.css";
-import store from "../store/configureStore";
+import { store } from "../store/configureStore";
 import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Update the state to the current window width after mounting
     setWindowWidth(window.innerWidth);
-    if (window.location.pathname === "/admin") {
+    if (window.location.pathname.startsWith("/admin")) {
       setAdmin(true);
     }
 
