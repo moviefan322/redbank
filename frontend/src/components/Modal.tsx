@@ -37,17 +37,17 @@ const styles = {
   } as React.CSSProperties,
   modal: {
     backgroundColor: "#fff",
-    padding: "20px",
+    padding: "25px",
     borderRadius: "5px",
-    maxWidth: "500px",
-    maxHeight: "80vh",
-    overflowY: "auto",
+    width: "80vw", // Use a percentage of the viewport width
+    maxHeight: "100vh", // Adjusted for potential padding/margin outside the modal
+    overflowY: "auto", // Adds scroll for content exceeding the modal's height
     position: "relative",
   } as React.CSSProperties,
   closeButton: {
     position: "absolute",
-    top: "10px",
-    right: "10px",
+    top: "-5px",
+    right: "0px",
     background: "none",
     border: "none",
     fontSize: "1.5rem",
