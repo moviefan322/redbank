@@ -15,3 +15,10 @@
   margin: 0;
   border: 1px solid #ccc;
 }
+
+.header {
+  border: 5px dashed rgb(64, 255, 47);
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { shallowEqual } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { loginUser } from "../../features/auth/authActions";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useGetUserDetailsQuery } from "@/services/auth/authService";
@@ -11,10 +12,10 @@ import LoginData from "../../types/LoginData";
 const AdminPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch() as ThunkDispatch<RootState, null, AnyAction>;
+  const dispatch = useAppDispatch();
 
-  const state = useSelector((state: any) => state.auth, shallowEqual);
-  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+  const state = useAppSelector((state: any) => state.auth, shallowEqual);
+  const isLoggedIn = useAppSelector((state: any) => state.auth.isLoggedIn);
 
   const { data, error, refetch } = useGetUserDetailsQuery("userDetails", {
     refetchOnMountOrArgChange: true,
@@ -25,7 +26,10 @@ const AdminPage = () => {
     if (state.token && data) {
       dispatch(setCredentials(data));
     }
-  }, [state.token, data, dispatch]);
+    if (error) {
+      console.error("Error fetching user details: ", error);
+    }
+  }, [state.token, data, dispatch, error]);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();

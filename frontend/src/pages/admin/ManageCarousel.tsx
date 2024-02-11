@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { shallowEqual } from "react-redux";
+import Modal from "@/components/Modal";
 import CarouselItem from "@/types/CarouselItem";
 import styles from "./ManageCarousel.module.css";
 
@@ -10,9 +13,17 @@ const ManageCarousel = () => {
   const [linkText, setLinkText] = useState("");
   const [link, setLink] = useState("");
   const [sequenceNo, setSequenceNo] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
 
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
-  const dispatch = useDispatch();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector(
+    (state: any) => state.auth,
+    shallowEqual
+  );
 
   const fetchCarouselItems = async () => {
     try {
@@ -38,9 +49,17 @@ const ManageCarousel = () => {
     setSequenceNo(0);
   };
 
+  if (!isLoggedIn) {
+    router.replace("/admin");
+  }
+
   return (
     <div className="d-flex flex-column align-items-center">
-      <h1 className="py-5">Carousel Management Desk</h1>
+      <h1 className={`${styles.header} my-5 p-3`}>Carousel Management Desk</h1>
+      <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
+        <button className="btn-primary btn">View Carousel</button>
+        <button className="btn-success btn">Add New Item</button>
+      </div>
       <div className="d-flex flex-column align-items-center">
         <h2 className="py-3">Current Carousel Items</h2>
         <div className="d-flex flex-column align-items-center">
@@ -113,17 +132,23 @@ const ManageCarousel = () => {
               </div>
 
               <div className="mt-4 d-flex flex-row justify-content-end w-100">
+                <button className="btn btn-secondary">Preview</button>
                 {editModeIndex === index ? (
                   <>
                     {" "}
-                    <button className="btn btn-success">Save</button>
-                    <button className="btn btn-danger ms-5" onClick={handleRevert}>Revert</button>
+                    <button className="btn btn-success ms-5">Save</button>
+                    <button
+                      className="btn btn-danger ms-5"
+                      onClick={handleRevert}
+                    >
+                      Revert
+                    </button>
                   </>
                 ) : (
                   <>
                     {" "}
                     <button
-                      className="btn btn-warning"
+                      className="btn btn-warning ms-5"
                       onClick={() => setEditModeIndex(index)}
                     >
                       Edit
@@ -135,6 +160,14 @@ const ManageCarousel = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <h2>Modal Title</h2>
+          <p>This is a modal!</p>
+          <button onClick={closeModal}>Close Modal</button>
+        </Modal>
       </div>
     </div>
   );
