@@ -1,0 +1,16 @@
+.modal {
+  background-color: black;
+  width: 100%;
+}
+
+.modal div {
+  width: 100%;
+  margin: 5px;
+  padding: 5px;
+}
+
+.modal input {
+  height: 1.5rem;
+  margin-left: 5px;
+  width: 10rem;
+}

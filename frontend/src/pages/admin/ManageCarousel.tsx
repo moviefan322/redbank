@@ -1,53 +1,77 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { getAllCarouselItems } from "@/features/carousel/carouselActions";
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/Modal";
+import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
 import CustomCarousel from "@/components/Carousel";
+import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import CarouselItem from "@/types/CarouselItem";
 import styles from "./ManageCarousel.module.css";
 
 const ManageCarousel = () => {
-  const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
   const [title, setTitle] = useState("");
   const [linkText, setLinkText] = useState("");
   const [link, setLink] = useState("");
   const [sequenceNo, setSequenceNo] = useState(0);
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
-  const attributes = {
+  const [postModalOpen, setPostModalOpen] = useState(false);
+
+  const updateCarouselData = {
     title,
     linkText,
     link,
     sequenceNo,
   };
 
-  const openPreviewModal = () => setPreviewModalOpen(true);
-  const closePreviewModal = () => setPreviewModalOpen(false);
-
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const { carouselItems, loading, error } = useAppSelector(
+    (state: any) => state.carousel,
+    shallowEqual
+  );
 
   const { isLoggedIn } = useAppSelector(
     (state: any) => state.auth,
     shallowEqual
   );
 
-  const fetchCarouselItems = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/carouselItems`
-      );
-      const data = await response.json();
-      setCarouselItems(data);
-    } catch (error) {
-      console.error("Error fetching carousel items: ", error);
+  const [postCarouselData, setPostCarouselData] = useState<PostCarouselItemReq>(
+    {
+      title: "",
+      linkText: "",
+      urlPhoto: "",
+      link: "",
+      sequenceNo: 0,
     }
+  );
+
+  const openPreviewModal = () => setPreviewModalOpen(true);
+  const closePreviewModal = () => setPreviewModalOpen(false);
+  const openPostModal = () => {
+    setPostCarouselData((prevData) => ({
+      ...prevData,
+      sequenceNo: carouselItems.length + 1,
+    }));
+    setPostModalOpen(true);
+  };
+  const closePostModal = () => {
+    setPostModalOpen(false);
+    setPostCarouselData({
+      title: "",
+      linkText: "",
+      urlPhoto: "",
+      link: "",
+      sequenceNo: null,
+    });
   };
 
   useEffect(() => {
-    fetchCarouselItems();
-  }, []);
+    dispatch(getAllCarouselItems());
+  }, [dispatch]);
 
   const handleRevert = () => {
     setEditModeIndex(null);
@@ -66,10 +90,12 @@ const ManageCarousel = () => {
   };
 
   if (!isLoggedIn) {
-    router.replace("/admin");
+    <h1>You are not logged in, Admin.... if that is your real name</h1>;
   }
 
-  console.log(carouselItems.length);
+  if (loading) return <div>Loading...</div>;
+
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -81,12 +107,24 @@ const ManageCarousel = () => {
           <button className="btn-primary btn" onClick={openPreviewModal}>
             View Carousel
           </button>
-          <button className="btn-success btn">Add New Item</button>
+          <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
+            <CustomCarousel />
+          </Modal>
+          <button className="btn-success btn" onClick={openPostModal}>
+            Add New Item
+          </button>
         </div>
+        <PostNewCarouselItem
+          postModalOpen={postModalOpen}
+          closePostModal={closePostModal}
+          postCarouselData={postCarouselData}
+          setPostCarouselData={setPostCarouselData}
+          carouselItems={carouselItems}
+        />
         <div className="d-flex flex-column align-items-center">
           <h2 className="py-3">Current Carousel Items</h2>
           <div className="d-flex flex-column align-items-center">
-            {carouselItems.map((item, index) => (
+            {carouselItems.map((item: CarouselItem, index: number) => (
               <div
                 key={index}
                 className="d-flex flex-column align-items-center py-3"
@@ -205,9 +243,6 @@ const ManageCarousel = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
-        <CustomCarousel />
-      </Modal>
     </>
   );
 };

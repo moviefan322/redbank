@@ -39,7 +39,7 @@ const styles = {
     backgroundColor: "#fff",
     padding: "25px",
     borderRadius: "5px",
-    width: "80vw", // Use a percentage of the viewport width
+    width: "50vw", // Use a percentage of the viewport width
     maxHeight: "100vh", // Adjusted for potential padding/margin outside the modal
     overflowY: "auto", // Adds scroll for content exceeding the modal's height
     position: "relative",
