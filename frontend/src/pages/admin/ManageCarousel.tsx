@@ -100,6 +100,9 @@ const ManageCarousel = () => {
   return (
     <>
       <div className="d-flex flex-column align-items-center">
+        <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
+          <CustomCarousel />
+        </Modal>
         <h1 className={`${styles.header} my-5 p-3`}>
           Carousel Management Desk
         </h1>
@@ -107,13 +110,12 @@ const ManageCarousel = () => {
           <button className="btn-primary btn" onClick={openPreviewModal}>
             View Carousel
           </button>
-          <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
-            <CustomCarousel />
-          </Modal>
+
           <button className="btn-success btn" onClick={openPostModal}>
             Add New Item
           </button>
         </div>
+
         <PostNewCarouselItem
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}

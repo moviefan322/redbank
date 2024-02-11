@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "./Modal";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { PostCarouselItem } from "@/features/carousel/carouselActions";
@@ -20,7 +20,25 @@ const PostNewCarouselItem = ({
   setPostCarouselData,
   carouselItems,
 }: PostNewCarouselItemProps) => {
+  const [error, setError] = useState("");
   const dispatch = useAppDispatch();
+
+  const validateData = () => {
+    if (!postCarouselData.title.trim()) return "Title is required.";
+    if (!postCarouselData.linkText.trim()) return "Link text is required.";
+    if (!postCarouselData.link.trim()) return "Link is required.";
+    if (
+      !postCarouselData.urlPhoto.trim() ||
+      !postCarouselData.urlPhoto.startsWith("http")
+    )
+      return "Valid photo URL is required.";
+    if (
+      postCarouselData.sequenceNo === null ||
+      postCarouselData.sequenceNo! < 1
+    )
+      return "Sequence number is invalid.";
+    return "";
+  };
 
   const handleCloseModal = () => {
     closePostModal();
@@ -28,8 +46,15 @@ const PostNewCarouselItem = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const validationError = validateData();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     dispatch(PostCarouselItem(postCarouselData));
     closePostModal();
+    setError(""); // Clear any existing error
     console.log("submit: ", postCarouselData);
   };
 
@@ -40,6 +65,7 @@ const PostNewCarouselItem = ({
           className={`${styles.modal} d-flex flex-column align-items-center`}
         >
           <h2 className="py-3">Add New Carousel Item</h2>
+          {error && <p className="text-danger">{error}</p>}
           <div className="d-flex flex-column align-items-center">
             <div className={`d-flex flex-row`}>
               <div
