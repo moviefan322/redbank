@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Update the state to the current window width after mounting
     setWindowWidth(window.innerWidth);
-    if (window.location.pathname === "/admin") {
+    if (window.location.pathname.startsWith("/admin")) {
       setAdmin(true);
     }
 
