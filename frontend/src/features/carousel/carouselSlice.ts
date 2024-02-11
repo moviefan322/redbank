@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllCarouselItems, PostCarouselItem } from "./carouselActions";
+import {
+  getAllCarouselItems,
+  PostCarouselItem,
+  DeleteCarouselItem,
+} from "./carouselActions";
 import CarouselItem from "../../types/CarouselItem";
 
 interface CarouselState {
@@ -41,6 +45,19 @@ const carouselSlice = createSlice({
         state.carouselItems = [action.payload, ...state.carouselItems!];
       })
       .addCase(PostCarouselItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(DeleteCarouselItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(DeleteCarouselItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.carouselItems = state.carouselItems.filter(
+          (item) => item._id !== action.payload.item._id
+        );
+      })
+      .addCase(DeleteCarouselItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

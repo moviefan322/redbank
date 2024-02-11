@@ -13,4 +13,4 @@ EXPOSE 3001
 ENV MONGODB_USERNAME=phil
 ENV MONGODB_PASSWORD=secret
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "server"]

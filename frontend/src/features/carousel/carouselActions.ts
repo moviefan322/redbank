@@ -63,3 +63,30 @@ export const PostCarouselItem = createAsyncThunk<
     }
   }
 });
+export const DeleteCarouselItem = createAsyncThunk<
+  { message: string; item: CarouselItem }, // Expected success response type
+  string, // Type of the argument (itemId in this case)
+  { rejectValue: string; state: RootState } // Types for ThunkAPI
+>("carouselItems/delete", async (itemId, { rejectWithValue, getState }) => {
+  const token = getState().auth.token; // Get token from state
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(
+      `${backendUrl}/api/carouselItems/${itemId}`,
+      config
+    );
+    return response.data; // Assuming server responds with { message: "Carousel Item Removed" }
+  } catch (error: any) {
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message);
+    } else {
+      return rejectWithValue(error.message || "An unknown error occurred");
+    }
+  }
+});

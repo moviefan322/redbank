@@ -34,7 +34,7 @@ const deleteCarouselItem = asyncHandler(async (req, res) => {
   );
 
   if (deletedCarouselItem) {
-    res.json({ message: "Carousel Item removed" });
+    res.json({ message: "Carousel Item removed", item: deletedCarouselItem });
   } else {
     res.status(404);
     throw new Error("Carousel Item not found");
