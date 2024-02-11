@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { getAllCarouselItems } from "@/features/carousel/carouselActions";
+import {
+  getAllCarouselItems,
+  DeleteCarouselItem,
+} from "@/features/carousel/carouselActions";
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
 import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
@@ -18,6 +21,7 @@ const ManageCarousel = () => {
   const [sequenceNo, setSequenceNo] = useState(0);
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
+  const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
 
   const updateCarouselData = {
     title,
@@ -87,6 +91,11 @@ const ManageCarousel = () => {
     setLinkText(carouselItems[index].linkText);
     setLink(carouselItems[index].link);
     setSequenceNo(carouselItems[index].sequenceNo);
+  };
+
+  const handleDelete = (index: number) => {
+    dispatch(DeleteCarouselItem(carouselItems[index]._id));
+    setAreYouSureModalOpen(false);
   };
 
   if (!isLoggedIn) {
@@ -236,7 +245,35 @@ const ManageCarousel = () => {
                       >
                         Edit
                       </button>
-                      <button className="btn btn-danger ms-5">Delete</button>
+                      <button
+                        className="btn btn-danger ms-5"
+                        onClick={() => setAreYouSureModalOpen(true)}
+                      >
+                        Delete
+                      </button>
+                      <Modal
+                        isOpen={areYouSureModalOpen}
+                        onClose={() => setAreYouSureModalOpen(false)}
+                      >
+                        <div className="d-flex flex-column text-center bg-dark p-5">
+                          <h3>Are you sure you want to delete this item?</h3>
+                          <div className="d-flex flex-row justify-content-around mt-2">
+                            {" "}
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleDelete(index)}
+                            >
+                              Yes
+                            </button>
+                            <button
+                              className="btn btn-success"
+                              onClick={() => setAreYouSureModalOpen(false)}
+                            >
+                              No
+                            </button>
+                          </div>
+                        </div>
+                      </Modal>
                     </>
                   )}
                 </div>
