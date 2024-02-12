@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import CarouselItem from "../../types/CarouselItem";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import { RootState } from "@/store/configureStore";
+import UpdateCarouselItemReq from "@/types/UpdateCarouselItemReq";
 
 let backendUrl: string;
 if (process.env.NODE_ENV === "development") {
@@ -63,6 +64,37 @@ export const PostCarouselItem = createAsyncThunk<
     }
   }
 });
+
+export const UpdateCarouselItem = createAsyncThunk<
+  CarouselItem,
+  UpdateCarouselItemReq,
+  { rejectValue: string; state: RootState }
+>("carouselItems/update", async (data, { rejectWithValue, getState }) => {
+  const token = getState().auth.token;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.put(
+      `${backendUrl}/api/carouselItems/${data._id}`,
+      data,
+      config
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message);
+    } else {
+      return rejectWithValue(error.message || "An unknown error occurred");
+    }
+  }
+});
+
 export const DeleteCarouselItem = createAsyncThunk<
   { message: string; item: CarouselItem }, // Expected success response type
   string, // Type of the argument (itemId in this case)
