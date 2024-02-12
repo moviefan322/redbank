@@ -9,6 +9,6 @@ const upload = multer({
   storage,
 });
 
-router.post("/", protect, upload.single("file"), uploadImage);
+router.post("/", upload.single("file"), uploadImage);
 
 export default router;

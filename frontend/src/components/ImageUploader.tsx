@@ -1,37 +1,57 @@
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { RootState } from "@/store/configureStore";
-import { uploadImage } from "../features/upload/uploadSlice";
-import { UploadImageForm } from "@/types/UploadImageForm";
+import { useState } from "react";
+import axios from "axios";
 
 const ImageUploader: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { uploading, error, imageUrl } = useAppSelector(
-    (state: RootState) => state.imageUploader
-  );
-
-  const handleUpload = () => {
-    if (selectedFile) {
-      const uploadForm: UploadImageForm = { file: selectedFile };
-      dispatch(uploadImage(uploadForm));
-    }
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
+  const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [res, setRes] = useState<any>({});
+  const handleSelectFile = (e: any) => setFile(e.target.files[0]);
+  const handleUpload = async () => {
+    try {
+      setLoading(true);
+      const data = new FormData();
+      data.append("file", file!);
+      const res = await axios.post("http://localhost:3001/api/upload", data);
+      setRes(res.data);
+    } catch (error: any) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={uploading}>
-        {uploading ? "Uploading..." : "Upload"}
-      </button>
-      {error && <p>Error: {error}</p>}
-      {imageUrl && <p>Image URL: {imageUrl}</p>}
+    <div className="App">
+      <label htmlFor="file" className="btn-grey">
+        {" "}
+        select file
+      </label>
+      {file && <center> {file?.name}</center>}
+      <input
+        id="file"
+        type="file"
+        onChange={handleSelectFile}
+        multiple={false}
+      />
+      <code>
+        {Object.keys(res).length > 0
+          ? Object.keys(res).map((key) => (
+              <p className="output-item" key={key}>
+                <span>{key}:</span>
+                <span>
+                  {typeof res[key] === "object" ? "object" : res[key]}
+                </span>
+              </p>
+            ))
+          : null}
+      </code>
+      {file && (
+        <>
+          <button onClick={handleUpload} className="btn-green">
+            {loading ? "uploading..." : "upload to cloudinary"}
+          </button>
+        </>
+      )}
     </div>
   );
 };

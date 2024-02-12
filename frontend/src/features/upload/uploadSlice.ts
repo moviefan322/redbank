@@ -16,6 +16,13 @@ const initialState: ImageUploaderState = {
   error: null,
 };
 
+let backendUrl: string;
+if (process.env.NODE_ENV === "development") {
+  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+} else {
+  backendUrl = "";
+}
+
 export const uploadImage = createAsyncThunk<
   string,
   UploadImageForm,
@@ -23,6 +30,7 @@ export const uploadImage = createAsyncThunk<
 >(
   "imageUploader/uploadImage",
   async (formData, { rejectWithValue, getState }) => {
+    console.log(formData);
     const token = getState().auth.token;
     const config = {
       headers: {
@@ -31,7 +39,11 @@ export const uploadImage = createAsyncThunk<
     };
 
     try {
-      const response = await axios.post("/api/upload", formData, config);
+      const response = await axios.post(
+        `${backendUrl}/api/upload`,
+        formData,
+        config
+      );
       return response.data.imageUrl;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
@@ -42,6 +54,7 @@ export const uploadImage = createAsyncThunk<
     }
   }
 );
+
 export const imageUploaderSlice = createSlice({
   name: "imageUploader",
   initialState,
