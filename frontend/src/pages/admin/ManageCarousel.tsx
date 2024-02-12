@@ -105,6 +105,7 @@ const ManageCarousel = () => {
       linkText: carouselItems[index].linkText,
       link: carouselItems[index].link,
       sequenceNo: carouselItems[index].sequenceNo,
+      urlPhoto: carouselItems[index].urlPhoto,
     });
   };
 
@@ -141,6 +142,8 @@ const ManageCarousel = () => {
   if (loading) return <Loading />;
 
   if (error) return <div>Error: {error}</div>;
+
+  console.log(updateCarouselData);
 
   return (
     <>
@@ -289,25 +292,37 @@ const ManageCarousel = () => {
                     onClose={closeSinglePreviewModal}
                   >
                     <Carousel id="myCarousel">
-                      <Carousel.Item key={index} interval={5000}>
+                      <Carousel.Item interval={5000}>
                         <div
-                          className={`${styles.carouselItem} d-flex flex-column justify-content-center align-items-center`}
+                          className={`${styles.carouselItemPrev} d-flex flex-column justify-content-center align-items-center`}
                           style={{
                             height: "90vh",
                             background: `#151515 url("${
-                              carouselItems[previewModeIndex!].urlPhoto
+                              editModeIndex === previewModeIndex
+                                ? updateCarouselData.urlPhoto
+                                : carouselItems[previewModeIndex!].urlPhoto
                             }") no-repeat center center`,
                             backgroundSize: "cover",
                             backgroundAttachment: "scroll",
                           }}
                         >
                           <div className={`${styles.matte}`}></div>
-                          <h1>{carouselItems[previewModeIndex!].title}</h1>
+                          <h1>
+                            {editModeIndex === previewModeIndex
+                              ? updateCarouselData.title
+                              : carouselItems[previewModeIndex!].title}
+                          </h1>
                           <Link
-                            href={carouselItems[previewModeIndex!].link}
+                            href={
+                              editModeIndex === previewModeIndex
+                                ? updateCarouselData.link
+                                : carouselItems[previewModeIndex!].link
+                            }
                             className={`${styles.carouselButt}`}
                           >
-                            {carouselItems[previewModeIndex!].linkText}
+                            {editModeIndex === previewModeIndex
+                              ? updateCarouselData.linkText
+                              : carouselItems[previewModeIndex!].linkText}
                           </Link>
                         </div>
                       </Carousel.Item>

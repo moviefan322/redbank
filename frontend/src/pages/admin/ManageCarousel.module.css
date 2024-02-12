@@ -37,7 +37,8 @@
   z-index: 1;
 }
 
-.carouselItem h1 {
+.carouselItem h1,
+.carouselItemPrev h1 {
   z-index: 2;
 }
 
@@ -56,6 +57,8 @@
   text-decoration: none;
 }
 
-.carouselItem {
+.carouselItemPrev {
   width: 100%;
+  color: white;
+  font-family: "Inter", sans-serif;
 }
