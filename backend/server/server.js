@@ -4,9 +4,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
 import cookieParser from "cookie-parser";
+import cloudinary from "cloudinary";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
-import cloudinary from "cloudinary";
 const port = process.env.PORT || 3000;
 import userRoutes from "./routes/userRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
@@ -27,7 +27,7 @@ const corsOptions = {
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_URL,
+  api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
@@ -42,7 +42,7 @@ app.use("/api/test", testRoutes);
 app.use("/api/carouselItems", carouselItemRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/news", newsRoutes);
-app.use("/api/uploadImage", uploadImageRoutes);
+app.use("/api/upload", uploadImageRoutes);
 
 // if (process.env.NODE_ENV === "production") {
 //   const __dirname = path.resolve();
