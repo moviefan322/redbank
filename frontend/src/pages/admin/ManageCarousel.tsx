@@ -3,32 +3,31 @@ import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
   getAllCarouselItems,
-  DeleteCarouselItem,
+  deleteCarouselItem,
+  updateCarouselItem,
 } from "@/features/carousel/carouselActions";
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
 import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
 import CustomCarousel from "@/components/Carousel";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
+import UpdateCarouselItemReq from "@/types/UpdateCarouselItemReq";
 import CarouselItem from "@/types/CarouselItem";
 import styles from "./ManageCarousel.module.css";
 
 const ManageCarousel = () => {
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
-  const [title, setTitle] = useState("");
-  const [linkText, setLinkText] = useState("");
-  const [link, setLink] = useState("");
-  const [sequenceNo, setSequenceNo] = useState(0);
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
-
-  const updateCarouselData = {
-    title,
-    linkText,
-    link,
-    sequenceNo,
-  };
+  const [updateCarouselData, setUpdateCarouselData] =
+    useState<UpdateCarouselItemReq>({
+      _id: "",
+      title: "",
+      linkText: "",
+      link: "",
+      sequenceNo: 0,
+    });
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -69,7 +68,7 @@ const ManageCarousel = () => {
       linkText: "",
       urlPhoto: "",
       link: "",
-      sequenceNo: null,
+      sequenceNo: 0,
     });
   };
 
@@ -79,22 +78,38 @@ const ManageCarousel = () => {
 
   const handleRevert = () => {
     setEditModeIndex(null);
-    setTitle("");
-    setLinkText("");
-    setLink("");
-    setSequenceNo(0);
+    setUpdateCarouselData({
+      _id: "",
+      title: "",
+      linkText: "",
+      link: "",
+      sequenceNo: 0,
+    });
   };
 
   const handleEditModeButton = (index: number) => {
     setEditModeIndex(index);
-    setTitle(carouselItems[index].title);
-    setLinkText(carouselItems[index].linkText);
-    setLink(carouselItems[index].link);
-    setSequenceNo(carouselItems[index].sequenceNo);
+    setUpdateCarouselData({
+      _id: carouselItems[index]._id,
+      title: carouselItems[index].title,
+      linkText: carouselItems[index].linkText,
+      link: carouselItems[index].link,
+      sequenceNo: carouselItems[index].sequenceNo,
+    });
+  };
+
+  const handleUpdate = (e: any) => {
+    e.preventDefault();
+    dispatch(
+      updateCarouselItem({
+        ...updateCarouselData,
+      })
+    );
+    setEditModeIndex(null);
   };
 
   const handleDelete = (index: number) => {
-    dispatch(DeleteCarouselItem(carouselItems[index]._id));
+    dispatch(deleteCarouselItem(carouselItems[index]._id));
     setAreYouSureModalOpen(false);
   };
 
@@ -158,8 +173,13 @@ const ManageCarousel = () => {
                         <p>title:</p>
                         <input
                           placeholder={item.title}
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
+                          value={updateCarouselData.title}
+                          onChange={(e) =>
+                            setUpdateCarouselData((prev) => ({
+                              ...prev,
+                              title: e.target.value,
+                            }))
+                          }
                         ></input>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
@@ -167,8 +187,13 @@ const ManageCarousel = () => {
                         <p>link text:</p>
                         <input
                           placeholder={item.linkText}
-                          value={linkText}
-                          onChange={(e) => setLinkText(e.target.value)}
+                          value={updateCarouselData.linkText}
+                          onChange={(e) =>
+                            setUpdateCarouselData((prev) => ({
+                              ...prev,
+                              linkText: e.target.value,
+                            }))
+                          }
                         ></input>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
@@ -176,8 +201,13 @@ const ManageCarousel = () => {
                         <p>url endpoint:</p>
                         <input
                           placeholder={item.link}
-                          value={link}
-                          onChange={(e) => setLink(e.target.value)}
+                          value={updateCarouselData.link}
+                          onChange={(e) =>
+                            setUpdateCarouselData((prev) => ({
+                              ...prev,
+                              link: e.target.value,
+                            }))
+                          }
                         ></input>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
@@ -187,9 +217,12 @@ const ManageCarousel = () => {
                           type="number"
                           min="1" // Assuming sequence numbers start at 1
                           max={carouselItems.length} // Set the maximum value to the length of carouselItems
-                          value={sequenceNo}
+                          value={updateCarouselData.sequenceNo!}
                           onChange={(e) =>
-                            setSequenceNo(Number(e.target.value))
+                            setUpdateCarouselData((prev) => ({
+                              ...prev,
+                              sequenceNo: +e.target.value,
+                            }))
                           }
                         />
                       </div>
@@ -228,7 +261,12 @@ const ManageCarousel = () => {
                   {editModeIndex === index ? (
                     <>
                       {" "}
-                      <button className="btn btn-success ms-5">Save</button>
+                      <button
+                        className="btn btn-success ms-5"
+                        onClick={handleUpdate}
+                      >
+                        Save
+                      </button>
                       <button
                         className="btn btn-danger ms-5"
                         onClick={handleRevert}
