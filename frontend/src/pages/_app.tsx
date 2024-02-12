@@ -16,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
   const [admin, setAdmin] = useState(false);
+  
 
   useEffect(() => {
     // Update the state to the current window width after mounting

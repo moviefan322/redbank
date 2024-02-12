@@ -9,6 +9,9 @@ import {
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
+import Carousel from "react-bootstrap/Carousel";
+import Link from "next/link";
+import useUserDetails from "@/hooks/userCredentials";
 import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
 import CustomCarousel from "@/components/Carousel";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
@@ -18,7 +21,9 @@ import styles from "./ManageCarousel.module.css";
 
 const ManageCarousel = () => {
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
+  const [previewModeIndex, setPreviewModeIndex] = useState<number>(0);
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
+  const [isSinglePreviewOpen, setSinglePreviewOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [updateCarouselData, setUpdateCarouselData] =
@@ -30,16 +35,14 @@ const ManageCarousel = () => {
       sequenceNo: 0,
     });
 
+  // Redux
+
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { isLoggedIn } = useUserDetails();
 
   const { carouselItems, loading, error } = useAppSelector(
     (state: any) => state.carousel,
-    shallowEqual
-  );
-
-  const { isLoggedIn } = useAppSelector(
-    (state: any) => state.auth,
     shallowEqual
   );
 
@@ -52,6 +55,8 @@ const ManageCarousel = () => {
       sequenceNo: 0,
     }
   );
+
+  // Modals
 
   const openPreviewModal = () => setPreviewModalOpen(true);
   const closePreviewModal = () => setPreviewModalOpen(false);
@@ -72,6 +77,10 @@ const ManageCarousel = () => {
       sequenceNo: 0,
     });
   };
+  const closeSinglePreviewModal = () => setSinglePreviewOpen(false);
+  const openSinglePreviewModal = () => setSinglePreviewOpen(true);
+
+  // Logic
 
   useEffect(() => {
     dispatch(getAllCarouselItems());
@@ -112,6 +121,11 @@ const ManageCarousel = () => {
   const handleDelete = (index: number) => {
     dispatch(deleteCarouselItem(carouselItems[index]._id));
     setAreYouSureModalOpen(false);
+  };
+
+  const handleOpenPreview = (index: number) => {
+    setPreviewModeIndex(index);
+    openSinglePreviewModal();
   };
 
   if (!isLoggedIn) {
@@ -264,7 +278,41 @@ const ManageCarousel = () => {
                 </div>
 
                 <div className="mt-4 d-flex flex-row justify-content-end w-100">
-                  <button className="btn btn-secondary">Preview</button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => handleOpenPreview(index)}
+                  >
+                    Preview
+                  </button>
+                  <Modal
+                    isOpen={isSinglePreviewOpen}
+                    onClose={closeSinglePreviewModal}
+                  >
+                    <Carousel id="myCarousel">
+                      <Carousel.Item key={index} interval={5000}>
+                        <div
+                          className={`${styles.carouselItem} d-flex flex-column justify-content-center align-items-center`}
+                          style={{
+                            height: "90vh",
+                            background: `#151515 url("${
+                              carouselItems[previewModeIndex!].urlPhoto
+                            }") no-repeat center center`,
+                            backgroundSize: "cover",
+                            backgroundAttachment: "scroll",
+                          }}
+                        >
+                          <div className={`${styles.matte}`}></div>
+                          <h1>{carouselItems[previewModeIndex!].title}</h1>
+                          <Link
+                            href={carouselItems[previewModeIndex!].link}
+                            className={`${styles.carouselButt}`}
+                          >
+                            {carouselItems[previewModeIndex!].linkText}
+                          </Link>
+                        </div>
+                      </Carousel.Item>
+                    </Carousel>
+                  </Modal>
                   {editModeIndex === index ? (
                     <>
                       {" "}

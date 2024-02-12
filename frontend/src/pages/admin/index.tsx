@@ -5,8 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { loginUser } from "../../features/auth/authActions";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useGetUserDetailsQuery } from "@/services/auth/authService";
-import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store/configureStore";
+import useUserDetails from "@/hooks/userCredentials";
 import LoginData from "../../types/LoginData";
 
 const AdminPage = () => {
@@ -14,22 +13,7 @@ const AdminPage = () => {
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
 
-  const state = useAppSelector((state: any) => state.auth, shallowEqual);
-  const isLoggedIn = useAppSelector((state: any) => state.auth.isLoggedIn);
-
-  const { data, error, refetch } = useGetUserDetailsQuery("userDetails", {
-    refetchOnMountOrArgChange: true,
-    skip: !state.token,
-  });
-
-  useEffect(() => {
-    if (state.token && data) {
-      dispatch(setCredentials(data));
-    }
-    if (error) {
-      console.error("Error fetching user details: ", error);
-    }
-  }, [state.token, data, dispatch, error]);
+  const { data, error, isLoggedIn } = useUserDetails();
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
