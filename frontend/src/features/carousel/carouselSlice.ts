@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllCarouselItems,
-  PostCarouselItem,
-  DeleteCarouselItem,
+  postCarouselItem,
+  deleteCarouselItem,
+  updateCarouselItem
 } from "./carouselActions";
 import CarouselItem from "../../types/CarouselItem";
 
@@ -37,27 +38,40 @@ const carouselSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(PostCarouselItem.pending, (state) => {
+      .addCase(postCarouselItem.pending, (state) => {
         state.loading = true;
       })
-      .addCase(PostCarouselItem.fulfilled, (state, action) => {
+      .addCase(postCarouselItem.fulfilled, (state, action) => {
         state.loading = false;
         state.carouselItems = [action.payload, ...state.carouselItems!];
       })
-      .addCase(PostCarouselItem.rejected, (state, action) => {
+      .addCase(postCarouselItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(DeleteCarouselItem.pending, (state) => {
+      .addCase(deleteCarouselItem.pending, (state) => {
         state.loading = true;
       })
-      .addCase(DeleteCarouselItem.fulfilled, (state, action) => {
+      .addCase(deleteCarouselItem.fulfilled, (state, action) => {
         state.loading = false;
         state.carouselItems = state.carouselItems.filter(
           (item) => item._id !== action.payload.item._id
         );
       })
-      .addCase(DeleteCarouselItem.rejected, (state, action) => {
+      .addCase(deleteCarouselItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateCarouselItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateCarouselItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.carouselItems = state.carouselItems.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        );
+      })
+      .addCase(updateCarouselItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

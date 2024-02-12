@@ -35,7 +35,7 @@ export const getAllCarouselItems = createAsyncThunk<
   }
 });
 
-export const PostCarouselItem = createAsyncThunk<
+export const postCarouselItem = createAsyncThunk<
   CarouselItem,
   PostCarouselItemReq,
   { rejectValue: string; state: RootState }
@@ -65,7 +65,7 @@ export const PostCarouselItem = createAsyncThunk<
   }
 });
 
-export const UpdateCarouselItem = createAsyncThunk<
+export const updateCarouselItem = createAsyncThunk<
   CarouselItem,
   UpdateCarouselItemReq,
   { rejectValue: string; state: RootState }
@@ -95,7 +95,7 @@ export const UpdateCarouselItem = createAsyncThunk<
   }
 });
 
-export const DeleteCarouselItem = createAsyncThunk<
+export const deleteCarouselItem = createAsyncThunk<
   { message: string; item: CarouselItem }, // Expected success response type
   string, // Type of the argument (itemId in this case)
   { rejectValue: string; state: RootState } // Types for ThunkAPI
