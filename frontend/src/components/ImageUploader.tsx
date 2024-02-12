@@ -1,32 +1,39 @@
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import {
+  useAppDispatch as useDispatch,
+  useAppSelector as useSelector,
+} from "../hooks/reduxHooks";
+import {
+  uploadImage,
+  selectUploading,
+  selectImageUrl,
+  selectError,
+} from "../features/upload/uploadSlice";
 
 const ImageUploader: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [res, setRes] = useState<any>({});
+  const dispatch = useDispatch();
+  const uploading = useSelector(selectUploading);
+  const imageUrl = useSelector(selectImageUrl);
+  const error = useSelector(selectError);
+
   const handleSelectFile = (e: any) => setFile(e.target.files[0]);
-  const handleUpload = async () => {
-    try {
-      setLoading(true);
-      const data = new FormData();
-      data.append("file", file!);
-      const res = await axios.post("http://localhost:3001/api/upload", data);
-      setRes(res.data);
-    } catch (error: any) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
+
+  const handleUpload = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      // Dispatch the Redux action here with the formData
+      dispatch(uploadImage(formData as any)); // Cast to any if your formData type does not match exactly; better to define a proper type
     }
   };
 
   return (
     <div className="App">
       <label htmlFor="file" className="btn-grey">
-        {" "}
         select file
       </label>
-      {file && <center> {file?.name}</center>}
+      {file && <center>{file?.name}</center>}
       <input
         id="file"
         type="file"
@@ -34,23 +41,18 @@ const ImageUploader: React.FC = () => {
         multiple={false}
       />
       <code>
-        {Object.keys(res).length > 0
-          ? Object.keys(res).map((key) => (
-              <p className="output-item" key={key}>
-                <span>{key}:</span>
-                <span>
-                  {typeof res[key] === "object" ? "object" : res[key]}
-                </span>
-              </p>
-            ))
-          : null}
+        {imageUrl && (
+          <p className="output-item">
+            <span>Image URL:</span>
+            <span>{imageUrl}</span>
+          </p>
+        )}
       </code>
+      {error && <p>Error: {error}</p>}
       {file && (
-        <>
-          <button onClick={handleUpload} className="btn-green">
-            {loading ? "uploading..." : "upload to cloudinary"}
-          </button>
-        </>
+        <button onClick={handleUpload} className="btn-green">
+          {uploading ? "Uploading..." : "Upload to Cloudinary"}
+        </button>
       )}
     </div>
   );

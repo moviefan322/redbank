@@ -16,7 +16,6 @@ async function handleUpload(file) {
 
 export async function uploadImage(req, res) {
   // check to make sure file is attached to req
-  console.log(req.file);
 
   if (!req.file) {
     return res.status(400).json({

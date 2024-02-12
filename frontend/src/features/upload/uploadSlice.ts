@@ -25,26 +25,20 @@ if (process.env.NODE_ENV === "development") {
 
 export const uploadImage = createAsyncThunk<
   string,
-  UploadImageForm,
+  FormData,
   { rejectValue: string; state: RootState }
 >(
   "imageUploader/uploadImage",
   async (formData, { rejectWithValue, getState }) => {
-    console.log(formData);
-    const token = getState().auth.token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     try {
-      const response = await axios.post(
-        `${backendUrl}/api/upload`,
-        formData,
-        config
-      );
-      return response.data.imageUrl;
+      const token = getState().auth.token;
+      const response = await axios.post(`${backendUrl}/api/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.url;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -58,7 +52,9 @@ export const uploadImage = createAsyncThunk<
 export const imageUploaderSlice = createSlice({
   name: "imageUploader",
   initialState,
-  reducers: {},
+  reducers: {
+    // You can add reducers here for other actions if necessary
+  },
   extraReducers: (builder) => {
     builder
       .addCase(uploadImage.pending, (state) => {
@@ -66,8 +62,10 @@ export const imageUploaderSlice = createSlice({
         state.error = null;
       })
       .addCase(uploadImage.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.uploading = false;
         state.imageUrl = action.payload;
+        state.error = null; // Ensure error is cleared upon successful upload
       })
       .addCase(uploadImage.rejected, (state, action) => {
         state.uploading = false;
@@ -76,10 +74,10 @@ export const imageUploaderSlice = createSlice({
   },
 });
 
-export const selectImageUrl = (state: RootState) =>
-  state.imageUploader.imageUrl;
-export const selectUploading = (state: RootState) =>
-  state.imageUploader.uploading;
-export const selectError = (state: RootState) => state.imageUploader.error;
+export const {} = imageUploaderSlice.actions;
+
+export const selectImageUrl = (state: any) => state.imageUploader.imageUrl;
+export const selectUploading = (state: any) => state.imageUploader.uploading;
+export const selectError = (state: any) => state.imageUploader.error;
 
 export default imageUploaderSlice.reducer;
