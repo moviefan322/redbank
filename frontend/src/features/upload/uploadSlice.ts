@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/configureStore";
 import { UploadImageForm } from "../../types/UploadImageForm";
+import axios from "axios";
 
 interface ImageUploaderState {
   uploading: boolean;
@@ -15,27 +16,32 @@ const initialState: ImageUploaderState = {
   error: null,
 };
 
-export const uploadImage = createAsyncThunk(
+export const uploadImage = createAsyncThunk<
+  string,
+  UploadImageForm,
+  { rejectValue: string; state: RootState }
+>(
   "imageUploader/uploadImage",
-  async (formData: UploadImageForm, thunkAPI) => {
-    try {
-      const body = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        body.append(key, value);
-      });
+  async (formData, { rejectWithValue, getState }) => {
+    const token = getState().auth.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: body,
-      });
-      const data = await response.json();
-      return data.imageUrl;
+    try {
+      const response = await axios.post("/api/upload", formData, config);
+      return response.data.imageUrl;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message || "An unknown error occurred");
+      }
     }
   }
 );
-
 export const imageUploaderSlice = createSlice({
   name: "imageUploader",
   initialState,
