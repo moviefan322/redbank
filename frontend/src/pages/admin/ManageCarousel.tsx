@@ -8,6 +8,7 @@ import {
 } from "@/features/carousel/carouselActions";
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
+import Loading from "@/components/loading";
 import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
 import CustomCarousel from "@/components/Carousel";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
@@ -114,10 +115,16 @@ const ManageCarousel = () => {
   };
 
   if (!isLoggedIn) {
-    <h1>You are not logged in, Admin.... if that is your real name</h1>;
+    return (
+      <div className="d-flex flex-column justify-content-center">
+        <h1 className="mx-3 text-center">
+          You are not logged in, Admin.... if that is your real name
+        </h1>
+      </div>
+    );
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
 
   if (error) return <div>Error: {error}</div>;
 
