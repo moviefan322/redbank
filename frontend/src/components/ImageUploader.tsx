@@ -60,6 +60,7 @@ const ImageUploader = <T extends {}>({
       />
       {!file ? (
         <button
+          type="button"
           onClick={() => document.getElementById("file")!.click()}
           className={`${styles.chooseFile} btn-admin mx-5`}
           style={imageUrl ? { display: "none" } : {}}

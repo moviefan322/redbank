@@ -25,6 +25,7 @@ const PostNewCarouselItem = ({
   const dispatch = useAppDispatch();
 
   const validateData = () => {
+    console.log("validation triggered");
     if (!postCarouselData.title.trim()) return "Title is required.";
     if (!postCarouselData.linkText.trim()) return "Link text is required.";
     if (!postCarouselData.link.trim()) return "Link is required.";
@@ -42,8 +43,8 @@ const PostNewCarouselItem = ({
   };
 
   const handleCloseModal = () => {
-    closePostModal();
     setError("");
+    closePostModal();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -158,11 +159,7 @@ const PostNewCarouselItem = ({
               <button className="btn-admin-red ms-5" onClick={handleCloseModal}>
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="btn-admin ms-5"
-                onClick={() => handleSubmit}
-              >
+              <button type="submit" className="btn-admin ms-5">
                 Submit
               </button>
             </div>
