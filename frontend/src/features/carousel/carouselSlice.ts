@@ -59,6 +59,7 @@ const carouselSlice = createSlice({
         state.loading = false;
         state.carouselItems = [action.payload, ...state.carouselItems!];
         state.success = true;
+        state.updateSuccess = true;
       })
       .addCase(postCarouselItem.rejected, (state, action) => {
         state.loading = false;
@@ -75,6 +76,7 @@ const carouselSlice = createSlice({
           (item) => item._id !== action.payload.item._id
         );
         state.success = true;
+        state.updateSuccess = true;
       })
       .addCase(deleteCarouselItem.rejected, (state, action) => {
         state.loading = false;

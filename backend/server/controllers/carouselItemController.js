@@ -29,16 +29,22 @@ const getCarouselItemById = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const deleteCarouselItem = asyncHandler(async (req, res) => {
-  const deletedCarouselItem = await CarouselItem.findByIdAndDelete(
-    req.params._id
+  const itemId = req.params._id;
+
+  // Attempt to find and delete the item directly
+  const deletedCarouselItem = await CarouselItem.findByIdAndDelete(itemId);
+
+  if (!deletedCarouselItem) {
+    return res.status(404).json({ message: "Carousel Item not found" });
+  }
+
+  // Decrease the sequenceNo of all items with a sequenceNo greater than the deleted item's sequenceNo
+  await CarouselItem.updateMany(
+    { sequenceNo: { $gt: deletedCarouselItem.sequenceNo } },
+    { $inc: { sequenceNo: -1 } }
   );
 
-  if (deletedCarouselItem) {
-    res.json({ message: "Carousel Item removed", item: deletedCarouselItem });
-  } else {
-    res.status(404);
-    throw new Error("Carousel Item not found");
-  }
+  res.json({ message: "Carousel Item removed", item: deletedCarouselItem });
 });
 
 // @desc    create a carousel item

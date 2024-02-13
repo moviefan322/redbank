@@ -42,14 +42,12 @@ const ImageUploader = <T extends {}>({
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      // Dispatch the Redux action here with the formData
-      dispatch(uploadImage(formData as any)); // Cast to any if your formData type does not match exactly; better to define a proper type
+      dispatch(uploadImage(formData as any));
     }
   };
 
   const handleCancel = () => {
     setFile(null);
-    dispatch(resetUploadState());
   };
 
   return (

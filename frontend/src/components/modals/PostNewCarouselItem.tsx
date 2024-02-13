@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { postCarouselItem } from "@/features/carousel/carouselActions";
+import { resetUploadState } from "@/features/upload/uploadSlice";
 import ImageUploader from "../ImageUploader";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import styles from "./PostNewCarouselItem.module.css";
@@ -44,6 +45,7 @@ const PostNewCarouselItem = ({
 
   const handleCloseModal = () => {
     setError("");
+    dispatch(resetUploadState());
     closePostModal();
   };
 
@@ -56,9 +58,8 @@ const PostNewCarouselItem = ({
     }
 
     dispatch(postCarouselItem(postCarouselData));
-    closePostModal();
+    handleCloseModal();
     setError(""); // Clear any existing error
-    console.log("submit: ", postCarouselData);
   };
 
   return (

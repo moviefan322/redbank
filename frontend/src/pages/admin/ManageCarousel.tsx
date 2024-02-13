@@ -14,6 +14,7 @@ import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import PostNewCarouselItem from "@/components/modals/PostNewCarouselItem";
 import CustomCarousel from "@/components/Carousel";
+import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import UpdateCarouselItemReq from "@/types/UpdateCarouselItemReq";
 import CarouselItem from "@/types/CarouselItem";
@@ -72,10 +73,13 @@ const ManageCarousel = () => {
   const openPreviewModal = () => setPreviewModalOpen(true);
   const closePreviewModal = () => setPreviewModalOpen(false);
   const openPostModal = () => {
-    setPostCarouselData((prevData) => ({
-      ...prevData,
+    setPostCarouselData({
+      title: "",
+      linkText: "",
+      urlPhoto: "",
+      link: "",
       sequenceNo: carouselItems.length + 1,
-    }));
+  });
     setPostModalOpen(true);
   };
   const closePostModal = () => {
@@ -181,7 +185,7 @@ const ManageCarousel = () => {
           setPostCarouselData={setPostCarouselData}
           carouselItems={carouselItems}
         />
-        <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Current Carousel Items</h2>
           <div className="d-flex flex-column align-items-center">
             {carouselItems.map((item: CarouselItem, index: number) => (
@@ -400,6 +404,14 @@ const ManageCarousel = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="d-flex flex-row justify-content-end pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mb-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
         </div>
       </div>
     </>
