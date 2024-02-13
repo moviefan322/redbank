@@ -2,11 +2,11 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  height: 33vh;
+  height: 40vh;
   width: 33vw;
   transform: translate(-50%, -50%);
-  background-color: black;
-  opacity: 0.5;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: rgb(64, 255, 47) dashed 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,6 +15,11 @@
 }
 
 .loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: white;
   margin: auto;
+  z-index: 2000;
 }

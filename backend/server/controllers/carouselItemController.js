@@ -73,36 +73,38 @@ const updateCarouselItem = asyncHandler(async (req, res) => {
     sequenceNo: newSequenceNo,
   } = req.body;
 
+  // Find the item to update
   const carouselItem = await CarouselItem.findById(req.params._id);
-
   if (!carouselItem) {
     return res.status(404).json({ message: "Carousel Item not found" });
   }
 
-  const currentSequenceNo = carouselItem.sequenceNo;
+  // Proceed if the sequence number is actually changing
+  if (
+    newSequenceNo !== undefined &&
+    newSequenceNo !== carouselItem.sequenceNo
+  ) {
+    const adjustmentOperation =
+      newSequenceNo > carouselItem.sequenceNo
+        ? { $gt: carouselItem.sequenceNo, $lte: newSequenceNo }
+        : { $gte: newSequenceNo, $lt: carouselItem.sequenceNo };
 
-  // Only proceed if the sequenceNo is actually changing
-  if (newSequenceNo !== undefined && newSequenceNo !== currentSequenceNo) {
-    // Identify the range of sequence numbers that need to be adjusted
-    const minSeqNo = Math.min(currentSequenceNo, newSequenceNo);
-    const maxSeqNo = Math.max(currentSequenceNo, newSequenceNo);
+    const adjustment = newSequenceNo > carouselItem.sequenceNo ? -1 : 1;
 
-    // Moving item down
-    if (newSequenceNo > currentSequenceNo) {
-      await CarouselItem.updateMany(
-        { sequenceNo: { $gt: currentSequenceNo, $lte: newSequenceNo } },
-        { $inc: { sequenceNo: -1 } }
-      );
+    // Adjust sequence numbers of other items
+    const updateResult = await CarouselItem.updateMany(
+      { sequenceNo: adjustmentOperation },
+      { $inc: { sequenceNo: adjustment } }
+    );
+
+    if (!updateResult || updateResult.nModified === 0) {
+      // Handle the case where the sequence adjustment did not work as expected
+      return res
+        .status(500)
+        .json({ message: "Failed to resequence carousel items" });
     }
-    // Moving item up
-    else {
-      await CarouselItem.updateMany(
-        { sequenceNo: { $gte: newSequenceNo, $lt: currentSequenceNo } },
-        { $inc: { sequenceNo: 1 } }
-      );
-    }
 
-    // Update the sequenceNo of the current item
+    // Update the sequence number of the current item
     carouselItem.sequenceNo = newSequenceNo;
   }
 
@@ -112,7 +114,10 @@ const updateCarouselItem = asyncHandler(async (req, res) => {
   carouselItem.urlPhoto = urlPhoto ?? carouselItem.urlPhoto;
   carouselItem.link = link ?? carouselItem.link;
 
+  // Save the updated item
   await carouselItem.save();
+
+  // Respond with the updated item
   res.json(carouselItem);
 });
 

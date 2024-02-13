@@ -29,6 +29,7 @@ const carouselSlice = createSlice({
   reducers: {
     resetSuccess: (state) => {
       state.success = false;
+      state.updateSuccess = false;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;

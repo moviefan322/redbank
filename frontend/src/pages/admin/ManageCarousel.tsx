@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { setLoading } from "@/features/carousel/carouselSlice";
+import { setLoading, resetSuccess } from "@/features/carousel/carouselSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
   getAllCarouselItems,
@@ -26,6 +26,7 @@ const ManageCarousel = () => {
   const [isSinglePreviewOpen, setSinglePreviewOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
+  const [currentItemId, setCurrentItemId] = useState<string>("");
   const [updateCarouselData, setUpdateCarouselData] =
     useState<UpdateCarouselItemReq>({
       _id: "",
@@ -46,11 +47,14 @@ const ManageCarousel = () => {
   );
 
   useEffect(() => {
-    dispatch(setLoading(true));
-    setTimeout(() => {
-      dispatch(setLoading(false));
-      dispatch(getAllCarouselItems());
-    }, 800);
+    if (updateSuccess) {
+      dispatch(setLoading(true));
+      setTimeout(() => {
+        dispatch(setLoading(false));
+        dispatch(getAllCarouselItems());
+        dispatch(resetSuccess());
+      }, 800);
+    }
   }, [updateSuccess]);
 
   const [postCarouselData, setPostCarouselData] = useState<PostCarouselItemReq>(
@@ -126,8 +130,8 @@ const ManageCarousel = () => {
     setEditModeIndex(null);
   };
 
-  const handleDelete = (index: number) => {
-    dispatch(deleteCarouselItem(carouselItems[index]._id));
+  const handleDelete = () => {
+    dispatch(deleteCarouselItem(currentItemId));
     setAreYouSureModalOpen(false);
   };
 
@@ -146,14 +150,13 @@ const ManageCarousel = () => {
     );
   }
 
-  if (loading) return <Loading />;
-
   if (error) return <div>Error: {error}</div>;
 
-  console.log(updateCarouselData);
+  console.log(currentItemId);
 
   return (
     <>
+      {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
         <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
           <CustomCarousel />
@@ -192,8 +195,7 @@ const ManageCarousel = () => {
                     style={{
                       height: "200px",
                       width: "200px",
-                      background: `#151515 url("${item.urlPhoto}") no-repeat center center`,
-                      backgroundSize: "cover",
+                      background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
                       backgroundAttachment: "scroll",
                     }}
                   ></div>
@@ -362,7 +364,10 @@ const ManageCarousel = () => {
                       </button>
                       <button
                         className="btn btn-danger ms-5"
-                        onClick={() => setAreYouSureModalOpen(true)}
+                        onClick={() => {
+                          setAreYouSureModalOpen(true);
+                          setCurrentItemId(item._id);
+                        }}
                       >
                         Delete
                       </button>
@@ -376,7 +381,7 @@ const ManageCarousel = () => {
                             {" "}
                             <button
                               className="btn btn-danger"
-                              onClick={() => handleDelete(index)}
+                              onClick={() => handleDelete()}
                             >
                               Yes
                             </button>
