@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { resetSuccess } from "@/features/carousel/carouselSlice";
+import { setLoading } from "@/features/carousel/carouselSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
   getAllCarouselItems,
@@ -46,7 +46,11 @@ const ManageCarousel = () => {
   );
 
   useEffect(() => {
-    dispatch(getAllCarouselItems());
+    dispatch(setLoading(true));
+    setTimeout(() => {
+      dispatch(setLoading(false));
+      dispatch(getAllCarouselItems());
+    }, 800);
   }, [updateSuccess]);
 
   const [postCarouselData, setPostCarouselData] = useState<PostCarouselItemReq>(

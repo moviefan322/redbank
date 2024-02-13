@@ -30,6 +30,9 @@ const carouselSlice = createSlice({
     resetSuccess: (state) => {
       state.success = false;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -94,6 +97,6 @@ const carouselSlice = createSlice({
   },
 });
 
-export const { resetSuccess } = carouselSlice.actions;
+export const { resetSuccess, setLoading } = carouselSlice.actions;
 export const { reducer } = carouselSlice;
 export default carouselSlice.reducer;
