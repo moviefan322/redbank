@@ -53,7 +53,11 @@ export const imageUploaderSlice = createSlice({
   name: "imageUploader",
   initialState,
   reducers: {
-    // You can add reducers here for other actions if necessary
+    resetUploadState: (state) => {
+      state.uploading = false;
+      state.imageUrl = null;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -74,7 +78,7 @@ export const imageUploaderSlice = createSlice({
   },
 });
 
-export const {} = imageUploaderSlice.actions;
+export const { resetUploadState } = imageUploaderSlice.actions;
 
 export const selectImageUrl = (state: any) => state.imageUploader.imageUrl;
 export const selectUploading = (state: any) => state.imageUploader.uploading;

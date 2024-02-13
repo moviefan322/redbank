@@ -9,6 +9,7 @@ import {
   selectUploading,
   selectImageUrl,
   selectError,
+  resetUploadState,
 } from "../features/upload/uploadSlice";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaExclamationTriangle } from "react-icons/fa";
@@ -46,6 +47,11 @@ const ImageUploader = <T extends {}>({
     }
   };
 
+  const handleCancel = () => {
+    setFile(null);
+    dispatch(resetUploadState());
+  };
+
   return (
     <div className="d-flex flex-row align-items-center py-2">
       {file && (
@@ -69,8 +75,9 @@ const ImageUploader = <T extends {}>({
         </button>
       ) : (
         <button
+          type="button"
           className="btn-admin-red mx-5"
-          onClick={() => setFile(null)}
+          onClick={handleCancel}
           style={imageUrl ? { display: "none" } : {}}
         >
           Cancel
@@ -87,7 +94,7 @@ const ImageUploader = <T extends {}>({
 
       {error && <FaExclamationTriangle className={styles.error} size={20} />}
       {file && !imageUrl && (
-        <button onClick={handleUpload} className="btn-admin">
+        <button type="button" onClick={handleUpload} className="btn-admin">
           {uploading ? "Uploading..." : "Upload"}
         </button>
       )}
