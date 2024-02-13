@@ -36,8 +36,7 @@ const ManageCarousel = () => {
     });
 
   // Redux
-
-  const router = useRouter();
+  
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useUserDetails();
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { PostCarouselItem } from "@/features/carousel/carouselActions";
+import { postCarouselItem } from "@/features/carousel/carouselActions";
+import ImageUploader from "../ImageUploader";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import styles from "./PostNewCarouselItem.module.css";
 
@@ -42,6 +43,7 @@ const PostNewCarouselItem = ({
 
   const handleCloseModal = () => {
     closePostModal();
+    setError("");
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +54,7 @@ const PostNewCarouselItem = ({
       return;
     }
 
-    dispatch(PostCarouselItem(postCarouselData));
+    dispatch(postCarouselItem(postCarouselData));
     closePostModal();
     setError(""); // Clear any existing error
     console.log("submit: ", postCarouselData);
@@ -139,26 +141,28 @@ const PostNewCarouselItem = ({
                     }
                   />
                 </div>
-                <div className="d-flex flex-row justify-content-between">
-                  {" "}
-                  <p>Photo URL:</p>
-                  <input
-                    type="text"
-                    placeholder="URL"
-                    value={postCarouselData.urlPhoto}
-                    onChange={(e) =>
-                      setPostCarouselData({
-                        ...postCarouselData,
-                        urlPhoto: e.target.value,
-                      })
-                    }
-                  />
+                <div className="d-inline">
+                  <div className="d-flex flex-row justify-content-between">
+                    <p className="w-100">Upload Image:</p>{" "}
+                    <div className="justify-self-end w-100 flex-grow-2">
+                      <ImageUploader
+                        data={postCarouselData}
+                        setData={setPostCarouselData}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="d-flex flex-row justify-content-end">
-              <button className="btn-admin-red ms-5">Cancel</button>
-              <button type="submit" className="btn-admin ms-5">
+              <button className="btn-admin-red ms-5" onClick={handleCloseModal}>
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn-admin ms-5"
+                onClick={() => handleSubmit}
+              >
                 Submit
               </button>
             </div>

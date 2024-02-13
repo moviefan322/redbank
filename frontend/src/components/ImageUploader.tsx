@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import {
   useAppDispatch as useDispatch,
   useAppSelector as useSelector,
@@ -13,12 +14,26 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaExclamationTriangle } from "react-icons/fa";
 import styles from "./ImageUploader.module.css";
 
-const ImageUploader: React.FC = () => {
+interface ImageUploaderProps<T> {
+  data: T;
+  setData: (data: T) => void;
+}
+
+const ImageUploader = <T extends {}>({
+  data,
+  setData,
+}: ImageUploaderProps<T>) => {
   const [file, setFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const uploading = useSelector(selectUploading);
   const imageUrl = useSelector(selectImageUrl);
   const error = useSelector(selectError);
+
+  useEffect(() => {
+    if (imageUrl) {
+      setData({ ...data, urlPhoto: imageUrl });
+    }
+  }, [imageUrl]);
 
   const handleSelectFile = (e: any) => setFile(e.target.files[0]);
 
@@ -33,7 +48,9 @@ const ImageUploader: React.FC = () => {
 
   return (
     <div className="d-flex flex-row align-items-center py-2">
-      {file && <code>{file.name}</code>}
+      {file && (
+        <code style={imageUrl ? { display: "none" } : {}}>{file.name}</code>
+      )}
       <input
         id="file"
         type="file"
@@ -44,13 +61,17 @@ const ImageUploader: React.FC = () => {
       {!file ? (
         <button
           onClick={() => document.getElementById("file")!.click()}
-          className="btn-admin mx-5"
+          className={`${styles.chooseFile} btn-admin mx-5`}
           style={imageUrl ? { display: "none" } : {}}
         >
           Choose File
         </button>
       ) : (
-        <button className="btn-admin-red mx-5" onClick={() => setFile(null)}>
+        <button
+          className="btn-admin-red mx-5"
+          onClick={() => setFile(null)}
+          style={imageUrl ? { display: "none" } : {}}
+        >
           Cancel
         </button>
       )}
@@ -58,7 +79,7 @@ const ImageUploader: React.FC = () => {
       {imageUrl && (
         <>
           {" "}
-          <FaCheckCircle className="me-3" size={20} /> Image Uploaded
+          <FaCheckCircle className="me-3" size={50} /> Image Uploaded
           Successfully
         </>
       )}
