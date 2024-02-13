@@ -20,7 +20,7 @@ const carouselItemSchema = mongoose.Schema(
     },
     sequenceNo: {
       type: Number,
-      unique: true,
+      unique: false,
       validate: {
         validator: Number.isInteger,
         message: "{VALUE} is not an integer value",

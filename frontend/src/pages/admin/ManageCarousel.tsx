@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { resetSuccess } from "@/features/carousel/carouselSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
   getAllCarouselItems,
@@ -36,14 +36,18 @@ const ManageCarousel = () => {
     });
 
   // Redux
-  
+
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useUserDetails();
 
-  const { carouselItems, loading, error } = useAppSelector(
+  const { carouselItems, loading, error, updateSuccess } = useAppSelector(
     (state: any) => state.carousel,
     shallowEqual
   );
+
+  useEffect(() => {
+    dispatch(getAllCarouselItems());
+  }, [updateSuccess]);
 
   const [postCarouselData, setPostCarouselData] = useState<PostCarouselItemReq>(
     {

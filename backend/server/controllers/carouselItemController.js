@@ -76,43 +76,44 @@ const updateCarouselItem = asyncHandler(async (req, res) => {
   const carouselItem = await CarouselItem.findById(req.params._id);
 
   if (!carouselItem) {
-    res.status(404);
-    throw new Error("Carousel Item not found");
+    return res.status(404).json({ message: "Carousel Item not found" });
   }
 
-  // Check if sequenceNo is being updated and is different from the current value
-  if (
-    newSequenceNo !== undefined &&
-    newSequenceNo !== carouselItem.sequenceNo
-  ) {
-    // Adjust sequence numbers for other items
-    // If the new sequence number is greater than the current, decrement sequenceNos in between
-    if (newSequenceNo > carouselItem.sequenceNo) {
+  const currentSequenceNo = carouselItem.sequenceNo;
+
+  // Only proceed if the sequenceNo is actually changing
+  if (newSequenceNo !== undefined && newSequenceNo !== currentSequenceNo) {
+    // Identify the range of sequence numbers that need to be adjusted
+    const minSeqNo = Math.min(currentSequenceNo, newSequenceNo);
+    const maxSeqNo = Math.max(currentSequenceNo, newSequenceNo);
+
+    // Moving item down
+    if (newSequenceNo > currentSequenceNo) {
       await CarouselItem.updateMany(
-        { sequenceNo: { $gt: carouselItem.sequenceNo, $lte: newSequenceNo } },
+        { sequenceNo: { $gt: currentSequenceNo, $lte: newSequenceNo } },
         { $inc: { sequenceNo: -1 } }
       );
     }
-    // If the new sequence number is less than the current, increment sequenceNos in between
-    else if (newSequenceNo < carouselItem.sequenceNo) {
+    // Moving item up
+    else {
       await CarouselItem.updateMany(
-        { sequenceNo: { $lt: carouselItem.sequenceNo, $gte: newSequenceNo } },
+        { sequenceNo: { $gte: newSequenceNo, $lt: currentSequenceNo } },
         { $inc: { sequenceNo: 1 } }
       );
     }
 
-    // Update the sequenceNo of the current item after adjusting others
+    // Update the sequenceNo of the current item
     carouselItem.sequenceNo = newSequenceNo;
   }
 
   // Update other fields
-  if (title !== undefined) carouselItem.title = title;
-  if (linkText !== undefined) carouselItem.linkText = linkText;
-  if (urlPhoto !== undefined) carouselItem.urlPhoto = urlPhoto;
-  if (link !== undefined) carouselItem.link = link;
+  carouselItem.title = title ?? carouselItem.title;
+  carouselItem.linkText = linkText ?? carouselItem.linkText;
+  carouselItem.urlPhoto = urlPhoto ?? carouselItem.urlPhoto;
+  carouselItem.link = link ?? carouselItem.link;
 
-  const updatedCarouselItem = await carouselItem.save();
-  res.json(updatedCarouselItem);
+  await carouselItem.save();
+  res.json(carouselItem);
 });
 
 export {
