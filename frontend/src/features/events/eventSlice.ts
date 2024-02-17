@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllEvents, postEvent } from "./eventActions";
+import { getAllEvents, postEvent, updateEvent } from "./eventActions";
 import Event from "../../types/Event";
 
 interface EventState {
@@ -56,7 +56,18 @@ const eventSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.success = false;
-      });
+      })
+      .addCase(updateEvent.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(updateEvent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = state.events!.map((event) =>
+          event._id === action.payload._id ? action.payload : event
+        );
+        state.success = true;
+      })
   },
 });
 

@@ -49,12 +49,8 @@ const ManageCarousel = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      dispatch(setLoading(true));
-      setTimeout(() => {
-        dispatch(setLoading(false));
-        dispatch(getAllCarouselItems());
-        dispatch(resetSuccess());
-      }, 800);
+      dispatch(getAllCarouselItems());
+      dispatch(resetSuccess());
     }
   }, [updateSuccess]);
 
@@ -79,7 +75,7 @@ const ManageCarousel = () => {
       urlPhoto: "",
       link: "",
       sequenceNo: carouselItems.length + 1,
-  });
+    });
     setPostModalOpen(true);
   };
   const closePostModal = () => {

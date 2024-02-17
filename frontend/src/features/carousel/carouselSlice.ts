@@ -89,6 +89,9 @@ const carouselSlice = createSlice({
       })
       .addCase(updateCarouselItem.fulfilled, (state, action) => {
         state.loading = false;
+        state.carouselItems = state.carouselItems.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        );
         state.success = true;
         state.updateSuccess = true;
       })
