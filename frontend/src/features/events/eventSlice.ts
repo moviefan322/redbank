@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllEvents, postEvent, updateEvent } from "./eventActions";
+import {
+  getAllEvents,
+  postEvent,
+  updateEvent,
+  deleteEvent,
+} from "./eventActions";
 import Event from "../../types/Event";
 
 interface EventState {
@@ -68,6 +73,27 @@ const eventSlice = createSlice({
         );
         state.success = true;
       })
+      .addCase(updateEvent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(deleteEvent.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(deleteEvent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = state.events!.filter(
+          (event) => event._id !== action.payload.item._id
+        );
+        state.success = true;
+      })
+      .addCase(deleteEvent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      });
   },
 });
 

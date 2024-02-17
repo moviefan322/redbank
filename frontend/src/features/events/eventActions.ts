@@ -90,3 +90,31 @@ export const updateEvent = createAsyncThunk<
     }
   }
 });
+
+export const deleteEvent = createAsyncThunk<
+  { message: string; item: Event },
+  string,
+  { rejectValue: string; state: RootState }
+>("events/delete", async (itemId, { rejectWithValue, getState }) => {
+  const token = getState().auth.token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(
+      `${backendUrl}/api/events/${itemId}`,
+      config
+    );
+    return response.data; // Assuming server responds with { message: "Carousel Item Removed" }
+  } catch (error: any) {
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message);
+    } else {
+      return rejectWithValue(error.message || "An unknown error occurred");
+    }
+  }
+});
