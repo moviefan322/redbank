@@ -17,7 +17,7 @@ const config = {
   },
 };
 
-export const getAllCarouselItems = createAsyncThunk<
+export const getAllEvents = createAsyncThunk<
   Event[],
   void,
   { rejectValue: string }
