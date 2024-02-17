@@ -23,7 +23,6 @@ export const getAllCarouselItems = createAsyncThunk<
   { rejectValue: string }
 >("carouselItems/getAll", async (_, { rejectWithValue }) => {
   try {
-    console.log("fetching");
     const response = await axios.get(`${backendUrl}/api/carouselItems`);
     return response.data;
   } catch (error: any) {

@@ -78,7 +78,7 @@ const ImageUploader = <T extends {}>({
           onClick={handleCancel}
           style={imageUrl ? { display: "none" } : {}}
         >
-          Cancel
+          X
         </button>
       )}
 
