@@ -1,5 +1,4 @@
-export default interface Event {
-  _id: string;
+export default interface PostEventReq {
   title: string;
   date: string;
   time: string;
@@ -7,7 +6,4 @@ export default interface Event {
   link: string;
   description: string;
   descriptionShort: string;
-  createdAt: string;
-  updatedAt: string;
-  _v: number;
 }

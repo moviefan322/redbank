@@ -101,5 +101,4 @@ const carouselSlice = createSlice({
 });
 
 export const { resetSuccess, setLoading } = carouselSlice.actions;
-export const { reducer } = carouselSlice;
 export default carouselSlice.reducer;

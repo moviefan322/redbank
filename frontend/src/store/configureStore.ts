@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "@/features/auth/authSlice";
 import carouselReducer from "@/features/carousel/carouselSlice";
+import eventReducer from "@/features/events/eventSlice";
 import imageUploadReducer from "@/features/upload/uploadSlice";
 import { authApi } from "@/services/auth/authService";
 
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authReducer,
     carousel: carouselReducer,
     imageUploader: imageUploadReducer,
+    events: eventReducer,
   },
   middleware: (getDefaultMiddleWare) =>
     getDefaultMiddleWare().concat(authApi.middleware),
