@@ -33,7 +33,7 @@ const deleteEvent = asyncHandler(async (req, res) => {
   const deletedEvent = await Event.findByIdAndDelete(req.params._id);
 
   if (deletedEvent) {
-    res.json({ message: "Event removed" });
+    res.json({ message: "Event removed", item: deletedEvent });
   } else {
     res.status(404);
     throw new Error("Event not found");
