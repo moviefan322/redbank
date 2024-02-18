@@ -1,9 +1,9 @@
 export default interface Event {
   _id: string;
   title: string;
-  date: Date;
-  startTime?: Date;
-  endTime?: Date;
+  date: string;
+  startTime?: string;
+  endTime?: string;
   allDay: boolean;
   urlPhoto: string;
   link: string;

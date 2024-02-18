@@ -1,8 +1,8 @@
 export default interface PostEventReq {
   title: string;
-  date: Date;
-  startTime?: Date;
-  endTime?: Date;
+  date: string;
+  startTime?: string;
+  endTime?: string;
   allDay: boolean;
   urlPhoto: string;
   link: string;

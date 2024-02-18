@@ -34,7 +34,9 @@ const ManageEvents = () => {
     description: "",
     descriptionShort: "",
     date: "",
-    time: "",
+    startTime: "",
+    endTime: "",
+    allDay: false,
     urlPhoto: "",
   });
 
@@ -57,12 +59,14 @@ const ManageEvents = () => {
 
   const [postEventData, setPostEventData] = useState<PostEventReq>({
     title: "",
-    date: "",
-    time: "",
-    urlPhoto: "",
     link: "",
     description: "",
     descriptionShort: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    allDay: false,
+    urlPhoto: "",
   });
 
   // Modals
@@ -72,12 +76,14 @@ const ManageEvents = () => {
   const openPostModal = () => {
     setPostEventData({
       title: "",
-      date: "",
-      time: "",
-      urlPhoto: "",
       link: "",
       description: "",
       descriptionShort: "",
+      date: "",
+      startTime: "",
+      endTime: "",
+      allDay: false,
+      urlPhoto: "",
     });
     setPostModalOpen(true);
   };
@@ -85,12 +91,14 @@ const ManageEvents = () => {
     setPostModalOpen(false);
     setPostEventData({
       title: "",
-      date: "",
-      time: "",
-      urlPhoto: "",
       link: "",
       description: "",
       descriptionShort: "",
+      date: "",
+      startTime: "",
+      endTime: "",
+      allDay: false,
+      urlPhoto: "",
     });
   };
   const closeSinglePreviewModal = () => setSinglePreviewOpen(false);
@@ -111,7 +119,9 @@ const ManageEvents = () => {
       description: "",
       descriptionShort: "",
       date: "",
-      time: "",
+      startTime: "",
+      endTime: "",
+      allDay: false,
       urlPhoto: "",
     });
   };
@@ -126,7 +136,9 @@ const ManageEvents = () => {
       description: events[index].description,
       descriptionShort: events[index].descriptionShort,
       date: events[index].date,
-      time: events[index].time,
+      startTime: events[index].startTime,
+      endTime: events[index].endTime,
+      allDay: events[index].allDay,
     });
   };
 
@@ -237,10 +249,10 @@ const ManageEvents = () => {
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
-                        <p>Time:</p>
+                        <p>Start Time:</p>
                         <input
-                          placeholder={item.time}
-                          value={updateEventData.time}
+                          placeholder={item.startTime}
+                          value={updateEventData.startTime}
                           onChange={(e) =>
                             setUpdateEventData((prev) => ({
                               ...prev,
@@ -309,8 +321,8 @@ const ManageEvents = () => {
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
-                        <p>Time:</p>
-                        <p>{item.time}</p>
+                        <p>Start Time:</p>
+                        <p>{item.startTime}</p>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}

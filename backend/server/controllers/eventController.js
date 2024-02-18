@@ -45,8 +45,17 @@ const deleteEvent = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const createEvent = asyncHandler(async (req, res) => {
-  const { title, date, time, urlPhoto, link, description, descriptionShort } =
-    req.body;
+  const {
+    title,
+    date,
+    startTime,
+    endTime,
+    allDay,
+    urlPhoto,
+    link,
+    description,
+    descriptionShort,
+  } = req.body;
 
   const event = new Event({
     title,
@@ -69,8 +78,17 @@ const createEvent = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateEvent = asyncHandler(async (req, res) => {
-  const { title, date, startTime, endTime, allDay, urlPhoto, link, description, descriptionShort } =
-    req.body;
+  const {
+    title,
+    date,
+    startTime,
+    endTime,
+    allDay,
+    urlPhoto,
+    link,
+    description,
+    descriptionShort,
+  } = req.body;
 
   const event = await Event.findById(req.params._id);
 

@@ -20,14 +20,17 @@ const PostNewEvent = ({
   postEventData,
   setPostEventData,
 }: PostNewEventProps) => {
+  const [month, setMonth] = useState("");
+  const [day, setDay] = useState("");
+  const [year, setYear] = useState("");
+
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
   const validateData = () => {
     console.log("validation triggered");
     if (!postEventData.title.trim()) return "Title is required.";
-    if (!postEventData.date.trim()) return "Date is required.";
-    if (!postEventData.time.trim()) return "Time is required.";
+    if (year === "" || month === "" || day === "") return "Date is required.";
     if (!postEventData.link.trim()) return "Link is required.";
     if (
       !postEventData.urlPhoto.trim() ||
@@ -53,9 +56,19 @@ const PostNewEvent = ({
       return;
     }
 
-    dispatch(postEvent(postEventData));
+    const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
+      2,
+      "0"
+    )}T00:00:00`;
+
+    const updatedPostEventData = {
+      ...postEventData,
+      date: new Date(formattedDate).toISOString(),
+    };
+
+    dispatch(postEvent(updatedPostEventData));
     handleCloseModal();
-    setError(""); // Clear any existing error
+    setError("");
   };
 
   return (
@@ -92,33 +105,58 @@ const PostNewEvent = ({
                   ></input>
                 </div>
                 <div className="d-flex flex-row justify-content-between">
-                  {" "}
                   <p>Date:</p>
-                  <input
-                    placeholder="Event date"
-                    value={postEventData.date}
-                    onChange={(e) =>
-                      setPostEventData({
-                        ...postEventData,
-                        date: e.target.value,
-                      })
-                    }
-                  ></input>
+                  <select
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                  >
+                    <option value="">Month</option>
+                    {[...Array(12)].map((_, index) => (
+                      <option key={index} value={index + 1}>
+                        {new Date(0, index).toLocaleString("default", {
+                          month: "long",
+                        })}
+                      </option>
+                    ))}
+                  </select>
+                  <select value={day} onChange={(e) => setDay(e.target.value)}>
+                    <option value="">Day</option>
+                    {[...Array(31)].map((_, index) => (
+                      <option key={index} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                  >
+                    <option value="">Year</option>
+                    {[...Array(10)].map((_, index) => {
+                      const year = new Date().getFullYear() + index;
+                      return (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+
+                {/* <div className="d-flex flex-row justify-content-between">
                   {" "}
                   <p>Time:</p>
                   <input
                     placeholder="Event time"
-                    value={postEventData.time}
+                    value={postEventData.startTime?.toISOString()}
                     onChange={(e) =>
                       setPostEventData({
                         ...postEventData,
-                        time: e.target.value,
+                        startTime: new Date(e.target.value),
                       })
                     }
                   ></input>
-                </div>
+                </div> */}
                 <div className="d-flex flex-row justify-content-between">
                   {" "}
                   <p>Link:</p>

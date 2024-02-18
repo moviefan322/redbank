@@ -12,6 +12,7 @@ interface EventState {
   loading: boolean;
   error: string | undefined;
   success: boolean;
+  updateSuccess: boolean;
 }
 
 const initialState: EventState = {
@@ -19,6 +20,7 @@ const initialState: EventState = {
   loading: false,
   error: undefined,
   success: false,
+  updateSuccess: false,
 };
 
 const eventSlice = createSlice({
@@ -27,6 +29,7 @@ const eventSlice = createSlice({
   reducers: {
     resetSuccess: (state) => {
       state.success = false;
+      state.updateSuccess = false;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -56,6 +59,7 @@ const eventSlice = createSlice({
         state.loading = false;
         state.events = [action.payload, ...state.events!];
         state.success = true;
+        state.updateSuccess = true;
       })
       .addCase(postEvent.rejected, (state, action) => {
         state.loading = false;
@@ -72,6 +76,7 @@ const eventSlice = createSlice({
           event._id === action.payload._id ? action.payload : event
         );
         state.success = true;
+        state.updateSuccess = true;
       })
       .addCase(updateEvent.rejected, (state, action) => {
         state.loading = false;
