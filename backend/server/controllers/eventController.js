@@ -51,7 +51,9 @@ const createEvent = asyncHandler(async (req, res) => {
   const event = new Event({
     title,
     date,
-    time,
+    startTime,
+    endTime,
+    allDay,
     urlPhoto,
     link,
     description,
@@ -67,7 +69,7 @@ const createEvent = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateEvent = asyncHandler(async (req, res) => {
-  const { title, date, time, urlPhoto, link, description, descriptionShort } =
+  const { title, date, startTime, endTime, allDay, urlPhoto, link, description, descriptionShort } =
     req.body;
 
   const event = await Event.findById(req.params._id);
@@ -75,7 +77,9 @@ const updateEvent = asyncHandler(async (req, res) => {
   if (event) {
     if (title !== undefined) event.title = title;
     if (date !== undefined) event.date = date;
-    if (time !== undefined) event.time = time;
+    if (startTime !== undefined) event.time = time;
+    if (endTime !== undefined) event.endTime = endTime;
+    if (allDay !== undefined) event.allDay = allDay;
     if (urlPhoto !== undefined) event.urlPhoto = urlPhoto;
     if (link !== undefined) event.link = link;
     if (description !== undefined) event.description = description;

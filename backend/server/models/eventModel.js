@@ -7,13 +7,20 @@ const EventSchema = mongoose.Schema(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
-    time: {
-      type: String,
-      required: true,
-      unique: false,
+    startTime: {
+      type: Date,
+      required: false,
+    },
+    endTime: {
+      type: Date,
+      required: false,
+    },
+    allDay: {
+      type: Boolean,
+      required
     },
     urlPhoto: {
       type: String,
