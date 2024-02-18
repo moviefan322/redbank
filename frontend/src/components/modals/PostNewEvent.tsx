@@ -12,7 +12,6 @@ interface PostNewEventProps {
   closePostModal: () => void;
   postEventData: PostEventReq;
   setPostEventData: (data: PostEventReq) => void;
-  Events: any[];
 }
 
 const PostNewEvent = ({
@@ -20,7 +19,6 @@ const PostNewEvent = ({
   closePostModal,
   postEventData,
   setPostEventData,
-  Events,
 }: PostNewEventProps) => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
