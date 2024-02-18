@@ -95,7 +95,7 @@ const updateEvent = asyncHandler(async (req, res) => {
   if (event) {
     if (title !== undefined) event.title = title;
     if (date !== undefined) event.date = date;
-    if (startTime !== undefined) event.time = time;
+    if (startTime !== undefined) event.startTime = startTime;
     if (endTime !== undefined) event.endTime = endTime;
     if (allDay !== undefined) event.allDay = allDay;
     if (urlPhoto !== undefined) event.urlPhoto = urlPhoto;

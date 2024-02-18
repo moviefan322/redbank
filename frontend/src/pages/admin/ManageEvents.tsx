@@ -17,7 +17,7 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
 import UpdateEventReq from "@/types/UpdateEventReq";
 import Event from "@/types/Event";
-import styles from "./ManageCarousel.module.css";
+import styles from "./ManageEvents.module.css";
 
 const ManageEvents = () => {
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
@@ -39,6 +39,20 @@ const ManageEvents = () => {
     allDay: false,
     urlPhoto: "",
   });
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   // Redux
 
@@ -207,7 +221,7 @@ const ManageEvents = () => {
                 key={index}
                 className="d-flex flex-column align-items-center py-3"
               >
-                <div className={`${styles.carouselItem} d-flex flex-row`}>
+                <div className={`${styles.eventItem} d-flex flex-row`}>
                   <div
                     className="w-50"
                     style={{
@@ -249,6 +263,20 @@ const ManageEvents = () => {
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
+                        <p>All Day Event:</p>
+                        <input
+                          type="checkbox"
+                          checked={updateEventData.allDay}
+                          onChange={(e) =>
+                            setUpdateEventData({
+                              ...updateEventData,
+                              allDay: e.target.checked,
+                            })
+                          }
+                        ></input>
+                      </div>
+                      <div className="d-flex flex-row justify-content-between">
+                        {" "}
                         <p>Start Time:</p>
                         <input
                           placeholder={item.startTime}
@@ -256,9 +284,25 @@ const ManageEvents = () => {
                           onChange={(e) =>
                             setUpdateEventData((prev) => ({
                               ...prev,
-                              time: e.target.value,
+                              startTime: e.target.value,
                             }))
                           }
+                          disabled={updateEventData.allDay}
+                        ></input>
+                      </div>
+                      <div className="d-flex flex-row justify-content-between">
+                        {" "}
+                        <p>End Time:</p>
+                        <input
+                          placeholder={item.endTime}
+                          value={updateEventData.endTime}
+                          onChange={(e) =>
+                            setUpdateEventData((prev) => ({
+                              ...prev,
+                              endTime: e.target.value,
+                            }))
+                          }
+                          disabled={updateEventData.allDay}
                         ></input>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
@@ -317,13 +361,29 @@ const ManageEvents = () => {
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
                         <p>Date:</p>
-                        <p>{item.date}</p>
+                        <p>{`${
+                          months[new Date(item.date).getMonth()]
+                        } ${new Date(item.date).getDay()}`}</p>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
-                        <p>Start Time:</p>
-                        <p>{item.startTime}</p>
+                        <p>All Day Event:</p>
+                        <p>{item.allDay ? "True" : "False"}</p>
                       </div>
+                      {!item.allDay && (
+                        <>
+                          <div className="d-flex flex-row justify-content-between">
+                            {" "}
+                            <p>Start Time:</p>
+                            <p>{item.startTime}</p>
+                          </div>
+                          <div className="d-flex flex-row justify-content-between">
+                            {" "}
+                            <p>End Time:</p>
+                            <p>{item.endTime}</p>
+                          </div>
+                        </>
+                      )}
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
                         <p>URL endpoint:</p>

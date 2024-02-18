@@ -2,17 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Upcoming.module.css";
 import Link from "next/link";
-
-interface Event {
-  _id: number;
-  title: string;
-  date: string;
-  time: string;
-  urlPhoto: string;
-  link: string;
-  descriptionShort: string;
-  description: string;
-}
+import Event from "../types/Event";
 
 const Upcoming = () => {
   const [events, setEvents] = useState<Event[]>([]);

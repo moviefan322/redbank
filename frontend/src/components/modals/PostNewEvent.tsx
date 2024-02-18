@@ -23,6 +23,10 @@ const PostNewEvent = ({
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
   const [year, setYear] = useState("");
+  const [startHour, setStartHour] = useState("");
+  const [startMinute, setStartMinute] = useState("");
+  const [endHour, setEndHour] = useState("");
+  const [endMinute, setEndMinute] = useState("");
 
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
@@ -65,6 +69,31 @@ const PostNewEvent = ({
       ...postEventData,
       date: new Date(formattedDate).toISOString(),
     };
+
+    if (!postEventData.allDay) {
+      const formattedStartTime = `${startHour.padStart(
+        2,
+        "0"
+      )}:${startMinute.padStart(2, "0")}`;
+      updatedPostEventData.startTime = formattedStartTime;
+
+      if (endHour && endMinute) {
+        const formattedEndTime = `${endHour.padStart(
+          2,
+          "0"
+        )}:${endMinute.padStart(2, "0")}`;
+        updatedPostEventData.endTime = formattedEndTime;
+
+        if (formattedStartTime >= formattedEndTime) {
+          return setError("End time must be later than start time.");
+        }
+      } else {
+        updatedPostEventData.endTime = "";
+      }
+    } else {
+      updatedPostEventData.startTime = "";
+      updatedPostEventData.endTime = "";
+    }
 
     dispatch(postEvent(updatedPostEventData));
     handleCloseModal();
@@ -142,21 +171,75 @@ const PostNewEvent = ({
                     })}
                   </select>
                 </div>
-
-                {/* <div className="d-flex flex-row justify-content-between">
-                  {" "}
-                  <p>Time:</p>
+                <div className="d-flex flex-row justify-content-end">
+                  <p>All Day Event:</p>
                   <input
-                    placeholder="Event time"
-                    value={postEventData.startTime?.toISOString()}
+                    type="checkbox"
+                    checked={postEventData.allDay}
                     onChange={(e) =>
                       setPostEventData({
                         ...postEventData,
-                        startTime: new Date(e.target.value),
+                        allDay: e.target.checked,
                       })
                     }
                   ></input>
-                </div> */}
+                </div>
+
+                <div className="d-flex flex-row justify-content-between">
+                  <p>Start Time:</p>
+                  <select
+                    value={startHour}
+                    onChange={(e) => setStartHour(e.target.value)}
+                    disabled={postEventData.allDay}
+                  >
+                    <option value="">Hour</option>
+                    {[...Array(24)].map((_, index) => (
+                      <option key={index} value={index}>
+                        {index.toString().padStart(2, "0")}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={startMinute}
+                    onChange={(e) => setStartMinute(e.target.value)}
+                    disabled={postEventData.allDay}
+                  >
+                    <option value="">Minute</option>
+                    {["00", "15", "30", "45"].map((value, index) => (
+                      <option key={index} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="d-flex flex-row justify-content-between">
+                  <p>End Time:</p>
+                  <select
+                    value={endHour}
+                    onChange={(e) => setEndHour(e.target.value)}
+                    disabled={postEventData.allDay}
+                  >
+                    <option value="">Hour</option>
+                    {[...Array(24)].map((_, index) => (
+                      <option key={index} value={index}>
+                        {index.toString().padStart(2, "0")}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={endMinute}
+                    onChange={(e) => setEndMinute(e.target.value)}
+                    disabled={postEventData.allDay}
+                  >
+                    <option value="">Minute</option>
+                    {["00", "15", "30", "45"].map((value, index) => (
+                      <option key={index} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div className="d-flex flex-row justify-content-between">
                   {" "}
                   <p>Link:</p>
@@ -188,8 +271,8 @@ const PostNewEvent = ({
                 <div className="d-flex flex-row justify-content-between">
                   {" "}
                   <p>Full Description:</p>
-                  <input
-                    placeholder="Fill description"
+                  <textarea
+                    placeholder="Full description"
                     value={postEventData.description}
                     onChange={(e) =>
                       setPostEventData({
@@ -197,7 +280,7 @@ const PostNewEvent = ({
                         description: e.target.value,
                       })
                     }
-                  ></input>
+                  ></textarea>
                 </div>
                 <div className="d-inline">
                   <div className="d-flex flex-row justify-content-between">
