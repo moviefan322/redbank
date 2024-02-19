@@ -6,7 +6,6 @@ export default interface UpdateEventReq {
   endTime?: string;
   allDay: boolean;
   urlPhoto?: string;
-  link?: string;
   description?: string;
   descriptionShort?: string;
 }

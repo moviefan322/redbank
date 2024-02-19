@@ -39,7 +39,6 @@ const ManageEvents = () => {
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
     _id: "",
     title: "",
-    link: "",
     description: "",
     descriptionShort: "",
     date: "",
@@ -82,7 +81,6 @@ const ManageEvents = () => {
 
   const [postEventData, setPostEventData] = useState<PostEventReq>({
     title: "",
-    link: "",
     description: "",
     descriptionShort: "",
     date: "",
@@ -99,7 +97,6 @@ const ManageEvents = () => {
   const openPostModal = () => {
     setPostEventData({
       title: "",
-      link: "",
       description: "",
       descriptionShort: "",
       date: "",
@@ -114,7 +111,6 @@ const ManageEvents = () => {
     setPostModalOpen(false);
     setPostEventData({
       title: "",
-      link: "",
       description: "",
       descriptionShort: "",
       date: "",
@@ -138,7 +134,6 @@ const ManageEvents = () => {
     setUpdateEventData({
       _id: "",
       title: "",
-      link: "",
       description: "",
       descriptionShort: "",
       date: "",
@@ -154,7 +149,6 @@ const ManageEvents = () => {
     setUpdateEventData({
       _id: events[index]._id,
       title: events[index].title,
-      link: events[index].link,
       urlPhoto: events[index].urlPhoto,
       description: events[index].description,
       descriptionShort: events[index].descriptionShort,
@@ -445,20 +439,6 @@ const ManageEvents = () => {
                             ))}
                           </select>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
-                          {" "}
-                          <p>URL endpoint:</p>
-                          <input
-                            placeholder={item.link}
-                            value={updateEventData.link}
-                            onChange={(e) =>
-                              setUpdateEventData((prev) => ({
-                                ...prev,
-                                link: e.target.value,
-                              }))
-                            }
-                          ></input>
-                        </div>
 
                         <div className="float-end">
                           <button className="btn-admin">
@@ -501,11 +481,6 @@ const ManageEvents = () => {
                             </div>
                           </>
                         )}
-                        <div className="d-flex flex-row justify-content-between">
-                          {" "}
-                          <p>URL endpoint:</p>
-                          <p>{item.link}</p>
-                        </div>
                       </div>
                     )}
                   </div>
