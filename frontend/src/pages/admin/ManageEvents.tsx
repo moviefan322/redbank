@@ -146,31 +146,40 @@ const ManageEvents = () => {
 
   const handleEditModeButton = (index: number) => {
     setEditModeIndex(index);
+    const currentEvent = events[index];
     setUpdateEventData({
-      _id: events[index]._id,
-      title: events[index].title,
-      urlPhoto: events[index].urlPhoto,
-      description: events[index].description,
-      descriptionShort: events[index].descriptionShort,
-      date: events[index].date,
-      startTime: events[index].startTime,
-      endTime: events[index].endTime,
-      allDay: events[index].allDay,
+      _id: currentEvent._id,
+      title: currentEvent.title,
+      urlPhoto: currentEvent.urlPhoto,
+      description: currentEvent.description,
+      descriptionShort: currentEvent.descriptionShort,
+      date: currentEvent.date,
+      startTime: currentEvent.startTime,
+      endTime: currentEvent.endTime,
+      allDay: currentEvent.allDay,
     });
 
-    setMonth(new Date(events[index].date).getMonth() + 1);
-    setDay(new Date(events[index].date).getDate());
-    setYear(new Date(events[index].date).getFullYear());
-    if (events[index].startTime) {
-      setStartHour(events[index].startTime.split(":")[0]);
-      setStartMinute(events[index].startTime.split(":")[1]);
+    // Validate existing descriptions when entering edit mode
+    const isDescriptionShortValid =
+      currentEvent.descriptionShort.trim().length > 0;
+    const isDescriptionValid = currentEvent.description.trim().length > 0;
+
+    // Assume both descriptions need to be valid to enable the Save button
+    setDescriptionValid(isDescriptionShortValid && isDescriptionValid);
+
+    setMonth(new Date(currentEvent.date).getMonth() + 1);
+    setDay(new Date(currentEvent.date).getDate());
+    setYear(new Date(currentEvent.date).getFullYear());
+    if (currentEvent.startTime) {
+      setStartHour(currentEvent.startTime.split(":")[0]);
+      setStartMinute(currentEvent.startTime.split(":")[1]);
     } else {
       setStartHour("");
       setStartMinute("");
     }
-    if (events[index].endTime) {
-      setEndHour(events[index].endTime.split(":")[0]);
-      setEndMinute(events[index].endTime.split(":")[1]);
+    if (currentEvent.endTime) {
+      setEndHour(currentEvent.endTime.split(":")[0]);
+      setEndMinute(currentEvent.endTime.split(":")[1]);
     } else {
       setEndHour("");
       setEndMinute("");
