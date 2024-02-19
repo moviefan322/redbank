@@ -62,3 +62,9 @@
   color: white;
   font-family: "Inter", sans-serif;
 }
+
+.timeSelect select {
+  height: 1.5rem;
+  margin-left: 5px;
+  width: 5rem;
+}

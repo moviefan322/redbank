@@ -27,6 +27,9 @@ const ManageEvents = () => {
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [currentItemId, setCurrentItemId] = useState<string>("");
+  const [month, setMonth] = useState<string>("");
+  const [day, setDay] = useState<string>("");
+  const [year, setYear] = useState<string>("");
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
     _id: "",
     title: "",
@@ -154,6 +157,10 @@ const ManageEvents = () => {
       endTime: events[index].endTime,
       allDay: events[index].allDay,
     });
+
+    setMonth(new Date(events[index].date).getMonth().toString());
+    setDay(new Date(events[index].date).getDay().toString());
+    setYear(new Date(events[index].date).getFullYear().toString());
   };
 
   const handleUpdate = (e: any) => {
@@ -247,19 +254,48 @@ const ManageEvents = () => {
                           }
                         ></input>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
+                      <div
+                        className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                      >
                         <p>Date:</p>
-                        <input
-                          placeholder={item.date}
-                          value={updateEventData.date}
-                          onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              date: e.target.value,
-                            }))
-                          }
-                        ></input>
+                        <select
+                          value={month}
+                          onChange={(e) => setMonth(e.target.value)}
+                        >
+                          <option value="">Month</option>
+                          {[...Array(12)].map((_, index) => (
+                            <option key={index} value={index + 1}>
+                              {new Date(0, index).toLocaleString("default", {
+                                month: "short",
+                              })}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={day}
+                          onChange={(e) => setDay(e.target.value)}
+                        >
+                          <option value="">Day</option>
+                          {[...Array(31)].map((_, index) => (
+                            <option key={index} value={index + 1}>
+                              {index + 1}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={year}
+                          onChange={(e) => setYear(e.target.value)}
+                        >
+                          <option value="">Year</option>
+                          {[...Array(10)].map((_, index) => {
+                            const year = new Date().getFullYear() + index;
+                            return (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            );
+                          })}
+                        </select>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
@@ -363,7 +399,9 @@ const ManageEvents = () => {
                         <p>Date:</p>
                         <p>{`${
                           months[new Date(item.date).getMonth()]
-                        } ${new Date(item.date).getDay()}`}</p>
+                        } ${new Date(item.date).getDay()}, ${new Date(
+                          item.date
+                        ).getFullYear()}`}</p>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
