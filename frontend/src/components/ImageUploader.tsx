@@ -51,7 +51,7 @@ const ImageUploader = <T extends {}>({
   };
 
   return (
-    <div className="d-flex flex-row align-items-center py-2">
+    <div className="d-flex flex-row align-items-center">
       {file && (
         <code style={imageUrl ? { display: "none" } : {}}>{file.name}</code>
       )}
@@ -66,7 +66,7 @@ const ImageUploader = <T extends {}>({
         <button
           type="button"
           onClick={() => document.getElementById("file")!.click()}
-          className={`${styles.chooseFile} btn-admin mx-5`}
+          className={`${styles.chooseFile} btn-admin`}
           style={imageUrl ? { display: "none" } : {}}
         >
           Choose File
@@ -74,7 +74,7 @@ const ImageUploader = <T extends {}>({
       ) : (
         <button
           type="button"
-          className="btn-admin-red mx-5"
+          className="btn-admin-red"
           onClick={handleCancel}
           style={imageUrl ? { display: "none" } : {}}
         >
@@ -85,8 +85,7 @@ const ImageUploader = <T extends {}>({
       {imageUrl && (
         <>
           {" "}
-          <FaCheckCircle className="me-3" size={50} /> Image Uploaded
-          Successfully
+          <FaCheckCircle className="me-3" size={30} /> Success
         </>
       )}
 

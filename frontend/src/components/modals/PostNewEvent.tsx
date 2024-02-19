@@ -35,7 +35,6 @@ const PostNewEvent = ({
     console.log("validation triggered");
     if (!postEventData.title.trim()) return "Title is required.";
     if (year === "" || month === "" || day === "") return "Date is required.";
-    if (!postEventData.link.trim()) return "Link is required.";
     if (
       !postEventData.urlPhoto.trim() ||
       !postEventData.urlPhoto.startsWith("http")
@@ -111,10 +110,10 @@ const PostNewEvent = ({
           <div className="d-flex flex-column align-items-center">
             <div className={`d-flex flex-row`}>
               <div
-                className="w-50"
+                className="w-100 align-self-center"
                 style={{
-                  height: "200px",
-                  width: "200px",
+                  height: "300px",
+                  width: "300px",
                   background: `#151515 url("${postEventData.urlPhoto}") no-repeat center center / contain`,
                 }}
               ></div>
@@ -172,7 +171,7 @@ const PostNewEvent = ({
                   </select>
                 </div>
                 <div className="d-flex flex-row justify-content-end">
-                  <p>All Day Event:</p>
+                  <p className="flex-grow-2 w-100">All Day Event:</p>
                   <input
                     type="checkbox"
                     checked={postEventData.allDay}
@@ -240,59 +239,45 @@ const PostNewEvent = ({
                   </select>
                 </div>
 
-                <div className="d-flex flex-row justify-content-between">
-                  {" "}
-                  <p>Link:</p>
-                  <input
-                    placeholder="Event link"
-                    value={postEventData.link}
-                    onChange={(e) =>
-                      setPostEventData({
-                        ...postEventData,
-                        link: e.target.value,
-                      })
-                    }
-                  ></input>
-                </div>
-                <div className="d-flex flex-row justify-content-between">
-                  {" "}
-                  <p>Short Description:</p>
-                  <input
-                    placeholder="Short description"
-                    value={postEventData.descriptionShort}
-                    onChange={(e) =>
-                      setPostEventData({
-                        ...postEventData,
-                        descriptionShort: e.target.value,
-                      })
-                    }
-                  ></input>
-                </div>
-                <div className="d-flex flex-row justify-content-between">
-                  {" "}
-                  <p>Full Description:</p>
-                  <textarea
-                    placeholder="Full description"
-                    value={postEventData.description}
-                    onChange={(e) =>
-                      setPostEventData({
-                        ...postEventData,
-                        description: e.target.value,
-                      })
-                    }
-                  ></textarea>
-                </div>
-                <div className="d-inline">
-                  <div className="d-flex flex-row justify-content-between">
-                    <p className="w-100">Upload Image:</p>{" "}
-                    <div className="justify-self-end w-100 flex-grow-2">
-                      <ImageUploader
-                        data={postEventData}
-                        setData={setPostEventData}
-                      />
-                    </div>
+                <div className="d-flex flex-row justify-content-between align-items-center">
+                  <p className="w-100 my-auto">Upload Image:</p>{" "}
+                  <div className="justify-self-end w-100 flex-grow-2">
+                    <ImageUploader
+                      data={postEventData}
+                      setData={setPostEventData}
+                    />
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="w-75">
+              <div className="d-flex flex-column justify-content-between">
+                {" "}
+                <p>Short Description:</p>
+                <textarea
+                  placeholder="Short description"
+                  value={postEventData.descriptionShort}
+                  onChange={(e) =>
+                    setPostEventData({
+                      ...postEventData,
+                      descriptionShort: e.target.value,
+                    })
+                  }
+                ></textarea>
+              </div>
+              <div className="d-flex flex-column justify-content-between">
+                {" "}
+                <p>Full Description:</p>
+                <textarea
+                  placeholder="Full description"
+                  value={postEventData.description}
+                  onChange={(e) =>
+                    setPostEventData({
+                      ...postEventData,
+                      description: e.target.value,
+                    })
+                  }
+                ></textarea>
               </div>
             </div>
             <div className="d-flex flex-row justify-content-end">
