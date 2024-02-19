@@ -27,6 +27,7 @@ const ManageEvents = () => {
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [currentItemId, setCurrentItemId] = useState<string>("");
+  const [isDescriptionValid, setDescriptionValid] = useState(false);
   const [month, setMonth] = useState(0);
   const [day, setDay] = useState(0);
   const [year, setYear] = useState(0);
@@ -246,6 +247,15 @@ const ManageEvents = () => {
     openSinglePreviewModal();
   };
 
+  const handleDescriptionChange = (e: any, type: any) => {
+    const value = e.target.value;
+    setUpdateEventData((prev) => ({ ...prev, [type]: value }));
+
+    if (type === "descriptionShort" || type === "description") {
+      setDescriptionValid(value.trim().length > 0);
+    }
+  };
+
   if (!isLoggedIn) {
     return (
       <div className="d-flex flex-column justify-content-center">
@@ -285,327 +295,329 @@ const ManageEvents = () => {
           setPostEventData={setPostEventData}
         />
         <div className="d-flex flex-column align-items-center pb-5">
-          <h2 className="py-3">Current Event</h2>
+          <h2 className="py-3">Current Events</h2>
           <div className="d-flex flex-column align-items-center">
             {events.map((item: Event, index: number) => (
               <div
                 key={index}
-                className="d-flex flex-column align-items-center py-3"
+                className="d-flex flex-column align-items-center py-3 border border-2 border-light my-5 mx-3 w-100"
               >
-                <div className={`${styles.eventItem} d-flex flex-row`}>
-                  <div
-                    className="w-50"
-                    style={{
-                      height: "200px",
-                      width: "200px",
-                      background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
-                      backgroundAttachment: "scroll",
-                    }}
-                  ></div>
-                  {editModeIndex === index ? (
-                    <div className={`${styles.info} ms-5 w-75`}>
-                      {submitError && submitError}
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>Title:</p>
-                        <input
-                          placeholder={item.title}
-                          value={updateEventData.title}
-                          onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              title: e.target.value,
-                            }))
-                          }
-                        ></input>
-                      </div>
-                      <div
-                        className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
-                      >
-                        <p>Date:</p>
-                        <select
-                          value={month}
-                          onChange={(e) => setMonth(+e.target.value)}
+                <div className="d-flex flex-column align-items-center">
+                  <div className={`${styles.eventItem} d-flex flex-row`}>
+                    <div
+                      className="w-100 align-self-center"
+                      style={{
+                        height: "300px",
+                        width: "300px",
+                        background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
+                        backgroundAttachment: "scroll",
+                      }}
+                    ></div>
+                    {editModeIndex === index ? (
+                      <div className={`${styles.info} ms-5 w-75`}>
+                        {submitError && submitError}
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Title:</p>
+                          <input
+                            placeholder={item.title}
+                            value={updateEventData.title}
+                            onChange={(e) =>
+                              setUpdateEventData((prev) => ({
+                                ...prev,
+                                title: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+                        <div
+                          className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
                         >
-                          <option value="">Month</option>
-                          {[...Array(12)].map((_, index) => (
-                            <option key={index} value={index + 1}>
-                              {new Date(0, index).toLocaleString("default", {
-                                month: "short",
-                              })}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={day}
-                          onChange={(e) => setDay(+e.target.value)}
-                        >
-                          <option value="">Day</option>
-                          {[...Array(31)].map((_, index) => (
-                            <option key={index} value={index + 1}>
-                              {index + 1}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={year}
-                          onChange={(e) => setYear(+e.target.value)}
-                        >
-                          <option value="">Year</option>
-                          {[...Array(10)].map((_, index) => {
-                            const year = new Date().getFullYear() + index;
-                            return (
-                              <option key={year} value={year}>
-                                {year}
+                          <p>Date:</p>
+                          <select
+                            value={month}
+                            onChange={(e) => setMonth(+e.target.value)}
+                          >
+                            <option value="">Month</option>
+                            {[...Array(12)].map((_, index) => (
+                              <option key={index} value={index + 1}>
+                                {new Date(0, index).toLocaleString("default", {
+                                  month: "short",
+                                })}
                               </option>
-                            );
-                          })}
-                        </select>
+                            ))}
+                          </select>
+                          <select
+                            value={day}
+                            onChange={(e) => setDay(+e.target.value)}
+                          >
+                            <option value="">Day</option>
+                            {[...Array(31)].map((_, index) => (
+                              <option key={index} value={index + 1}>
+                                {index + 1}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={year}
+                            onChange={(e) => setYear(+e.target.value)}
+                          >
+                            <option value="">Year</option>
+                            {[...Array(10)].map((_, index) => {
+                              const year = new Date().getFullYear() + index;
+                              return (
+                                <option key={year} value={year}>
+                                  {year}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>All Day Event:</p>
+                          <input
+                            type="checkbox"
+                            checked={updateEventData.allDay}
+                            onChange={(e) =>
+                              setUpdateEventData({
+                                ...updateEventData,
+                                allDay: e.target.checked,
+                              })
+                            }
+                          ></input>
+                        </div>
+                        <div
+                          className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                        >
+                          <p>Start Time:</p>
+                          <select
+                            value={startHour}
+                            onChange={(e) => setStartHour(e.target.value)}
+                            disabled={updateEventData.allDay}
+                          >
+                            <option value="">Hour</option>
+                            {[...Array(24)].map((_, index) => (
+                              <option key={index} value={index}>
+                                {index.toString().padStart(2, "0")}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={startMinute}
+                            onChange={(e) => setStartMinute(e.target.value)}
+                            disabled={updateEventData.allDay}
+                          >
+                            <option value="">Minute</option>
+                            {["00", "15", "30", "45"].map((value, index) => (
+                              <option key={index} value={value}>
+                                {value}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div
+                          className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                        >
+                          <p>End Time:</p>
+                          <select
+                            value={endHour}
+                            onChange={(e) => setEndHour(e.target.value)}
+                            disabled={updateEventData.allDay}
+                          >
+                            <option value="">Hour</option>
+                            {[...Array(24)].map((_, index) => (
+                              <option key={index} value={index}>
+                                {index.toString().padStart(2, "0")}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={endMinute}
+                            onChange={(e) => setEndMinute(e.target.value)}
+                            disabled={updateEventData.allDay}
+                          >
+                            <option value="">Minute</option>
+                            {["00", "15", "30", "45"].map((value, index) => (
+                              <option key={index} value={value}>
+                                {value}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>URL endpoint:</p>
+                          <input
+                            placeholder={item.link}
+                            value={updateEventData.link}
+                            onChange={(e) =>
+                              setUpdateEventData((prev) => ({
+                                ...prev,
+                                link: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+
+                        <div className="float-end">
+                          <button className="btn-admin">
+                            Upload New Photo
+                          </button>
+                        </div>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                    ) : (
+                      <div className="ms-5 w-75 align-self-center">
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Title:</p>
+                          <p>{item.title}</p>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Date:</p>
+                          <p>{`${
+                            months[new Date(item.date).getMonth()]
+                          } ${new Date(item.date).getDate()}, ${new Date(
+                            item.date
+                          ).getFullYear()}`}</p>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>All Day Event:</p>
+                          <p>{item.allDay ? "True" : "False"}</p>
+                        </div>
+                        {!item.allDay && (
+                          <>
+                            <div className="d-flex flex-row justify-content-between">
+                              {" "}
+                              <p>Start Time:</p>
+                              <p>{item.startTime}</p>
+                            </div>
+                            <div className="d-flex flex-row justify-content-between">
+                              {" "}
+                              <p>End Time:</p>
+                              <p>{item.endTime}</p>
+                            </div>
+                          </>
+                        )}
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>URL endpoint:</p>
+                          <p>{item.link}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {editModeIndex !== index ? (
+                    <div className="w-75 my-3">
+                      <div>Short Description: {item.descriptionShort}</div>
+                      <div className="my-3">
                         {" "}
-                        <p>All Day Event:</p>
-                        <input
-                          type="checkbox"
-                          checked={updateEventData.allDay}
-                          onChange={(e) =>
-                            setUpdateEventData({
-                              ...updateEventData,
-                              allDay: e.target.checked,
-                            })
-                          }
-                        ></input>
+                        Full Description: {item.description}
                       </div>
-                      <div
-                        className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
-                      >
-                        <p>Start Time:</p>
-                        <select
-                          value={startHour}
-                          onChange={(e) => setStartHour(e.target.value)}
-                          disabled={updateEventData.allDay}
-                        >
-                          <option value="">Hour</option>
-                          {[...Array(24)].map((_, index) => (
-                            <option key={index} value={index}>
-                              {index.toString().padStart(2, "0")}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={startMinute}
-                          onChange={(e) => setStartMinute(e.target.value)}
-                          disabled={updateEventData.allDay}
-                        >
-                          <option value="">Minute</option>
-                          {["00", "15", "30", "45"].map((value, index) => (
-                            <option key={index} value={value}>
-                              {value}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div
-                        className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
-                      >
-                        <p>End Time:</p>
-                        <select
-                          value={endHour}
-                          onChange={(e) => setEndHour(e.target.value)}
-                          disabled={updateEventData.allDay}
-                        >
-                          <option value="">Hour</option>
-                          {[...Array(24)].map((_, index) => (
-                            <option key={index} value={index}>
-                              {index.toString().padStart(2, "0")}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={endMinute}
-                          onChange={(e) => setEndMinute(e.target.value)}
-                          disabled={updateEventData.allDay}
-                        >
-                          <option value="">Minute</option>
-                          {["00", "15", "30", "45"].map((value, index) => (
-                            <option key={index} value={value}>
-                              {value}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>URL endpoint:</p>
-                        <input
-                          placeholder={item.link}
-                          value={updateEventData.link}
-                          onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              link: e.target.value,
-                            }))
-                          }
-                        ></input>
-                      </div>
-                      <div className="d-flex flex-row justify-content-between">
+                    </div>
+                  ) : (
+                    <div className="w-75 my-3">
+                      <div className="d-flex flex-column justify-content-between">
                         {" "}
                         <p>Short Description:</p>
-                        <input
+                        <textarea
                           placeholder={item.descriptionShort}
                           value={updateEventData.descriptionShort}
                           onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              descriptionShort: e.target.value,
-                            }))
+                            handleDescriptionChange(e, "descriptionShort")
                           }
-                        ></input>
+                        ></textarea>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column justify-content-between mt-3">
                         {" "}
                         <p>Full Description:</p>
-                        <input
+                        <textarea
                           placeholder={item.description}
                           value={updateEventData.description}
                           onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              description: e.target.value,
-                            }))
+                            handleDescriptionChange(e, "description")
                           }
-                        ></input>
-                      </div>
-                      <div className="float-end">
-                        <button className="btn-admin">Upload New Photo</button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="ms-5 w-75">
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>Title:</p>
-                        <p>{item.title}</p>
-                      </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>Date:</p>
-                        <p>{`${
-                          months[new Date(item.date).getMonth()]
-                        } ${new Date(item.date).getDate()}, ${new Date(
-                          item.date
-                        ).getFullYear()}`}</p>
-                      </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>All Day Event:</p>
-                        <p>{item.allDay ? "True" : "False"}</p>
-                      </div>
-                      {!item.allDay && (
-                        <>
-                          <div className="d-flex flex-row justify-content-between">
-                            {" "}
-                            <p>Start Time:</p>
-                            <p>{item.startTime}</p>
-                          </div>
-                          <div className="d-flex flex-row justify-content-between">
-                            {" "}
-                            <p>End Time:</p>
-                            <p>{item.endTime}</p>
-                          </div>
-                        </>
-                      )}
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>URL endpoint:</p>
-                        <p>{item.link}</p>
-                      </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>Short Description:</p>
-                        <p>{item.descriptionShort}</p>
-                      </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
-                        <p>Full Description:</p>
-                        <p>{item.description}</p>
+                        ></textarea>
                       </div>
                     </div>
                   )}
-                </div>
 
-                <div className="mt-4 d-flex flex-row justify-content-end w-100">
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => handleOpenPreview(index)}
-                  >
-                    Preview
-                  </button>
-                  <Modal
-                    isOpen={isSinglePreviewOpen}
-                    onClose={closeSinglePreviewModal}
-                  >
-                    <h1>Event Preview</h1>
-                  </Modal>
-                  {editModeIndex === index ? (
-                    <>
-                      {" "}
-                      <button
-                        className="btn btn-success ms-5"
-                        onClick={handleUpdate}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn btn-danger ms-5"
-                        onClick={handleRevert}
-                      >
-                        Revert
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      {" "}
-                      <button
-                        className="btn btn-warning ms-5"
-                        onClick={() => handleEditModeButton(index)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-danger ms-5"
-                        onClick={() => {
-                          setAreYouSureModalOpen(true);
-                          setCurrentItemId(item._id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                      <Modal
-                        isOpen={areYouSureModalOpen}
-                        onClose={() => setAreYouSureModalOpen(false)}
-                      >
-                        <div className="d-flex flex-column text-center bg-dark p-5">
-                          <h3>Are you sure you want to delete this item?</h3>
-                          <div className="d-flex flex-row justify-content-around mt-2">
-                            {" "}
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => handleDelete()}
-                            >
-                              Yes
-                            </button>
-                            <button
-                              className="btn btn-success"
-                              onClick={() => setAreYouSureModalOpen(false)}
-                            >
-                              No
-                            </button>
+                  <div className="mt-4 d-flex flex-row justify-content-center w-100">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => handleOpenPreview(index)}
+                    >
+                      Preview
+                    </button>
+                    <Modal
+                      isOpen={isSinglePreviewOpen}
+                      onClose={closeSinglePreviewModal}
+                    >
+                      <h1>Event Preview</h1>
+                    </Modal>
+                    {editModeIndex === index ? (
+                      <>
+                        {" "}
+                        <button
+                          className="btn btn-success ms-5"
+                          onClick={handleUpdate}
+                          disabled={!isDescriptionValid}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="btn btn-danger ms-5"
+                          onClick={handleRevert}
+                        >
+                          Revert
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <button
+                          className="btn btn-warning ms-5"
+                          onClick={() => handleEditModeButton(index)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-danger ms-5"
+                          onClick={() => {
+                            setAreYouSureModalOpen(true);
+                            setCurrentItemId(item._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                        <Modal
+                          isOpen={areYouSureModalOpen}
+                          onClose={() => setAreYouSureModalOpen(false)}
+                        >
+                          <div className="d-flex flex-column text-center bg-dark p-5">
+                            <h3>Are you sure you want to delete this item?</h3>
+                            <div className="d-flex flex-row justify-content-around mt-2">
+                              {" "}
+                              <button
+                                className="btn btn-danger"
+                                onClick={() => handleDelete()}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                className="btn btn-success"
+                                onClick={() => setAreYouSureModalOpen(false)}
+                              >
+                                No
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </Modal>
-                    </>
-                  )}
+                        </Modal>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
