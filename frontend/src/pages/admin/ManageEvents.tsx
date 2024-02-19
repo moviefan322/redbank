@@ -169,10 +169,16 @@ const ManageEvents = () => {
     if (events[index].startTime) {
       setStartHour(events[index].startTime.split(":")[0]);
       setStartMinute(events[index].startTime.split(":")[1]);
+    } else {
+      setStartHour("");
+      setStartMinute("");
     }
     if (events[index].endTime) {
       setEndHour(events[index].endTime.split(":")[0]);
       setEndMinute(events[index].endTime.split(":")[1]);
+    } else {
+      setEndHour("");
+      setEndMinute("");
     }
   };
 
@@ -210,7 +216,7 @@ const ManageEvents = () => {
         )}:${endMinute.padStart(2, "0")}`;
         updatedUpdateEventData.endTime = formattedEndTime;
 
-        if (startHour > endHour) {
+        if (+startHour > +endHour) {
           return setSubmitError("End time must be later than start time.");
         }
       } else {
@@ -227,6 +233,7 @@ const ManageEvents = () => {
       })
     );
     setEditModeIndex(null);
+    setSubmitError("");
   };
 
   const handleDelete = () => {
@@ -297,6 +304,7 @@ const ManageEvents = () => {
                   ></div>
                   {editModeIndex === index ? (
                     <div className={`${styles.info} ms-5 w-75`}>
+                      {submitError && submitError}
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
                         <p>Title:</p>
