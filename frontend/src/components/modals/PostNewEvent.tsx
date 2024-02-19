@@ -84,7 +84,7 @@ const PostNewEvent = ({
         )}:${endMinute.padStart(2, "0")}`;
         updatedPostEventData.endTime = formattedEndTime;
 
-        if (formattedStartTime >= formattedEndTime) {
+        if (startHour > endHour) {
           return setError("End time must be later than start time.");
         }
       } else {

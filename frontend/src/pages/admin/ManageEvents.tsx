@@ -27,9 +27,14 @@ const ManageEvents = () => {
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [currentItemId, setCurrentItemId] = useState<string>("");
-  const [month, setMonth] = useState<string>("");
-  const [day, setDay] = useState<string>("");
-  const [year, setYear] = useState<string>("");
+  const [month, setMonth] = useState(0);
+  const [day, setDay] = useState(0);
+  const [year, setYear] = useState(0);
+  const [startHour, setStartHour] = useState("");
+  const [startMinute, setStartMinute] = useState("");
+  const [endHour, setEndHour] = useState("");
+  const [endMinute, setEndMinute] = useState("");
+  const [submitError, setSubmitError] = useState<string>("");
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
     _id: "",
     title: "",
@@ -158,16 +163,67 @@ const ManageEvents = () => {
       allDay: events[index].allDay,
     });
 
-    setMonth(new Date(events[index].date).getMonth().toString());
-    setDay(new Date(events[index].date).getDay().toString());
-    setYear(new Date(events[index].date).getFullYear().toString());
+    setMonth(new Date(events[index].date).getMonth() + 1);
+    setDay(new Date(events[index].date).getDate());
+    setYear(new Date(events[index].date).getFullYear());
+    if (events[index].startTime) {
+      setStartHour(events[index].startTime.split(":")[0]);
+      setStartMinute(events[index].startTime.split(":")[1]);
+    }
+    if (events[index].endTime) {
+      setEndHour(events[index].endTime.split(":")[0]);
+      setEndMinute(events[index].endTime.split(":")[1]);
+    }
   };
 
   const handleUpdate = (e: any) => {
     e.preventDefault();
+
+    // Adjust the month index to 0-based for JavaScript Date compatibility
+    const adjustedMonth = month;
+
+    // Construct a date string using the adjusted month
+    const formattedDate = `${year}-${adjustedMonth
+      .toString()
+      .padStart(2, "0")}-${day.toString().padStart(2, "0")}T00:00:00`;
+
+    // Convert the string to a Date object and format it to ISO string
+    const updatedDateISO = new Date(formattedDate).toISOString();
+
+    // Update the event data with the new date
+    const updatedUpdateEventData: UpdateEventReq = {
+      ...updateEventData,
+      date: updatedDateISO,
+    };
+
+    if (!updateEventData.allDay) {
+      const formattedStartTime = `${startHour.padStart(
+        2,
+        "0"
+      )}:${startMinute.padStart(2, "0")}`;
+      updatedUpdateEventData.startTime = formattedStartTime;
+
+      if (endHour && endMinute) {
+        const formattedEndTime = `${endHour.padStart(
+          2,
+          "0"
+        )}:${endMinute.padStart(2, "0")}`;
+        updatedUpdateEventData.endTime = formattedEndTime;
+
+        if (startHour > endHour) {
+          return setSubmitError("End time must be later than start time.");
+        }
+      } else {
+        updatedUpdateEventData.endTime = "";
+      }
+    } else {
+      updatedUpdateEventData.startTime = "";
+      updatedUpdateEventData.endTime = "";
+    }
+
     dispatch(
       updateEvent({
-        ...updateEventData,
+        ...updatedUpdateEventData,
       })
     );
     setEditModeIndex(null);
@@ -195,7 +251,8 @@ const ManageEvents = () => {
 
   if (error) return <div>Error: {error}</div>;
 
-  console.log(currentItemId);
+  console.log(updateEventData);
+  console.log(year, month, day, startHour, startMinute, endHour, endMinute);
 
   return (
     <>
@@ -260,7 +317,7 @@ const ManageEvents = () => {
                         <p>Date:</p>
                         <select
                           value={month}
-                          onChange={(e) => setMonth(e.target.value)}
+                          onChange={(e) => setMonth(+e.target.value)}
                         >
                           <option value="">Month</option>
                           {[...Array(12)].map((_, index) => (
@@ -273,7 +330,7 @@ const ManageEvents = () => {
                         </select>
                         <select
                           value={day}
-                          onChange={(e) => setDay(e.target.value)}
+                          onChange={(e) => setDay(+e.target.value)}
                         >
                           <option value="">Day</option>
                           {[...Array(31)].map((_, index) => (
@@ -284,7 +341,7 @@ const ManageEvents = () => {
                         </select>
                         <select
                           value={year}
-                          onChange={(e) => setYear(e.target.value)}
+                          onChange={(e) => setYear(+e.target.value)}
                         >
                           <option value="">Year</option>
                           {[...Array(10)].map((_, index) => {
@@ -311,35 +368,63 @@ const ManageEvents = () => {
                           }
                         ></input>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
+                      <div
+                        className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                      >
                         <p>Start Time:</p>
-                        <input
-                          placeholder={item.startTime}
-                          value={updateEventData.startTime}
-                          onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              startTime: e.target.value,
-                            }))
-                          }
+                        <select
+                          value={startHour}
+                          onChange={(e) => setStartHour(e.target.value)}
                           disabled={updateEventData.allDay}
-                        ></input>
+                        >
+                          <option value="">Hour</option>
+                          {[...Array(24)].map((_, index) => (
+                            <option key={index} value={index}>
+                              {index.toString().padStart(2, "0")}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={startMinute}
+                          onChange={(e) => setStartMinute(e.target.value)}
+                          disabled={updateEventData.allDay}
+                        >
+                          <option value="">Minute</option>
+                          {["00", "15", "30", "45"].map((value, index) => (
+                            <option key={index} value={value}>
+                              {value}
+                            </option>
+                          ))}
+                        </select>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
-                        {" "}
+                      <div
+                        className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                      >
                         <p>End Time:</p>
-                        <input
-                          placeholder={item.endTime}
-                          value={updateEventData.endTime}
-                          onChange={(e) =>
-                            setUpdateEventData((prev) => ({
-                              ...prev,
-                              endTime: e.target.value,
-                            }))
-                          }
+                        <select
+                          value={endHour}
+                          onChange={(e) => setEndHour(e.target.value)}
                           disabled={updateEventData.allDay}
-                        ></input>
+                        >
+                          <option value="">Hour</option>
+                          {[...Array(24)].map((_, index) => (
+                            <option key={index} value={index}>
+                              {index.toString().padStart(2, "0")}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={endMinute}
+                          onChange={(e) => setEndMinute(e.target.value)}
+                          disabled={updateEventData.allDay}
+                        >
+                          <option value="">Minute</option>
+                          {["00", "15", "30", "45"].map((value, index) => (
+                            <option key={index} value={value}>
+                              {value}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                       <div className="d-flex flex-row justify-content-between">
                         {" "}
@@ -399,7 +484,7 @@ const ManageEvents = () => {
                         <p>Date:</p>
                         <p>{`${
                           months[new Date(item.date).getMonth()]
-                        } ${new Date(item.date).getDay()}, ${new Date(
+                        } ${new Date(item.date).getDate()}, ${new Date(
                           item.date
                         ).getFullYear()}`}</p>
                       </div>
