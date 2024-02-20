@@ -33,7 +33,7 @@ const deleteNews = asyncHandler(async (req, res) => {
   const deletedNews = await News.findByIdAndDelete(req.params._id);
 
   if (deletedNews) {
-    res.json({ message: "News removed" });
+    res.json({ message: "News removed", item: deletedNews });
   } else {
     res.status(404);
     throw new Error("News not found");
