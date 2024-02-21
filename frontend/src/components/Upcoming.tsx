@@ -1,11 +1,53 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import styles from "./Upcoming.module.css";
 import Link from "next/link";
 import Event from "../types/Event";
 
+const months = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC",
+];
+
+const months2 = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+]
+
+const formatDate = (event: Event) => {
+  return `${months2[new Date(event.date).getMonth()]} ${new Date(
+    event.date
+  ).getDate()} ${
+    event.startTime && event.endTime
+      ? `| ${event.startTime} - ${event.endTime}`
+      : ""
+  }`;
+};
+
 const Upcoming = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [displayedEvents, setDisplayedEvents] = useState<Event[]>([]);
 
   const fetchEvents = async () => {
     try {
@@ -14,6 +56,7 @@ const Upcoming = () => {
       );
       const data = await res.json();
       setEvents(data);
+      setDisplayedEvents(data.slice(0, 4));
     } catch (error) {
       console.log(error);
     }
@@ -29,9 +72,25 @@ const Upcoming = () => {
 
   return (
     <div className="container d-flex flex-column align-items-center pb-5">
-      <h4 className={`${styles.newsh4} my-4 fw-bold`}>UPCOMING EVENTS</h4>
-      <div className="row d-flex flex-row justify-content-around mx-auto mt-3">
-        {events.map((event, index) => {
+      <h4
+        className={`d-flex flex-row justify-content-center justify-content-md-start fs-2 my-4 fw-bold w-75`}
+      >
+        <u>EVENTS</u>
+      </h4>
+      <div
+        className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3`}
+      >
+        <button
+          className={`noStyleButt ${styles.arrowButt}`}
+          onClick={() => {
+            if (events.length > 4) {
+              setDisplayedEvents(events.slice(0, 4));
+            }
+          }}
+        >
+          <FaChevronLeft />
+        </button>
+        {displayedEvents.map((event, index) => {
           return (
             <div
               key={index}
@@ -46,23 +105,27 @@ const Upcoming = () => {
                 }}
               >
                 <p className={styles.overlayText}>
-                  {event.date.split("/")[0]} <br />
-                  <span>{event.date.split("/")[1]}</span>
+                  {months[new Date(event.date).getMonth()]} <br />
+                  <span>{new Date(event.date).getDate()}</span>
                 </p>
               </div>
-              <div className="d-flex flex-column align-items-center">
-                <h4>{event.title}</h4>
-                <p>{event.descriptionShort}</p>
-                <Link href="/dummy">
-                  <p className="text-primary align-self-start">Read More →</p>
-                </Link>
+              <div className={styles.descText}>
+                <p>{event.title}</p>
+                <p>{formatDate(event)}</p>
               </div>
             </div>
           );
         })}
-      </div>
-      <div>
-        <button className={`noStyleButt greenButt`}> ALL EVENTS</button>
+        <button
+          className={`noStyleButt ${styles.arrowButt}`}
+          onClick={() => {
+            if (events.length > 4) {
+              setDisplayedEvents(events.slice(4, 8));
+            }
+          }}
+        >
+          <FaChevronRight />
+        </button>
       </div>
     </div>
   );

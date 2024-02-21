@@ -7,21 +7,23 @@
   border-radius: 0.3rem;
 }
 
-.menu {
-  align-self: center;
-}
 
 .dropHead {
+  font-size: 0.7rem;
   position: relative;
   font-weight: bolder;
-  margin: 0 1.5rem;
+  margin: 0 0.5rem;
+  border: solid black 2px;
+  padding: 0.2rem 1.5rem;
+  border-radius: 9px;
 }
 
 .dropdown {
   position: absolute;
+  text-align: center;
   top: 95%; /* Start just below the button */
   left: 0;
-  width: 17rem;
+  width: inherit;
   background-color: var(--bs-light);
   border-radius: 0.3rem;
   padding-top: 1rem;
@@ -32,23 +34,33 @@
   transition: visibility 0.2s, opacity 0.2s, top 0.2s; /* Transition for animation */
 }
 
-.dropHead button:hover {
+.dropHead:hover {
   cursor: pointer;
-  color: rgb(45, 212, 45);
+  color: rgb(199, 0, 0);
+  border: solid rgb(199, 0, 0) 2px;
+}
+
+.dropHead:hover button {
+  color: rgb(199, 0, 0);
 }
 
 .dropHead:hover .dropdown {
   visibility: visible; /* Show on hover */
   opacity: 1; /* Make it opaque */
   top: 120%; /* Drop down to final position */
+  color: black;
 }
 
 .noStyleLi {
-  width: fit-content;
+  width: 9rem;
   text-decoration: none;
   list-style-type: none;
   color: inherit;
   font-weight: bolder;
+}
+
+.noStyleLi li {
+  text-align: left;
 }
 
 .noStyleLink {
@@ -57,6 +69,19 @@
 }
 
 .noStyleLi li:hover {
-  color: rgb(45, 212, 45);
+  color: rgb(199, 0, 0);
   cursor: pointer;
 }
+
+.image1 {
+  height: 75px;
+  width: 300px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8400,h_2200/v1708489715/RedBank-Swoosh-Logo-Red_ylwwdx.png") no-repeat center/cover;
+}
+
+.image2 {
+  height: 75px;
+  width: 250px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8000,h_2500/v1708489713/RedBank-Rivercenter-Logo-Red_yihp5v.png") no-repeat center/cover;
+}
+

@@ -1,12 +1,5 @@
-.newsh4 {
-  font-weight: 400;
-  color: rgb(80, 80, 238);
-}
-
-.newsHead {
-  font-weight: 400;
-  color: rgb(80, 80, 238);
-  text-align: left;
+.arrowButt {
+  display: none;
 }
 
 .imageWrapper {
@@ -33,6 +26,27 @@
   font-size: 2.2rem;
 }
 
-.eventItem {
-  width: 250px;
+.descText {
+  font-size: .9rem;
+  text-align: left;
+  padding: 1rem 0.5rem 0 .5rem;
+  line-height: 0;
+  width: 100%;
+  border: red 1px solid;
+}
+
+.descText p {
+  font-weight: bolder;
+}
+
+@media (min-width: 768px) {
+  .eventItem {
+    margin: 0 2rem;
+  }
+
+  .arrowButt {
+    font-size: 3rem;
+    display: block;
+  }
+
 }

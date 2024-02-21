@@ -29,12 +29,8 @@ export default function Home() {
   return (
     <>
       <Carousel />
-      <hr className="w-75 mx-auto" />
       <Upcoming />
       <News />
-      <hr className="w-75 mx-auto" />
-      <OpenBiz />
-      <Subscribe />
       <Foot />
     </>
   );

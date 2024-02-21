@@ -52,10 +52,9 @@ function CustomCarousel() {
               <div
                 className={`${styles.carouselItem} d-flex flex-column justify-content-center align-items-center`}
                 style={{
-                  height: "90vh",
+                  height: "40vh",
                   background: `#151515 url("${item.urlPhoto}") no-repeat center center`,
                   backgroundSize: "cover",
-                  backgroundAttachment: "scroll",
                 }}
               >
                 <div className={`${styles.matte}`}></div>
