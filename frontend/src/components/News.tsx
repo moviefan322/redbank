@@ -1,19 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import styles from "./News.module.css";
-import Link from "next/link";
+import News from "../types/News";
 
-interface News {
-  _id: number;
-  title: string;
-  urlPhoto: string;
-  link: string;
-  descriptionShort: string;
-  description: string;
-}
-
-const News = () => {
+const Upcoming = () => {
   const [news, setNews] = useState<News[]>([]);
+  const [displayedNews, setDisplayedNews] = useState<News[]>([]);
 
   const fetchNews = async () => {
     try {
@@ -22,6 +15,7 @@ const News = () => {
       );
       const data = await res.json();
       setNews(data);
+      setDisplayedNews(data.slice(0, 4));
     } catch (error) {
       console.log(error);
     }
@@ -34,11 +28,28 @@ const News = () => {
   if (news.length < 1) {
     return <h1>Loading...</h1>;
   }
+
   return (
-    <div className="container d-flex flex-column align-items-center pb-5">
-      <h4 className={`${styles.newsh4} my-4 fw-bold`}>NEWS</h4>
-      <div className="row d-flex flex-row justify-content-around mx-auto mt-3">
-        {news.map((news, index) => {
+    <div className="d-flex flex-column align-items-center pb-5">
+      <h4
+        className={`d-flex flex-row justify-content-center justify-content-md-start fs-2 my-4 fw-bold w-75`}
+      >
+        <u>NEWS</u>
+      </h4>
+      <div
+        className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3 w-100`}
+      >
+        <button
+          className={`noStyleButt ${styles.arrowButt}`}
+          onClick={() => {
+            if (news.length > 4) {
+              setDisplayedNews(news.slice(0, 4));
+            }
+          }}
+        >
+          <FaChevronLeft />
+        </button>
+        {displayedNews.map((news, index) => {
           return (
             <div
               key={index}
@@ -52,22 +63,23 @@ const News = () => {
                   backgroundAttachment: "scroll",
                 }}
               ></div>
-              <div className="d-flex flex-column align-items-center">
-                <h4>{news.title}</h4>
-                <p>{news.descriptionShort}</p>
-                <Link href="/dummy">
-                  <p className="text-primary align-self-start">Read More →</p>
-                </Link>
-              </div>
+              <div className={styles.descText}>{news.descriptionShort}</div>
             </div>
           );
         })}
-      </div>
-      <div>
-        <button className={`noStyleButt greenButt`}> ALL EVENTS</button>
+        <button
+          className={`noStyleButt ${styles.arrowButt}`}
+          onClick={() => {
+            if (news.length > 4) {
+              setDisplayedNews(news.slice(4, 8));
+            }
+          }}
+        >
+          <FaChevronRight />
+        </button>
       </div>
     </div>
   );
 };
 
-export default News;
+export default Upcoming;

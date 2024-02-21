@@ -303,7 +303,7 @@ const ManageEvents = () => {
             {events.map((item: Event, index: number) => (
               <div
                 key={index}
-                className="d-flex flex-column align-items-center py-3 border border-2 border-light my-5 mx-3 w-100"
+                className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
                 <div className="d-flex flex-column align-items-center">
                   <div className={`${styles.eventItem} d-flex flex-row`}>

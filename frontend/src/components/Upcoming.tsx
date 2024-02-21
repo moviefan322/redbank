@@ -71,14 +71,14 @@ const Upcoming = () => {
   }
 
   return (
-    <div className="container d-flex flex-column align-items-center pb-5">
+    <div className={`d-flex flex-column align-items-center pb-5`}>
       <h4
         className={`d-flex flex-row justify-content-center justify-content-md-start fs-2 my-4 fw-bold w-75`}
       >
         <u>EVENTS</u>
       </h4>
       <div
-        className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3`}
+        className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3 w-100`}
       >
         <button
           className={`noStyleButt ${styles.arrowButt}`}

@@ -1,12 +1,5 @@
-.newsh4 {
-  font-weight: 400;
-  color: rgb(80, 80, 238);
-}
-
-.newsHead {
-  font-weight: 400;
-  color: rgb(80, 80, 238);
-  text-align: left;
+.arrowButt {
+  display: none;
 }
 
 .imageWrapper {
@@ -15,24 +8,25 @@
   width: 200px;
 }
 
-.overlayText {
-  position: absolute;
-  top: 15%;
-  left: 86%;
-  transform: translate(-50%, -50%);
-  color: black;
-  background-color: white;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 800;
-  padding: 0.2rem 0.2rem;
-  line-height: 0.9;
+.descText {
+  font-size: 0.9rem;
+  text-align: left;
+  padding: 1rem 0.5rem 0 0.5rem;
+  line-height: 1;
+  width: 200px;
 }
 
-.overlayText span {
-  font-size: 2.2rem;
+.descText p {
+  font-weight: bolder;
 }
 
-.eventItem {
-  width: 250px;
+@media (min-width: 768px) {
+  .eventItem {
+    margin: 0 2rem;
+  }
+
+  .arrowButt {
+    font-size: 3rem;
+    display: block;
+  }
 }

@@ -1,3 +1,8 @@
+.container {
+  width: 100%;
+  border: red 1px solid;
+}
+
 .arrowButt {
   display: none;
 }
@@ -27,12 +32,11 @@
 }
 
 .descText {
-  font-size: .9rem;
+  font-size: 0.9rem;
   text-align: left;
-  padding: 1rem 0.5rem 0 .5rem;
+  padding: 1rem 0.5rem 0 0.5rem;
   line-height: 0;
   width: 100%;
-  border: red 1px solid;
 }
 
 .descText p {
@@ -48,5 +52,4 @@
     font-size: 3rem;
     display: block;
   }
-
 }
