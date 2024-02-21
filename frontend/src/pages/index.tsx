@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import Carousel from "@/components/Carousel";
-import Greetings from "@/components/Greetings";
 import News from "@/components/News";
 import Upcoming from "@/components/Upcoming";
-import OpenBiz from "@/components/OpenBiz";
-import Subscribe from "@/components/Subscribe";
+import Newsletter from "@/components/Newsletter";
 import Foot from "@/components/Foot";
 
 export default function Home() {
@@ -30,6 +28,7 @@ export default function Home() {
     <>
       <Carousel />
       <Upcoming />
+      <Newsletter />
       <News />
       <Foot />
     </>

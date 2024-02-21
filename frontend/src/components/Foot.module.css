@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   background-color: rgb(199, 0, 0);
+  padding: 1rem;
 }
 
 .textItems {
@@ -33,6 +34,36 @@
   font-size: 2rem;
 }
 
+.logo {
+  height: 75px;
+  width: 250px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8000,h_2500/v1708489714/RedBank-Rivercenter-Logo-White_adhnpv.png")
+    no-repeat center/cover;
+}
+
+.footText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bolder;
+  font-size: 1.5rem;
+  line-height: 0.9rem;
+}
+
+.contactButt {
+  background-color: white;
+  color: black;
+  border: black solid 3px;
+  border-radius: 0.5rem;
+  padding: 0.5rem 3rem;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  cursor: pointer;
+
+}
+
 @media (min-width: 768px) {
   .textItems {
     flex-direction: row;
@@ -42,3 +73,5 @@
     width: 75%;
   }
 }
+
+/* https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8000,h_2500/v1708489714/RedBank-Rivercenter-Logo-White_adhnpv.png */
