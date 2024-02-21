@@ -1,12 +1,18 @@
 import asyncHandler from "express-async-handler";
 import Event from "../models/eventModel.js";
+import moment from "moment";
 
 // @desc    get all events
 // @route   GET /api/events
 // @access  Public
 
 const getEvents = asyncHandler(async (req, res) => {
-  const events = await Event.find({});
+  const todayDateISO = moment().startOf("day").toISOString();
+
+  const events = await Event.find({
+    date: { $gte: todayDateISO }, // Filters events from the start of today onwards
+  }).sort({ date: 1 }); // Sorts by date in ascending order
+  console.log(events);
   res.json(events);
 });
 
