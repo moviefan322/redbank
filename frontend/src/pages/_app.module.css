@@ -16,3 +16,21 @@
   color: rgb(64, 255, 47);
   overflow-y: scroll;
 }
+
+.desktopNav {
+  display: none;
+}
+
+.mobileNav {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: block;
+  }
+
+  .mobileNav {
+    display: none;
+  }
+}

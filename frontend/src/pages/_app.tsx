@@ -19,21 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    // Update the state to the current window width after mounting
-    setWindowWidth(window.innerWidth);
     if (window.location.pathname.startsWith("/admin")) {
       setAdmin(true);
     }
-
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
 
   const toggleMenu = () => {
@@ -43,10 +31,6 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
-
-  if (typeof windowWidth === "undefined") {
-    return null;
-  }
 
   if (admin) {
     return (
@@ -73,15 +57,20 @@ export default function App({ Component, pageProps }: AppProps) {
             menuOpen ? `${styles.slide}` : ""
           }`}
         >
-          {windowWidth > 868 ? (
+          <div className={styles.desktopNav}>
             <DesktopNavBar />
-          ) : (
+          </div>
+
+          <div className={styles.mobileNav}>
             <MobileNavBar toggleMenu={toggleMenu} isMenuOpen={menuOpen} />
-          )}
+          </div>
+
           <Component {...pageProps} />
           <Foot />
         </div>
-        {windowWidth < 868 ? <SideMenu isOpen={menuOpen} /> : null}
+        <div className={styles.mobileNav}>
+          <SideMenu isOpen={menuOpen} />
+        </div>
       </Provider>
     </>
   );
