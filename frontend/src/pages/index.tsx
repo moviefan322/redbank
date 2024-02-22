@@ -3,7 +3,6 @@ import Carousel from "@/components/Carousel";
 import News from "@/components/News";
 import Upcoming from "@/components/Upcoming";
 import Newsletter from "@/components/Newsletter";
-import Foot from "@/components/Foot";
 
 export default function Home() {
   useEffect(() => {
@@ -30,7 +29,6 @@ export default function Home() {
       <Upcoming />
       <Newsletter />
       <News />
-      <Foot />
     </>
   );
 }

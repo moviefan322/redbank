@@ -7,7 +7,10 @@ const DesktopNavBar = () => {
   return (
     <>
       <div className="d-flex flex-row justify-content-between align-items-center m-2">
-        <div className={styles.image1}></div>
+        <Link href="/">
+          <div className={styles.image1}></div>
+        </Link>
+
         <div className={styles.image2}></div>
       </div>
       <div

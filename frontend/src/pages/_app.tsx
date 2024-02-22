@@ -5,6 +5,7 @@ import { useState } from "react";
 import Head from "next/head";
 import DesktopNavBar from "@/components/DesktopNavBar";
 import MobileNavBar from "@/components/MobileNavBar";
+import Foot from "@/components/Foot";
 import SideMenu from "@/components/SideMenu";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
@@ -16,7 +17,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
   const [admin, setAdmin] = useState(false);
-  
 
   useEffect(() => {
     // Update the state to the current window width after mounting
@@ -79,6 +79,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <MobileNavBar toggleMenu={toggleMenu} isMenuOpen={menuOpen} />
           )}
           <Component {...pageProps} />
+          <Foot />
         </div>
         {windowWidth < 868 ? <SideMenu isOpen={menuOpen} /> : null}
       </Provider>

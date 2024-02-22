@@ -5,7 +5,7 @@ import styles from "./Foot.module.css";
 
 const Foot = () => {
   return (
-    <>
+    <div className={styles.foot}>
       <div
         className={`${styles.container} d-flex flex-row align-items-center text-white justify-content-around`}
       >
@@ -25,8 +25,8 @@ const Foot = () => {
           <FaFacebook size={60} />
         </div>
       </div>
-      <div className="d-flex flex-row justify-content-between m-5">
-        <div>
+      <div className="d-flex flex-row justify-content-between align-items-center m-3">
+        <div className={styles.bottom}>
           <p>
             Supported in part by a grant from the New Jersey Department of
             State, Division of Travel and Tourism
@@ -46,7 +46,7 @@ const Foot = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
