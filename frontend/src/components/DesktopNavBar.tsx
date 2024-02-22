@@ -41,11 +41,6 @@ const DesktopNavBar = () => {
         </div>
         <div>
           <button className={`noStyleButt ${styles.dropHead}`}>
-            GIFT CARDS
-          </button>
-        </div>
-        <div>
-          <button className={`noStyleButt ${styles.dropHead}`}>
             BUSINESS DIRECTORY
           </button>
         </div>

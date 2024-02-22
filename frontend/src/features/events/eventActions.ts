@@ -35,6 +35,23 @@ export const getAllEvents = createAsyncThunk<
   }
 });
 
+export const getEvent = createAsyncThunk<
+  Event,
+  string,
+  { rejectValue: string }
+>("events/getOne", async (id, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`${backendUrl}/api/events/${id}`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message);
+    } else {
+      return rejectWithValue(error.message || "An unknown error occurred");
+    }
+  }
+});
+
 export const postEvent = createAsyncThunk<
   Event,
   PostEventReq,

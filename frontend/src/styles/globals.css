@@ -90,6 +90,11 @@ body {
   text-align: center;
 }
 
+.nostyle-link {
+  text-decoration: none;
+  text-align: center;
+}
+
 .btn-admin .icon {
   vertical-align: middle;
 }

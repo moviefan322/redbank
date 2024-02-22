@@ -500,7 +500,9 @@ const ManageEvents = () => {
                         {" "}
                         Full Description: {item.description}
                       </div>
+                      <div dangerouslySetInnerHTML={{ __html: item.description }} />
                     </div>
+                    
                   ) : (
                     <div className="w-75 my-3">
                       <div className="d-flex flex-column justify-content-between">

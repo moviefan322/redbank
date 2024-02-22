@@ -33,7 +33,7 @@ const months2 = [
   "Oct",
   "Nov",
   "Dec",
-]
+];
 
 const formatDate = (event: Event) => {
   return `${months2[new Date(event.date).getMonth()]} ${new Date(
@@ -96,23 +96,25 @@ const Upcoming = () => {
               key={index}
               className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
             >
-              <div
-                className={styles.imageWrapper}
-                style={{
-                  background: `#151515 url("${event.urlPhoto}") no-repeat center center`,
-                  backgroundSize: "cover",
-                  backgroundAttachment: "scroll",
-                }}
-              >
-                <p className={styles.overlayText}>
-                  {months[new Date(event.date).getMonth()]} <br />
-                  <span>{new Date(event.date).getDate()}</span>
-                </p>
-              </div>
-              <div className={styles.descText}>
-                <p>{event.title}</p>
-                <p>{formatDate(event)}</p>
-              </div>
+              <Link className="nostyle-link" href={`/events/${event._id}`}>
+                <div
+                  className={styles.imageWrapper}
+                  style={{
+                    background: `#151515 url("${event.urlPhoto}") no-repeat center center`,
+                    backgroundSize: "cover",
+                    backgroundAttachment: "scroll",
+                  }}
+                >
+                  <p className={styles.overlayText}>
+                    {months[new Date(event.date).getMonth()]} <br />
+                    <span>{new Date(event.date).getDate()}</span>
+                  </p>
+                </div>
+                <div className={styles.descText}>
+                  <p>{event.title}</p>
+                  <p>{formatDate(event)}</p>
+                </div>
+              </Link>
             </div>
           );
         })}

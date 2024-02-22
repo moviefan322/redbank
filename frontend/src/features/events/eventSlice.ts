@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllEvents,
+  getEvent,
   postEvent,
   updateEvent,
   deleteEvent,
@@ -47,6 +48,20 @@ const eventSlice = createSlice({
         state.success = true;
       })
       .addCase(getAllEvents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(getEvent.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(getEvent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = [action.payload];
+        state.success = true;
+      })
+      .addCase(getEvent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.success = false;
