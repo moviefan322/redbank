@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import styles from "./DesktopNavBar.module.css";
 
@@ -13,8 +14,11 @@ const DesktopNavBar = () => {
         className={`d-flex flex-row justify-content-between align-items-center mx-5`}
       >
         <div>
-          <button className={`noStyleButt ${styles.dropHead}`}>EVENTS</button>
+          <Link href="/events">
+            <button className={`noStyleButt ${styles.dropHead}`}>EVENTS</button>
+          </Link>
         </div>
+
         <div>
           <button className={`noStyleButt ${styles.dropHead}`}>
             E-NEWSLETTER
