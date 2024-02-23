@@ -7,7 +7,7 @@ const Foot = () => {
   return (
     <div className={styles.foot}>
       <div
-        className={`${styles.container} d-flex flex-row align-items-center text-white justify-content-around`}
+        className={`${styles.container} d-flex flex-column flex-md-row align-items-center text-white justify-content-around`}
       >
         <div className={styles.logo}></div>
         <div className={styles.footText}>
@@ -25,19 +25,23 @@ const Foot = () => {
           <FaFacebook size={60} />
         </div>
       </div>
-      <div className="d-flex flex-row justify-content-between align-items-center m-3">
-        <div className={styles.bottom}>
-          <p>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center m-3">
+        <div
+          className={`d-flex flex-column align-items-center mx-auto ${styles.bottom}`}
+        >
+          <p className="text-center text-md-start">
             Supported in part by a grant from the New Jersey Department of
             State, Division of Travel and Tourism
           </p>
-          <p>Copyright ©2024 The Red Bank River Center</p>
+          <p className="text-sm-center text-md-start">
+            Copyright ©2024 The Red Bank River Center
+          </p>
         </div>
         <div className="mx-3">
           <Image
             src="/MSNJ.jpeg"
-            height={50}
-            width={100}
+            height={75}
+            width={150}
             alt="logo"
             style={{
               maxWidth: "100%",

@@ -4,38 +4,17 @@
 
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack elements vertically on small screens */
   align-items: center;
   background-color: rgb(199, 0, 0);
   padding: 1rem;
+  text-align: center; /* Ensure text is centered on small screens */
 }
 
-.textItems {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: space-between;
-  text-align: center;
-  margin-bottom: 20px;
-  color: rgb(136, 0, 255);
-  font-weight: bolder;
-}
-
-.addressBlock {
-  text-align: center;
-  margin: 10px 0;
-}
-
+.footText,
+.contactButt,
 .icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0 0 0;
-}
-
-.icon {
-  margin: 0 5px;
-  font-size: 2rem;
+  margin-bottom: 20px; /* Space out elements on small screens */
 }
 
 .logo {
@@ -43,17 +22,14 @@
   width: 250px;
   background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8000,h_2500/v1708489714/RedBank-Rivercenter-Logo-White_adhnpv.png")
     no-repeat center/cover;
+  margin-bottom: 1rem;
 }
 
 .footText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bolder;
-  font-size: 1.5rem;
-  line-height: 0.9rem;
+  font-size: 1rem; /* Adjust text size for small screens */
+  line-height: 1.2rem;
 }
 
 .contactButt {
@@ -61,25 +37,34 @@
   color: black;
   border: black solid 3px;
   border-radius: 0.5rem;
-  padding: 0.5rem 3rem;
-  font-size: 1.5rem;
+  padding: 0.5rem 1.5rem; /* Adjust button padding for small screens */
+  font-size: 1rem; /* Adjust font size for small screens */
   font-weight: bolder;
   cursor: pointer;
 }
 
 .bottom {
-  line-height: 0.5rem;
-  font-weight: bolder;
+  line-height: 1.2rem; /* Adjust line height for readability on small screens */
 }
 
 @media (min-width: 768px) {
-  .textItems {
-    flex-direction: row;
+  .container {
+    flex-direction: row; /* Align elements horizontally on larger screens */
+    justify-content: space-around; /* Space out elements evenly */
   }
 
-  .textItems {
-    width: 75%;
+  .footText,
+  .contactButt {
+    margin-bottom: 0; /* Remove bottom margin on larger screens */
+  }
+
+  .footText {
+    font-size: 1.5rem; /* Increase text size for larger screens */
+    line-height: 0.9rem;
+  }
+
+  .contactButt {
+    padding: 0.5rem 3rem; /* Increase button padding for larger screens */
+    font-size: 1.5rem; /* Increase font size for larger screens */
   }
 }
-
-/* https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8000,h_2500/v1708489714/RedBank-Rivercenter-Logo-White_adhnpv.png */
