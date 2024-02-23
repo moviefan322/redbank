@@ -45,7 +45,8 @@ const deleteNews = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const createNews = asyncHandler(async (req, res) => {
-  const { title, urlPhoto, link, description, descriptionShort } = req.body;
+  const { title, urlPhoto, link, description, descriptionShort, videoLink } =
+    req.body;
 
   const news = new News({
     title,
@@ -53,6 +54,7 @@ const createNews = asyncHandler(async (req, res) => {
     link,
     description,
     descriptionShort,
+    videoLink,
   });
 
   const createdNews = await news.save();
@@ -64,7 +66,8 @@ const createNews = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateNews = asyncHandler(async (req, res) => {
-  const { title, urlPhoto, link, description, descriptionShort } = req.body;
+  const { title, urlPhoto, link, description, descriptionShort, videoLink } =
+    req.body;
 
   const news = await News.findById(req.params._id);
 
@@ -76,6 +79,7 @@ const updateNews = asyncHandler(async (req, res) => {
     if (descriptionShort !== undefined)
       news.descriptionShort = descriptionShort;
 
+    if (videoLink !== undefined) news.videoLink = videoLink;
     const updatedNews = await news.save();
     res.json(updatedNews);
   } else {

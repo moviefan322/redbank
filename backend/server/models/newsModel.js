@@ -12,6 +12,7 @@ const NewsSchema = mongoose.Schema(
     },
     link: {
       type: String,
+      required: false,
     },
     descriptionShort: {
       type: String,
@@ -20,6 +21,10 @@ const NewsSchema = mongoose.Schema(
     description: {
       type: String,
       required: true,
+    },
+    videoLink: {
+      type: String,
+      required: false,
     },
   },
   {
