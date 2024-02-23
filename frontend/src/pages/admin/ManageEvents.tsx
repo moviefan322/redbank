@@ -7,6 +7,7 @@ import {
   updateEvent,
 } from "@/features/events/eventActions";
 import { shallowEqual } from "react-redux";
+import DOMPurify from "dompurify";
 import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
 import Link from "next/link";
@@ -259,6 +260,13 @@ const ManageEvents = () => {
     }
   };
 
+  const sanitizeData = (data: string) => {
+    const sanitizedData = () => ({
+      __html: DOMPurify.sanitize(data),
+    });
+    return <div dangerouslySetInnerHTML={sanitizedData()} />;
+  };
+
   if (!isLoggedIn) {
     return (
       <div className="d-flex flex-column justify-content-center">
@@ -498,11 +506,9 @@ const ManageEvents = () => {
                       <div>Short Description: {item.descriptionShort}</div>
                       <div className="my-3">
                         {" "}
-                        Full Description: {item.description}
+                        Full Description: {sanitizeData(item.description)}
                       </div>
-                      <div dangerouslySetInnerHTML={{ __html: item.description }} />
                     </div>
-                    
                   ) : (
                     <div className="w-75 my-3">
                       <div className="d-flex flex-column justify-content-between">

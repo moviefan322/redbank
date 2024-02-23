@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import styles from "./News.module.css";
 import News from "../types/News";
@@ -55,15 +56,17 @@ const Upcoming = () => {
               key={index}
               className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
             >
-              <div
-                className={styles.imageWrapper}
-                style={{
-                  background: `#151515 url("${news.urlPhoto}") no-repeat center center`,
-                  backgroundSize: "cover",
-                  backgroundAttachment: "scroll",
-                }}
-              ></div>
-              <div className={styles.descText}>{news.descriptionShort}</div>
+              <Link href={`/news/${news._id}`}>
+                <div
+                  className={styles.imageWrapper}
+                  style={{
+                    background: `#151515 url("${news.urlPhoto}") no-repeat center center`,
+                    backgroundSize: "cover",
+                    backgroundAttachment: "scroll",
+                  }}
+                ></div>
+                <div className={styles.descText}>{news.descriptionShort}</div>
+              </Link>
             </div>
           );
         })}

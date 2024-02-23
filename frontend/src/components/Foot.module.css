@@ -1,6 +1,4 @@
 .foot {
-  position: absolute;
-  bottom: 0;
   width: 100vw;
 }
 
@@ -67,11 +65,10 @@
   font-size: 1.5rem;
   font-weight: bolder;
   cursor: pointer;
-
 }
 
 .bottom {
-  line-height: .5rem;
+  line-height: 0.5rem;
   font-weight: bolder;
 }
 
