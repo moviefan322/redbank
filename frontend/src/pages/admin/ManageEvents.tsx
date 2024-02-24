@@ -273,8 +273,13 @@ const ManageEvents = () => {
     return (
       <div className="d-flex flex-column justify-content-center">
         <h1 className="mx-3 text-center">
-          You are not logged in, Admin.... if that is your real name
+          {`I'm sorry Dave, I'm afraid I can't do that.`}
         </h1>
+        <br />
+        <br />
+        <h5 className="text-center">
+          You must <Link href="/admin">log in</Link> to access this page.
+        </h5>
       </div>
     );
   }

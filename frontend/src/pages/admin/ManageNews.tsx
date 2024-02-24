@@ -12,6 +12,7 @@ import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
+import ImageUploader from "@/components/ImageUploader";
 // import PostNewNews from "@/components/modals/PostNewNews";
 import NewsComponent from "@/components/News";
 import { FaCircleArrowLeft } from "react-icons/fa6";
@@ -188,8 +189,12 @@ const ManageNews = () => {
       <div className="d-flex flex-column justify-content-center">
         <h1 className="mx-3 text-center">
           {`I'm sorry Dave, I'm afraid I can't do that.`}
-          You must <Link href="/admin">log in</Link> to access this page.
         </h1>
+        <br />
+        <br />
+        <h5 className="text-center">
+          You must <Link href="/admin">log in</Link> to access this page.
+        </h5>
       </div>
     );
   }
@@ -286,9 +291,13 @@ const ManageNews = () => {
                           ></input>
                         </div>
                         <div className="float-end">
-                          <button className="btn-admin">
-                            Upload New Photo
-                          </button>
+                          <div className="justify-self-end w-100 flex-grow-2">
+                            <ImageUploader
+                              data={updateNewsData}
+                              setData={setUpdateNewsData}
+                              buttonText="Upload New Image"
+                            />
+                          </div>
                         </div>
                       </div>
                     ) : (
