@@ -14,6 +14,7 @@ import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import PostNewEvent from "@/components/modals/PostNewEvent";
 import Upcoming from "@/components/Upcoming";
+import ImageUploader from "@/components/ImageUploader";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
 import UpdateEventReq from "@/types/UpdateEventReq";
@@ -37,6 +38,7 @@ const ManageEvents = () => {
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
   const [submitError, setSubmitError] = useState<string>("");
+  const [displayUploader, setDisplayUploader] = useState(false);
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
     _id: "",
     title: "",
@@ -314,13 +316,18 @@ const ManageEvents = () => {
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
                 <div className="d-flex flex-column align-items-center">
+                  {}
                   <div className={`${styles.eventItem} d-flex flex-row`}>
                     <div
                       className="w-100 align-self-center"
                       style={{
                         height: "300px",
                         width: "300px",
-                        background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
+                        background: `#151515 url("${
+                          editModeIndex !== index
+                            ? item.urlPhoto
+                            : updateEventData.urlPhoto
+                        }") no-repeat center center / cover`,
                         backgroundAttachment: "scroll",
                       }}
                     ></div>
@@ -458,9 +465,13 @@ const ManageEvents = () => {
                         </div>
 
                         <div className="float-end">
-                          <button className="btn-admin">
-                            Upload New Photo
-                          </button>
+                          <div className="justify-self-end w-100 flex-grow-2">
+                            <ImageUploader
+                              data={updateEventData}
+                              setData={setUpdateEventData}
+                              buttonText="Upload New Image"
+                            />
+                          </div>
                         </div>
                       </div>
                     ) : (

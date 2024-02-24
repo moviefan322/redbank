@@ -5,6 +5,7 @@ export default interface News {
   link: string;
   description: string;
   descriptionShort: string;
+  videoLink?: string;
   createdAt: string;
   updatedAt: string;
   _v: number;

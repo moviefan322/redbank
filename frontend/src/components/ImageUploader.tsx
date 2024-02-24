@@ -18,11 +18,13 @@ import styles from "./ImageUploader.module.css";
 interface ImageUploaderProps<T> {
   data: T;
   setData: (data: T) => void;
+  buttonText?: string;
 }
 
 const ImageUploader = <T extends {}>({
   data,
   setData,
+  buttonText = "Upload File",
 }: ImageUploaderProps<T>) => {
   const [file, setFile] = useState<File | null>(null);
   const dispatch = useDispatch();
@@ -69,7 +71,7 @@ const ImageUploader = <T extends {}>({
           className={`${styles.chooseFile} btn-admin`}
           style={imageUrl ? { display: "none" } : {}}
         >
-          Choose File
+          {buttonText}
         </button>
       ) : (
         <button

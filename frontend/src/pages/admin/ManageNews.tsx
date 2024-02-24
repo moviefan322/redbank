@@ -241,7 +241,7 @@ const ManageNews = () => {
                       }}
                     ></div>
                     {editModeIndex === index ? (
-                      <div className={`${styles.info} ms-5 w-75`}>
+                      <div className={`${styles.info} ms-5 w-100`}>
                         {submitError && submitError}
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
@@ -253,6 +253,34 @@ const ManageNews = () => {
                               setUpdateNewsData((prev) => ({
                                 ...prev,
                                 title: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Link:</p>
+                          <input
+                            placeholder={item.link}
+                            value={updateNewsData.link}
+                            onChange={(e) =>
+                              setUpdateNewsData((prev) => ({
+                                ...prev,
+                                link: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Video:</p>
+                          <input
+                            placeholder={item.videoLink}
+                            value={updateNewsData.videoLink}
+                            onChange={(e) =>
+                              setUpdateNewsData((prev) => ({
+                                ...prev,
+                                videoLink: e.target.value,
                               }))
                             }
                           ></input>
@@ -270,11 +298,21 @@ const ManageNews = () => {
                           <p>Title:</p>
                           <p>{item.title}</p>
                         </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Link:</p>
+                          <p>{item.link}</p>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Video Link:</p>
+                          <p>{item.link}</p>
+                        </div>
                       </div>
                     )}
                   </div>
                   {editModeIndex !== index ? (
-                    <div className="w-75 my-3">
+                    <div className="w-75 my-3 w-100">
                       <div>Short Description: {item.descriptionShort}</div>
                       <div className="my-3">
                         {" "}
