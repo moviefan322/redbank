@@ -14,6 +14,7 @@ import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import PostNewEvent from "@/components/modals/PostNewEvent";
 import Upcoming from "@/components/Upcoming";
+import EventDetail from "../events/[eventId]";
 import ImageUploader from "@/components/ImageUploader";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
@@ -286,14 +287,15 @@ const ManageEvents = () => {
 
   if (error) return <div>Error: {error}</div>;
 
-  console.log(updateEventData);
-  console.log(year, month, day, startHour, startMinute, endHour, endMinute);
-
   return (
     <>
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-        <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
+        <Modal
+          isOpen={isPreviewModalOpen}
+          onClose={closePreviewModal}
+          customStyle={{ minWidth: "100%" }}
+        >
           <Upcoming />
         </Modal>
         <h1 className={`${styles.header} my-5 p-3`}>Event Management Desk</h1>
@@ -563,7 +565,7 @@ const ManageEvents = () => {
                       isOpen={isSinglePreviewOpen}
                       onClose={closeSinglePreviewModal}
                     >
-                      <h1>Event Preview</h1>
+                      {<EventDetail event={events[index]} />}
                     </Modal>
                     {editModeIndex === index ? (
                       <>

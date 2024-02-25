@@ -13,6 +13,7 @@ import Loading from "@/components/loading";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import ImageUploader from "@/components/ImageUploader";
+import NewsDetail from "../news/[newsId]";
 // import PostNewNews from "@/components/modals/PostNewNews";
 import NewsComponent from "@/components/News";
 import { FaCircleArrowLeft } from "react-icons/fa6";
@@ -201,15 +202,19 @@ const ManageNews = () => {
 
   if (error) return <div>Error: {error}</div>;
 
-  console.log(updateNewsData);
-
   return (
     <>
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-        <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
-          <NewsComponent />
-        </Modal>
+        <div className="w-100">
+          <Modal
+            isOpen={isPreviewModalOpen}
+            onClose={closePreviewModal}
+            customStyle={{ minWidth: "100%" }}
+          >
+            <NewsComponent />
+          </Modal>
+        </div>
         <h1 className={`${styles.header} my-5 p-3`}>News Management Desk</h1>
         <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
           <button className="btn-primary btn" onClick={openPreviewModal}>
@@ -366,7 +371,7 @@ const ManageNews = () => {
                       isOpen={isSinglePreviewOpen}
                       onClose={closeSinglePreviewModal}
                     >
-                      <h1>News Preview</h1>
+                      <NewsDetail news={news[index]} />
                     </Modal>
                     {editModeIndex === index ? (
                       <>
