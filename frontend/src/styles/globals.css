@@ -95,6 +95,11 @@ body {
 .nostyle-link {
   text-decoration: none;
   text-align: center;
+  color: black;
+}
+
+.nostyle-link:hover {
+  color: rgb(255, 47, 47);
 }
 
 .btn-admin .icon {

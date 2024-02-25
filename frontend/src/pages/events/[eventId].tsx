@@ -49,18 +49,18 @@ function EventDetail(props: Props) {
         <meta name="description" content={event.description} />
       </Head>
       <div
-        className={`${styles.eventDetail} d-flex flex-column justify-content-center align-items-center`}
+        className={`${styles.eventDetail} d-flex flex-column justify-content-center align-items-center mb-5`}
       >
         <Link
-          className="nostyle-link align-self-start mb-5 text-black fw-bold"
+          className="nostyle-link align-self-start mb-5 fw-bold"
           href="/events"
         >{`<< All Events`}</Link>
         <h1 className="align-self-center">{event.title}</h1>
-        <h4>
+        <h5>
           {months[new Date(event.date).getMonth()]}{" "}
           {new Date(event.date).getDate()}{" "}
           {!event.allDay! && `@ ${event.startTime}-${event.endTime}`}
-        </h4>
+        </h5>
         <div
           className="m-3"
           style={{
@@ -74,7 +74,7 @@ function EventDetail(props: Props) {
           }}
         ></div>
         <h6>{event.descriptionShort}</h6>
-        <div>{sanitizeData(event.description)}</div>
+        <div dangerouslySetInnerHTML={{ __html: event.description }} />
       </div>
     </Fragment>
   );

@@ -8,6 +8,8 @@ import News from "../types/News";
 const Upcoming = () => {
   const [news, setNews] = useState<News[]>([]);
   const [displayedNews, setDisplayedNews] = useState<News[]>([]);
+  const [displayedStart, setDisplayedStart] = useState(0);
+  const [displayedEnd, setDisplayedEnd] = useState(3);
 
   const fetchNews = async () => {
     try {
@@ -26,6 +28,22 @@ const Upcoming = () => {
     fetchNews();
   }, []);
 
+  const handleDisplayPrev3News = () => {
+    const newStart = Math.max(displayedStart - 3, 0);
+    const newEnd = newStart + 3;
+    setDisplayedStart(newStart);
+    setDisplayedEnd(newEnd);
+    setDisplayedNews(news.slice(newStart, newEnd));
+  };
+
+  const handleDisplayNext3News = () => {
+    const newEnd = Math.min(displayedEnd + 3, news.length);
+    const newStart = newEnd - 3;
+    setDisplayedStart(newStart);
+    setDisplayedEnd(newEnd);
+    setDisplayedNews(news.slice(newStart, newEnd));
+  };
+
   if (news.length < 1) {
     return <h1>Loading...</h1>;
   }
@@ -42,9 +60,10 @@ const Upcoming = () => {
       >
         <button
           className={`noStyleButt ${styles.arrowButt}`}
+          disabled={displayedStart === 0}
           onClick={() => {
             if (news.length > 3) {
-              setDisplayedNews(news.slice(0, 3));
+              handleDisplayPrev3News();
             }
           }}
         >
@@ -54,9 +73,9 @@ const Upcoming = () => {
           return (
             <div
               key={index}
-              className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
+              className={`mb-4 d-flex flex-column align-items-center justify-content-between p-1`}
             >
-              <Link href={`/news/${news._id}`}>
+              <Link className="nostyle-link" href={`/news/${news._id}`}>
                 <div
                   style={{
                     backgroundColor: "#151515",
@@ -64,20 +83,26 @@ const Upcoming = () => {
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
-                    width: "200px",
-                    height: "200px",
+                    width: "250px",
+                    height: "250px",
                   }}
                 ></div>
-                <div className={styles.descText}>{news.descriptionShort}</div>
+                <div>
+                  <p className="mt-3 fw-bolder fs-5">{news.title}</p>
+                  <p className="text-start">{news.descriptionShort}</p>
+                </div>
+                <h6 className="mt-3"></h6>
+                <div className={styles.descText}></div>
               </Link>
             </div>
           );
         })}
         <button
           className={`noStyleButt ${styles.arrowButt}`}
+          disabled={displayedEnd === news.length}
           onClick={() => {
             if (news.length > 3) {
-              setDisplayedNews(news.slice(3, 8));
+              handleDisplayNext3News();
             }
           }}
         >

@@ -48,6 +48,8 @@ const formatDate = (event: Event) => {
 const Upcoming = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [displayedEvents, setDisplayedEvents] = useState<Event[]>([]);
+  const [displayedStart, setDisplayedStart] = useState(0);
+  const [displayedEnd, setDisplayedEnd] = useState(3);
 
   const fetchEvents = async () => {
     try {
@@ -60,6 +62,22 @@ const Upcoming = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDisplayPrev3Events = () => {
+    const newStart = Math.max(displayedStart - 3, 0);
+    const newEnd = newStart + 3;
+    setDisplayedStart(newStart);
+    setDisplayedEnd(newEnd);
+    setDisplayedEvents(events.slice(newStart, newEnd));
+  };
+
+  const handleDisplayNext3Events = () => {
+    const newEnd = Math.min(displayedEnd + 3, events.length);
+    const newStart = newEnd - 3;
+    setDisplayedStart(newStart);
+    setDisplayedEnd(newEnd);
+    setDisplayedEvents(events.slice(newStart, newEnd));
   };
 
   useEffect(() => {
@@ -82,9 +100,10 @@ const Upcoming = () => {
       >
         <button
           className={`noStyleButt ${styles.arrowButt}`}
+          disabled={displayedStart === 0}
           onClick={() => {
             if (events.length > 3) {
-              setDisplayedEvents(events.slice(0, 3));
+              handleDisplayPrev3Events();
             }
           }}
         >
@@ -96,7 +115,10 @@ const Upcoming = () => {
               key={index}
               className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
             >
-              <Link className="nostyle-link" href={`/events/${event._id}`}>
+              <Link
+                className="nostyle-link"
+                href={`/events/${event._id}`}
+              >
                 <div
                   className={styles.imageWrapper}
                   style={{
@@ -104,15 +126,17 @@ const Upcoming = () => {
                     backgroundImage: `url("${event.urlPhoto}")`,
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center center",
-                    backgroundSize: "cover",
-                    width: "200px",
-                    height: "200px",
+                    backgroundSize: "cover", // Ensures the image covers the area, might cause "zooming" depending on aspect ratio
+                    width: "250px",
+                    height: "250px",
                   }}
                 >
-                  <p className={styles.overlayText}>
-                    {months[new Date(event.date).getMonth()]} <br />
-                    <span>{new Date(event.date).getDate()}</span>
-                  </p>
+                  <div>
+                    <p className={styles.overlayText}>
+                      {months[new Date(event.date).getMonth()]} <br />
+                      <span>{new Date(event.date).getDate()}</span>
+                    </p>
+                  </div>
                 </div>
                 <div className={styles.descText}>
                   <p>{event.title}</p>
@@ -124,9 +148,10 @@ const Upcoming = () => {
         })}
         <button
           className={`noStyleButt ${styles.arrowButt}`}
+          disabled={displayedEnd === events.length}
           onClick={() => {
             if (events.length > 3) {
-              setDisplayedEvents(events.slice(3, 8));
+              handleDisplayNext3Events();
             }
           }}
         >
