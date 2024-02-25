@@ -14,3 +14,7 @@
   height: 100%;
   border: 3px solid brown;
 }
+
+.imageWrapper:hover .overlayText {
+  color: yellow;
+}
