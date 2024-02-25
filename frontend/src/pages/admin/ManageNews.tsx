@@ -14,7 +14,7 @@ import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import ImageUploader from "@/components/ImageUploader";
 import NewsDetail from "../news/[newsId]";
-// import PostNewNews from "@/components/modals/PostNewNews";
+import PostNewNews from "@/components/modals/PostNewNews";
 import NewsComponent from "@/components/News";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostNewsReq from "@/types/PostNewsReq";
@@ -210,7 +210,7 @@ const ManageNews = () => {
           <Modal
             isOpen={isPreviewModalOpen}
             onClose={closePreviewModal}
-            customStyle={{ minWidth: "100%" }}
+            customStyle={{ minWidth: "100%", color: "black" }}
           >
             <NewsComponent />
           </Modal>
@@ -225,12 +225,12 @@ const ManageNews = () => {
           </button>
         </div>
 
-        {/* <PostNewNews
+        <PostNewNews
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}
           postNewsData={postNewsData}
           setPostNewsData={setPostNewsData}
-        /> */}
+        />
         <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Current News</h2>
           <div className="d-flex flex-column align-items-center">
@@ -326,7 +326,7 @@ const ManageNews = () => {
                     )}
                   </div>
                   {editModeIndex !== index ? (
-                    <div className="w-75 my-3 w-100">
+                    <div className="w-75 my-3">
                       <div>Short Description: {item.descriptionShort}</div>
                       <div className="my-3">
                         {" "}
@@ -370,6 +370,7 @@ const ManageNews = () => {
                     <Modal
                       isOpen={isSinglePreviewOpen}
                       onClose={closeSinglePreviewModal}
+                      customStyle={{ color: "black" }}
                     >
                       <NewsDetail news={news[previewModeIndex]} />
                     </Modal>

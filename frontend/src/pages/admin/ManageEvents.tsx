@@ -294,7 +294,7 @@ const ManageEvents = () => {
         <Modal
           isOpen={isPreviewModalOpen}
           onClose={closePreviewModal}
-          customStyle={{ minWidth: "100%" }}
+          customStyle={{ minWidth: "100%", color: "black" }}
         >
           <Upcoming />
         </Modal>
@@ -564,6 +564,7 @@ const ManageEvents = () => {
                     <Modal
                       isOpen={isSinglePreviewOpen}
                       onClose={closeSinglePreviewModal}
+                      customStyle={{ color: "black" }}
                     >
                       {<EventDetail event={events[previewModeIndex]} />}
                     </Modal>
