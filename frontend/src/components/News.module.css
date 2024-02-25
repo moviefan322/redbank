@@ -2,12 +2,6 @@
   display: none;
 }
 
-.imageWrapper {
-  position: relative;
-  height: 200px;
-  width: 200px;
-}
-
 .descText {
   font-size: 0.9rem;
   text-align: left;

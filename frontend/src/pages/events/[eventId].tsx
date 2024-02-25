@@ -1,6 +1,24 @@
 import React, { Fragment } from "react";
 import Head from "next/head";
+import Link from "next/link";
+import DOMPurify from "dompurify";
 import Event from "../../types/Event";
+import styles from "./eventDetail.module.css";
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 type Props = {
   event: Event;
@@ -8,6 +26,13 @@ type Props = {
 
 function EventDetail(props: Props) {
   const event: Event | undefined = props.event;
+
+  const sanitizeData = (data: string) => {
+    const sanitizedData = () => ({
+      __html: DOMPurify.sanitize(data),
+    });
+    return <div dangerouslySetInnerHTML={sanitizedData()} />;
+  };
 
   if (!event) {
     return (
@@ -23,11 +48,34 @@ function EventDetail(props: Props) {
         <title>{event.title}</title>
         <meta name="description" content={event.description} />
       </Head>
-      {event.title}
-      {event.date}
-      {event.urlPhoto}
-      {event.description}
-      {event._id}
+      <div
+        className={`${styles.eventDetail} d-flex flex-column justify-content-center align-items-center`}
+      >
+        <Link
+          className="nostyle-link align-self-start mb-5 text-black fw-bold"
+          href="/events"
+        >{`<< All Events`}</Link>
+        <h1 className="align-self-center">{event.title}</h1>
+        <h4>
+          {months[new Date(event.date).getMonth()]}{" "}
+          {new Date(event.date).getDate()}{" "}
+          {!event.allDay! && `@ ${event.startTime}-${event.endTime}`}
+        </h4>
+        <div
+          className="m-3"
+          style={{
+            backgroundColor: "#151515",
+            backgroundImage: `url("${event.urlPhoto}")`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            backgroundSize: "cover",
+            width: "300px",
+            height: "300px",
+          }}
+        ></div>
+        <h6>{event.descriptionShort}</h6>
+        <div>{sanitizeData(event.description)}</div>
+      </div>
     </Fragment>
   );
 }

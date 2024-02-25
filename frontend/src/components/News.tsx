@@ -16,7 +16,7 @@ const Upcoming = () => {
       );
       const data = await res.json();
       setNews(data);
-      setDisplayedNews(data.slice(0, 4));
+      setDisplayedNews(data.slice(0, 3));
     } catch (error) {
       console.log(error);
     }
@@ -43,8 +43,8 @@ const Upcoming = () => {
         <button
           className={`noStyleButt ${styles.arrowButt}`}
           onClick={() => {
-            if (news.length > 4) {
-              setDisplayedNews(news.slice(0, 4));
+            if (news.length > 3) {
+              setDisplayedNews(news.slice(0, 3));
             }
           }}
         >
@@ -58,11 +58,14 @@ const Upcoming = () => {
             >
               <Link href={`/news/${news._id}`}>
                 <div
-                  className={styles.imageWrapper}
                   style={{
-                    background: `#151515 url("${news.urlPhoto}") no-repeat center center`,
+                    backgroundColor: "#151515",
+                    backgroundImage: `url("${news.urlPhoto}")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
                     backgroundSize: "cover",
-                    backgroundAttachment: "scroll",
+                    width: "200px",
+                    height: "200px",
                   }}
                 ></div>
                 <div className={styles.descText}>{news.descriptionShort}</div>
@@ -73,8 +76,8 @@ const Upcoming = () => {
         <button
           className={`noStyleButt ${styles.arrowButt}`}
           onClick={() => {
-            if (news.length > 4) {
-              setDisplayedNews(news.slice(4, 8));
+            if (news.length > 3) {
+              setDisplayedNews(news.slice(3, 8));
             }
           }}
         >

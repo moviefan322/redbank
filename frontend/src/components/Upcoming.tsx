@@ -56,7 +56,7 @@ const Upcoming = () => {
       );
       const data = await res.json();
       setEvents(data);
-      setDisplayedEvents(data.slice(0, 4));
+      setDisplayedEvents(data.slice(0, 3));
     } catch (error) {
       console.log(error);
     }
@@ -83,8 +83,8 @@ const Upcoming = () => {
         <button
           className={`noStyleButt ${styles.arrowButt}`}
           onClick={() => {
-            if (events.length > 4) {
-              setDisplayedEvents(events.slice(0, 4));
+            if (events.length > 3) {
+              setDisplayedEvents(events.slice(0, 3));
             }
           }}
         >
@@ -100,9 +100,13 @@ const Upcoming = () => {
                 <div
                   className={styles.imageWrapper}
                   style={{
-                    background: `#151515 url("${event.urlPhoto}") no-repeat center center`,
+                    backgroundColor: "#151515",
+                    backgroundImage: `url("${event.urlPhoto}")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
                     backgroundSize: "cover",
-                    backgroundAttachment: "scroll",
+                    width: "200px",
+                    height: "200px",
                   }}
                 >
                   <p className={styles.overlayText}>
@@ -121,8 +125,8 @@ const Upcoming = () => {
         <button
           className={`noStyleButt ${styles.arrowButt}`}
           onClick={() => {
-            if (events.length > 4) {
-              setDisplayedEvents(events.slice(4, 8));
+            if (events.length > 3) {
+              setDisplayedEvents(events.slice(3, 8));
             }
           }}
         >

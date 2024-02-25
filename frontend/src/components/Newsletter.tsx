@@ -63,21 +63,7 @@ const Upcoming = () => {
             <strong>Feb 8, 2024</strong>
           </div>
         </div>
-        <div
-          className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
-        >
-          <div
-            className={styles.imageWrapper}
-            style={{
-              background: `#151515 url("https://res.cloudinary.com/dnaj4dehf/image/upload/v1708529356/Screenshot_2024-02-21_at_10.23.36_AM_n9sivx.png") no-repeat center center`,
-              backgroundSize: "cover",
-              backgroundAttachment: "scroll",
-            }}
-          ></div>
-          <div className={styles.descText}>
-            <strong>Feb 1, 2024</strong>
-          </div>
-        </div>
+
         <button className={`noStyleButt ${styles.arrowButt}`}>
           <FaChevronRight />
         </button>
