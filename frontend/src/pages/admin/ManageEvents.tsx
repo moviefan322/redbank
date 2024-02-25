@@ -565,7 +565,7 @@ const ManageEvents = () => {
                       isOpen={isSinglePreviewOpen}
                       onClose={closeSinglePreviewModal}
                     >
-                      {<EventDetail event={events[index]} />}
+                      {<EventDetail event={events[previewModeIndex]} />}
                     </Modal>
                     {editModeIndex === index ? (
                       <>

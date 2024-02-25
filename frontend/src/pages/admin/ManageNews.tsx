@@ -371,7 +371,7 @@ const ManageNews = () => {
                       isOpen={isSinglePreviewOpen}
                       onClose={closeSinglePreviewModal}
                     >
-                      <NewsDetail news={news[index]} />
+                      <NewsDetail news={news[previewModeIndex]} />
                     </Modal>
                     {editModeIndex === index ? (
                       <>
