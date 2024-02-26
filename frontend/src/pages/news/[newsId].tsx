@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 import Head from "next/head";
+import Link from "next/link";
+import DOMPurify from "dompurify";
 import News from "../../types/News";
+import styles from "./NewsDetail.module.css";
 
 type Props = {
   news: News;
@@ -8,6 +11,15 @@ type Props = {
 
 function NewsDetail(props: Props) {
   const news: News | undefined = props.news;
+
+  const sanitizeData = (data: string) => {
+    const withLineBreaks = data.replace(/\n/g, "<br />");
+    // Sanitize the modified string
+    const sanitizedData = DOMPurify.sanitize(withLineBreaks, {
+      ADD_TAGS: ["br"],
+    });
+    return <div dangerouslySetInnerHTML={{ __html: sanitizedData }} />;
+  };
 
   if (!news) {
     return (
@@ -25,12 +37,34 @@ function NewsDetail(props: Props) {
         <title>{news.title}</title>
         <meta name="description" content={news.description} />
       </Head>
-      <h2>{news.title}</h2>
-      {news.createdAt}
-      <h4>{news.descriptionShort}</h4>
-      <p>{news.description}</p>
-
-      {news._id}
+      <div className="py-5">
+        <div
+          className={`${styles.eventDetail} d-flex flex-column justify-content-center align-items-center mb-5 mx-3`}
+        >
+          <Link
+            className="nostyle-link align-self-start mb-5 fw-bold"
+            href="/news"
+          >{`<< All News`}</Link>
+          <h1 className="align-self-center">{news.title}</h1>
+          <small className="align-self-start ms-3">
+            {new Date(news.createdAt).toLocaleDateString()}
+          </small>
+          <div
+            className="m-3"
+            style={{
+              backgroundColor: "#151515",
+              backgroundImage: `url("${news.urlPhoto}")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center center",
+              backgroundSize: "cover",
+              width: "300px",
+              height: "300px",
+            }}
+          ></div>
+          <h6>{news.descriptionShort}</h6>
+          {sanitizeData(news.description)}
+        </div>
+      </div>
     </Fragment>
   );
 }

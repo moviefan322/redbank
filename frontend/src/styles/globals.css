@@ -24,6 +24,10 @@ body {
   outline: none;
 }
 
+.noStyleButt:hover {
+  color: brown;
+}
+
 .carousel-indicators {
   display: none;
 }
@@ -99,7 +103,7 @@ body {
 }
 
 .nostyle-link:hover {
-  color: rgb(255, 47, 47);
+  color: brown;
 }
 
 .btn-admin .icon {

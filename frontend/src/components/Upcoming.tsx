@@ -89,12 +89,12 @@ const Upcoming = () => {
   }
 
   return (
-    <div className={`d-flex flex-column align-items-center pb-5`}>
-      <h4
-        className={`d-flex flex-row justify-content-center justify-content-md-start fs-2 my-4 fw-bold w-75`}
-      >
-        <u>EVENTS</u>
-      </h4>
+    <div className={`d-flex flex-column align-items-center py-5`}>
+      <Link className="nostyle-link" href="/events">
+        <h4 className={`fs-2 my-4 fw-bold`}>
+          <u>EVENTS</u>
+        </h4>
+      </Link>
       <div
         className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3 w-100`}
       >
@@ -115,10 +115,7 @@ const Upcoming = () => {
               key={index}
               className={`${styles.eventItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
             >
-              <Link
-                className="nostyle-link"
-                href={`/events/${event._id}`}
-              >
+              <Link className="nostyle-link" href={`/events/${event._id}`}>
                 <div
                   className={styles.imageWrapper}
                   style={{

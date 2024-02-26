@@ -179,10 +179,12 @@ const ManageNews = () => {
   };
 
   const sanitizeData = (data: string) => {
-    const sanitizedData = () => ({
-      __html: DOMPurify.sanitize(data),
+    const withLineBreaks = data.replace(/\n/g, "<br />");
+    // Sanitize the modified string
+    const sanitizedData = DOMPurify.sanitize(withLineBreaks, {
+      ADD_TAGS: ["br"],
     });
-    return <div dangerouslySetInnerHTML={sanitizedData()} />;
+    return <div dangerouslySetInnerHTML={{ __html: sanitizedData }} />;
   };
 
   if (!isLoggedIn) {
@@ -239,10 +241,10 @@ const ManageNews = () => {
                 key={index}
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
-                <div className="d-flex flex-column align-items-center">
-                  <div className={`${styles.newsItem} d-flex flex-row`}>
+                <div className="d-flex flex-column align-items-center w-100">
+                  <div className={`${styles.newsItem} d-flex flex-row w-75`}>
                     <div
-                      className="w-100 align-self-center"
+                      className="w-50 align-self-center"
                       style={{
                         height: "300px",
                         width: "300px",
@@ -311,6 +313,11 @@ const ManageNews = () => {
                           {" "}
                           <p>Title:</p>
                           <p>{item.title}</p>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Date Posted:</p>
+                          <p>{new Date(item.createdAt).toLocaleDateString()}</p>
                         </div>
                         <div className="d-flex flex-row justify-content-between">
                           {" "}

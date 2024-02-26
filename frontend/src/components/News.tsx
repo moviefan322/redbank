@@ -49,12 +49,12 @@ const Upcoming = () => {
   }
 
   return (
-    <div className="d-flex flex-column align-items-center pb-5">
-      <h4
-        className={`d-flex flex-row justify-content-center justify-content-md-start fs-2 my-4 fw-bold w-75`}
-      >
-        <u>NEWS</u>
-      </h4>
+    <div className={`d-flex flex-column align-items-center pb-5`}>
+      <Link className="nostyle-link" href="/news">
+        <h4 className={`fs-2 my-4 fw-bold`}>
+          <u>NEWS</u>
+        </h4>
+      </Link>
       <div
         className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3 w-100`}
       >
@@ -69,17 +69,18 @@ const Upcoming = () => {
         >
           <FaChevronLeft />
         </button>
-        {displayedNews.map((news, index) => {
+        {displayedNews.map((newsItem, index) => {
           return (
             <div
               key={index}
-              className={`mb-4 d-flex flex-column align-items-center justify-content-between p-1`}
+              className={`${styles.newsItem} mb-4 d-flex flex-column align-items-center justify-content-between`}
             >
-              <Link className="nostyle-link" href={`/news/${news._id}`}>
+              <Link className="nostyle-link" href={`/news/${newsItem._id}`}>
                 <div
+                  className={styles.imageWrapper}
                   style={{
                     backgroundColor: "#151515",
-                    backgroundImage: `url("${news.urlPhoto}")`,
+                    backgroundImage: `url("${newsItem.urlPhoto}")`,
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
@@ -87,12 +88,15 @@ const Upcoming = () => {
                     height: "250px",
                   }}
                 ></div>
-                <div>
-                  <p className="mt-3 fw-bolder fs-5">{news.title}</p>
-                  <p className="text-start">{news.descriptionShort}</p>
+                <div className={styles.descText}>
+                  <p className={styles.overlayText}>
+                    {newsItem.createdAt
+                      ? `${new Date(newsItem.createdAt).toLocaleDateString()}`
+                      : ""}
+                  </p>
+                  <p className="mt-3 fw-bolder fs-5">{newsItem.title}</p>
+                  <p className="text-start">{newsItem.descriptionShort}</p>
                 </div>
-                <h6 className="mt-3"></h6>
-                <div className={styles.descText}></div>
               </Link>
             </div>
           );

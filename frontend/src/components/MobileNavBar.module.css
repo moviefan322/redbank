@@ -2,6 +2,12 @@
   background-color: var(--bs-light);
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem 0rem;
   align-items: center;
+}
+
+.image1 {
+  height: 37.5px;
+  width: 150px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/c_crop,w_8400,h_2200/v1708489715/RedBank-Swoosh-Logo-Red_ylwwdx.png") no-repeat center/cover;
 }
