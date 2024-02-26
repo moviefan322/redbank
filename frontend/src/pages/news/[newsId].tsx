@@ -7,19 +7,21 @@ import styles from "./NewsDetail.module.css";
 
 type Props = {
   news: News;
+  fullDescriptionHTML: string;
 };
 
 function NewsDetail(props: Props) {
   const news: News | undefined = props.news;
+  const descriptionHTML = props.fullDescriptionHTML;
 
-  const sanitizeData = (data: string) => {
-    const withLineBreaks = data.replace(/\n/g, "<br />");
-    // Sanitize the modified string
-    const sanitizedData = DOMPurify.sanitize(withLineBreaks, {
-      ADD_TAGS: ["br"],
-    });
-    return <div dangerouslySetInnerHTML={{ __html: sanitizedData }} />;
-  };
+  // const sanitizeData = (data: string) => {
+  //   const withLineBreaks = data.replace(/\n/g, "<br />");
+  //   // Sanitize the modified string
+  //   const sanitizedData = DOMPurify.sanitize(withLineBreaks, {
+  //     ADD_TAGS: ["br"],
+  //   });
+  //   return <div dangerouslySetInnerHTML={{ __html: sanitizedData }} />;
+  // };
 
   if (!news) {
     return (
@@ -46,7 +48,7 @@ function NewsDetail(props: Props) {
             href="/news"
           >{`<< All News`}</Link>
           <h1 className="align-self-center">{news.title}</h1>
-          <small className="align-self-start ms-3">
+          <small className="align-self-start align-self-md-center ms-3 ms-md-0">
             {new Date(news.createdAt).toLocaleDateString()}
           </small>
           <div
@@ -59,11 +61,17 @@ function NewsDetail(props: Props) {
               backgroundSize: "cover",
               width: "300px",
               height: "300px",
+              border: "2px solid black",
             }}
           ></div>
           <h6>{news.descriptionShort}</h6>
-          {sanitizeData(news.description)}
+          <div dangerouslySetInnerHTML={{ __html: descriptionHTML }} />
         </div>
+        {news.link && (
+          <Link className="noStyleLink" href={news.link}>
+            <button className="noStyleButt">Read More</button>
+          </Link>
+        )}
       </div>
     </Fragment>
   );
@@ -76,9 +84,12 @@ export async function getStaticProps(context: any) {
   );
   const news: News | undefined = await response.json();
 
+  const fullDescriptionHTML = news!.description.replace(/\n/g, "<br />");
+
   return {
     props: {
       news,
+      fullDescriptionHTML,
     },
     revalidate: 30,
   };
