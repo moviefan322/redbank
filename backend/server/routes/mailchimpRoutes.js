@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const { getMailchimpData } = require("../controllers/mailchimpController");
+import { getMailchimpData } from "../controllers/mailchimpController.js";
 
 router.get("/", getMailchimpData);
 
-module.exports = router;
+export default router;

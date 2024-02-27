@@ -15,6 +15,7 @@ import eventRoutes from "./routes/eventRoutes.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import uploadImageRoutes from "./routes/uploadImageRoutes.js";
 import carouselItemRoutes from "./routes/carouselItemRoutes.js";
+import mailchimpRoutes from "./routes/mailchimpRoutes.js";
 
 connectDB();
 
@@ -44,24 +45,7 @@ app.use("/api/carouselItems", carouselItemRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/upload", uploadImageRoutes);
-app.get("/api/mailchimp", async (req, res) => {
-  try {
-    // Replace with the specific Mailchimp API endpoint you need
-    const url =
-      "https://us7.api.mailchimp.com/3.0/campaigns?folder_id=c64693791f";
-    const apiKey = process.env.MAILCHIMP_API_KEY;
-    console.log(apiKey);
-    const response = await axios.get(url, {
-      auth: {
-        username: "anystring", // Mailchimp API does not use this value, so 'anystring' is a placeholder
-        password: apiKey, // Your actual Mailchimp API key
-      },
-    });
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error fetching data from Mailchimp:", error);
-  }
-});
+app.use("/api/redbankbeat", mailchimpRoutes);
 
 // if (process.env.NODE_ENV === "production") {
 //   const __dirname = path.resolve();
