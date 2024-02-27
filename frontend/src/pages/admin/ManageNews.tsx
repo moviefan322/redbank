@@ -327,7 +327,7 @@ const ManageNews = () => {
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
                           <p>Video Link:</p>
-                          <p>{item.link}</p>
+                          <p>{item.videoLink}</p>
                         </div>
                       </div>
                     )}

@@ -1,0 +1,26 @@
+.videoResponsive {
+  position: relative;
+  width: 100%;
+}
+
+.videoResponsive::before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: 56.25%;
+}
+
+.videoResponsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .videoResponsive {
+    position: relative;
+    width: 80%;
+  }
+}

@@ -1,27 +1,16 @@
 import React, { Fragment } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import DOMPurify from "dompurify";
 import News from "../../types/News";
 import styles from "./NewsDetail.module.css";
 
 type Props = {
   news: News;
-  fullDescriptionHTML: string;
 };
 
 function NewsDetail(props: Props) {
   const news: News | undefined = props.news;
-  const descriptionHTML = props.fullDescriptionHTML;
-
-  // const sanitizeData = (data: string) => {
-  //   const withLineBreaks = data.replace(/\n/g, "<br />");
-  //   // Sanitize the modified string
-  //   const sanitizedData = DOMPurify.sanitize(withLineBreaks, {
-  //     ADD_TAGS: ["br"],
-  //   });
-  //   return <div dangerouslySetInnerHTML={{ __html: sanitizedData }} />;
-  // };
+  const fullDescriptionHTML = news!.description.replace(/\n/g, "<br />");
 
   if (!news) {
     return (
@@ -30,8 +19,6 @@ function NewsDetail(props: Props) {
       </div>
     );
   }
-
-  console.log(news);
 
   return (
     <Fragment>
@@ -65,13 +52,28 @@ function NewsDetail(props: Props) {
             }}
           ></div>
           <h6>{news.descriptionShort}</h6>
-          <div dangerouslySetInnerHTML={{ __html: descriptionHTML }} />
+          <div dangerouslySetInnerHTML={{ __html: fullDescriptionHTML }} />
+          {news.videoLink && (
+            <div
+              className={`d-flex flex-row justify-content-center mt-5 ${styles.videoResponsive}`}
+            >
+              <iframe
+                src={`${news.videoLink}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
+          {news.link && (
+            <Link
+              className="noStyleLink mt-5 btn btn-sm btn-secondary"
+              href={news.link}
+            >
+              <button className="noStyleButt">Read More</button>
+            </Link>
+          )}
         </div>
-        {news.link && (
-          <Link className="noStyleLink" href={news.link}>
-            <button className="noStyleButt">Read More</button>
-          </Link>
-        )}
       </div>
     </Fragment>
   );
@@ -84,12 +86,9 @@ export async function getStaticProps(context: any) {
   );
   const news: News | undefined = await response.json();
 
-  const fullDescriptionHTML = news!.description.replace(/\n/g, "<br />");
-
   return {
     props: {
       news,
-      fullDescriptionHTML,
     },
     revalidate: 30,
   };
