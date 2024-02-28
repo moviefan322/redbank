@@ -45,7 +45,7 @@ app.use("/api/carouselItems", carouselItemRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/upload", uploadImageRoutes);
-app.use("/api/redbankbeat", newsletterRoutes);
+app.use("/api/newsletter", newsletterRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
