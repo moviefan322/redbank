@@ -6,7 +6,7 @@ import News from "../models/newsModel.js";
 // @access  Public
 
 const getNews = asyncHandler(async (req, res) => {
-  const news = await News.find({});
+  const news = await News.find({}).sort({ createdAt: -1 });
   res.json(news);
 });
 

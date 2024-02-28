@@ -24,7 +24,7 @@ body {
   outline: none;
 }
 
-.noStyleButt:hover {
+.noStyleButt:not(:disabled):hover {
   color: brown;
 }
 
@@ -102,7 +102,7 @@ body {
   color: black;
 }
 
-.nostyle-link:hover {
+.nostyle-link:not(:disabled):hover {
   color: brown;
 }
 

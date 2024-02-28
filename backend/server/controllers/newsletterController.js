@@ -40,7 +40,7 @@ const getNewsletters = asyncHandler(async (req, res) => {
       await newNewsletter.save();
     }
 
-    res.json(await Newsletter.find({})); // Fetch updated list
+    res.json(await Newsletter.find({}).sort({ create_time: -1 }));
   } catch (error) {
     console.error("Error in getNewsletters:", error);
     res.status(500).send("An error occurred");
@@ -48,7 +48,8 @@ const getNewsletters = asyncHandler(async (req, res) => {
 });
 
 const updateNewsletter = asyncHandler(async (req, res) => {
-  const { imageUrl, _id } = req.body;
+  const { _id } = req.params;
+  const { imageUrl } = req.body;
   const newsletter = await Newsletter.findById(_id);
 
   if (newsletter) {
