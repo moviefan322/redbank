@@ -15,7 +15,7 @@ import eventRoutes from "./routes/eventRoutes.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import uploadImageRoutes from "./routes/uploadImageRoutes.js";
 import carouselItemRoutes from "./routes/carouselItemRoutes.js";
-import mailchimpRoutes from "./routes/mailchimpRoutes.js";
+import newsletterRoutes from "./routes/newsletterRoutes.js";
 
 connectDB();
 
@@ -45,17 +45,17 @@ app.use("/api/carouselItems", carouselItemRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/upload", uploadImageRoutes);
-app.use("/api/redbankbeat", mailchimpRoutes);
+app.use("/api/redbankbeat", newsletterRoutes);
 
-// if (process.env.NODE_ENV === "production") {
-//   const __dirname = path.resolve();
-//   app.use(express.static(path.join(__dirname, "/client/dist")));
-//   app.get("*", (req, res) =>
-//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"))
-//   );
-// } else {
-app.get("/", (req, res) => res.send("Server is ready"));
-// }
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "/client/dist")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => res.send("Server is ready"));
+}
 
 app.use(notFound);
 app.use(errorHandler);
