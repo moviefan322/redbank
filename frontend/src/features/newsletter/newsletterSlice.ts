@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllNewsletters } from "./newsletterActions";
+import { getAllNewsletters, updateNewsletter } from "./newsletterActions";
 import Newsletter from "../../types/Newsletter";
 
 interface NewsletterState {
@@ -45,24 +45,24 @@ const newsletterSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.success = false;
+      })
+      .addCase(updateNewsletter.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(updateNewsletter.fulfilled, (state, action) => {
+        state.loading = false;
+        state.newsletter = state.newsletter!.map((newsletter) =>
+          newsletter._id === action.payload._id ? action.payload : newsletter
+        );
+        state.success = true;
+        state.updateSuccess = true;
+      })
+      .addCase(updateNewsletter.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
       });
-    // .addCase(updateNewsletter.pending, (state) => {
-    //   state.loading = true;
-    //   state.success = false;
-    // })
-    // .addCase(updateNewsletter.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.newsletter = state.newsletter!.map((newsletter) =>
-    //     newsletter._id === action.payload._id ? action.payload : newsletter
-    //   );
-    //   state.success = true;
-    //   state.updateSuccess = true;
-    // })
-    // .addCase(updateNewsletter.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    //   state.success = false;
-    // })
   },
 });
 
