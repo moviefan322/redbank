@@ -17,7 +17,7 @@ const config = {
   },
 };
 
-export const getAllNewsletter = createAsyncThunk<
+export const getAllNewsletters = createAsyncThunk<
   Newsletter[],
   void,
   { rejectValue: string }

@@ -3,7 +3,8 @@ import Newsletter from "../models/newsletterModel.js";
 import axios from "axios";
 
 const getMailchimpData = async () => {
-  const url = "https://us7.api.mailchimp.com/3.0/campaigns?folder_id=c64693791f";
+  const url =
+    "https://us7.api.mailchimp.com/3.0/campaigns?folder_id=c64693791f";
   const apiKey = process.env.MAILCHIMP_API_KEY;
   try {
     const response = await axios.get(url, {
@@ -18,20 +19,23 @@ const getMailchimpData = async () => {
 
 const getNewsletters = asyncHandler(async (req, res) => {
   try {
-    const mailchimpData = await getMailchimpData(); // Ensure this is awaited
+    const mailchimpData = await getMailchimpData();
     const newsletters = await Newsletter.find({});
 
-    // Assuming mailchimpData contains an array of campaign objects
-    const newMailChimpCampaigns = mailchimpData.campaigns.filter(campaign => 
-      !newsletters.some(newsletter => newsletter.mailchimp_id === campaign.id));
+    const newMailChimpCampaigns = mailchimpData.campaigns.filter(
+      (campaign) =>
+        !newsletters.some(
+          (newsletter) => newsletter.mailchimp_id === campaign.id
+        )
+    );
 
     for (const campaign of newMailChimpCampaigns) {
       const newNewsletter = new Newsletter({
         mailchimp_id: campaign.id,
-        url: campaign.archive_url, // Make sure these fields exist
+        url: campaign.archive_url,
         create_time: campaign.create_time,
         subject_line: campaign.settings.subject_line,
-        imageUrl: "", // Determine how you want to handle images
+        imageUrl: "",
       });
       await newNewsletter.save();
     }
@@ -43,4 +47,17 @@ const getNewsletters = asyncHandler(async (req, res) => {
   }
 });
 
-export { getNewsletters, getMailchimpData };
+const updateNewsletter = asyncHandler(async (req, res) => {
+  const { imageUrl, _id } = req.body;
+  const newsletter = await Newsletter.findById(_id);
+
+  if (newsletter) {
+    newsletter.imageUrl = imageUrl;
+    await newsletter.save();
+    res.json(newsletter);
+  } else {
+    res.status(404).json({ message: "Newsletter not found" });
+  }
+});
+
+export { getNewsletters, updateNewsletter };

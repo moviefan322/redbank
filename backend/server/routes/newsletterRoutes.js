@@ -1,7 +1,11 @@
 import express from "express";
 const router = express.Router();
-import { getNewsletters } from "../controllers/newsletterController.js";
+import {
+  getNewsletters,
+  updateNewsletter,
+} from "../controllers/newsletterController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
-router.get("/", getNewsletters);
+router.route("/").get(getNewsletters).put(protect, updateNewsletter);
 
 export default router;
