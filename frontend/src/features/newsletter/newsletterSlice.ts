@@ -3,7 +3,7 @@ import { getAllNewsletters, updateNewsletter } from "./newsletterActions";
 import Newsletter from "../../types/Newsletter";
 
 interface NewsletterState {
-  newsletter: Newsletter[];
+  newsletters: Newsletter[];
   loading: boolean;
   error: string | undefined;
   success: boolean;
@@ -11,7 +11,7 @@ interface NewsletterState {
 }
 
 const initialState: NewsletterState = {
-  newsletter: [],
+  newsletters: [],
   loading: false,
   error: undefined,
   success: false,
@@ -19,7 +19,7 @@ const initialState: NewsletterState = {
 };
 
 const newsletterSlice = createSlice({
-  name: "newsletter",
+  name: "newsletters",
   initialState,
   reducers: {
     resetSuccess: (state) => {
@@ -38,7 +38,7 @@ const newsletterSlice = createSlice({
       })
       .addCase(getAllNewsletters.fulfilled, (state, action) => {
         state.loading = false;
-        state.newsletter = action.payload;
+        state.newsletters = action.payload;
         state.success = true;
       })
       .addCase(getAllNewsletters.rejected, (state, action) => {
@@ -52,7 +52,7 @@ const newsletterSlice = createSlice({
       })
       .addCase(updateNewsletter.fulfilled, (state, action) => {
         state.loading = false;
-        state.newsletter = state.newsletter!.map((newsletter) =>
+        state.newsletters = state.newsletters!.map((newsletter) =>
           newsletter._id === action.payload._id ? action.payload : newsletter
         );
         state.success = true;

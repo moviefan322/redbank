@@ -4,6 +4,7 @@ import carouselReducer from "@/features/carousel/carouselSlice";
 import eventReducer from "@/features/events/eventSlice";
 import newsReducer from "@/features/news/newsSlice";
 import imageUploadReducer from "@/features/upload/uploadSlice";
+import newsletterReducer from "@/features/newsletter/newsletterSlice";
 import { authApi } from "@/services/auth/authService";
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     imageUploader: imageUploadReducer,
     events: eventReducer,
     news: newsReducer,
+    newsletters: newsletterReducer,
   },
   middleware: (getDefaultMiddleWare) =>
     getDefaultMiddleWare().concat(authApi.middleware),

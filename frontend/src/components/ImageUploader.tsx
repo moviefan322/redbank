@@ -19,12 +19,14 @@ interface ImageUploaderProps<T> {
   data: T;
   setData: (data: T) => void;
   buttonText?: string;
+  imageParam?: string;
 }
 
 const ImageUploader = <T extends {}>({
   data,
   setData,
   buttonText = "Upload File",
+  imageParam = "urlPhoto",
 }: ImageUploaderProps<T>) => {
   const [file, setFile] = useState<File | null>(null);
   const dispatch = useDispatch();
@@ -34,9 +36,16 @@ const ImageUploader = <T extends {}>({
 
   useEffect(() => {
     if (imageUrl) {
-      setData({ ...data, urlPhoto: imageUrl });
+      setData({ ...data, [imageParam ? imageParam : "urlPhoto"]: imageUrl });
     }
   }, [imageUrl]);
+
+  useEffect(() => {
+    // Reset upload state when an image URL is successfully obtained or when an error occurs
+    if (imageUrl || error) {
+      dispatch(resetUploadState());
+    }
+  }, [imageUrl, error, dispatch]);
 
   const handleSelectFile = (e: any) => setFile(e.target.files[0]);
 
