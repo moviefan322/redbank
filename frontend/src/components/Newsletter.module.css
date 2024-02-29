@@ -2,26 +2,15 @@
   display: none;
 }
 
-.imageWrapper {
-  position: relative;
-  height: 200px;
-  width: 200px;
-}
-
 .descText {
   font-size: 0.9rem;
   text-align: left;
-  padding: 1rem 0.5rem 0 0.5rem;
   line-height: 1;
   width: 200px;
 }
 
-.descText p {
-  font-weight: bolder;
-}
-
 @media (min-width: 768px) {
-  .eventItem {
+  .newslettersItem {
     margin: 0 2rem;
   }
 

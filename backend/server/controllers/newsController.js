@@ -52,6 +52,7 @@ const createNews = asyncHandler(async (req, res) => {
     title,
     urlPhoto,
     link,
+    linkText,
     description,
     descriptionShort,
     videoLink,
@@ -66,7 +67,7 @@ const createNews = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateNews = asyncHandler(async (req, res) => {
-  const { title, urlPhoto, link, description, descriptionShort, videoLink } =
+  const { title, urlPhoto, link, linkText, description, descriptionShort, videoLink } =
     req.body;
 
   const news = await News.findById(req.params._id);
@@ -75,6 +76,7 @@ const updateNews = asyncHandler(async (req, res) => {
     if (title !== undefined) news.title = title;
     if (urlPhoto !== undefined) news.urlPhoto = urlPhoto;
     if (link !== undefined) news.link = link;
+    if (linkText !== undefined) news.linkText = linkText;
     if (description !== undefined) news.description = description;
     if (descriptionShort !== undefined)
       news.descriptionShort = descriptionShort;

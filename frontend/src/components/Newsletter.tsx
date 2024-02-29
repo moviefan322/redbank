@@ -93,14 +93,14 @@ const Upcoming = () => {
                   }}
                 ></div>
                 <div className={styles.descText}>
-                  <p className={styles.overlayText}>
-                    {newslettersItem.createdAt
+                  <p className="fw-bolder mt-2">
+                    {newslettersItem.create_time
                       ? `${new Date(
                           newslettersItem.create_time
                         ).toLocaleDateString()}`
                       : ""}
                   </p>
-                  <p className="mt-3 fw-bolder fs-5">
+                  <p className="mt-3 text-center">
                     {newslettersItem.subject_line}
                   </p>
                 </div>

@@ -14,6 +14,10 @@ const NewsSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    linkText: {
+      type: String,
+      required: false,
+    },
     descriptionShort: {
       type: String,
       required: true,
