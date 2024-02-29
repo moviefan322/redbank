@@ -70,7 +70,9 @@ function NewsDetail(props: Props) {
               className="noStyleLink mt-5 btn btn-sm btn-secondary"
               href={news.link}
             >
-              <button className="noStyleButt">Read More</button>
+              <button className="noStyleButt">
+                {news.linkText ? news.linkText : "Read More"}
+              </button>
             </Link>
           )}
         </div>

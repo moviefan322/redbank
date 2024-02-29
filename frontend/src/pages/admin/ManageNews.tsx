@@ -37,6 +37,7 @@ const ManageNews = () => {
     title: "",
     urlPhoto: "",
     link: "",
+    linkText: "",
     description: "",
     descriptionShort: "",
     videoLink: "",
@@ -78,6 +79,7 @@ const ManageNews = () => {
     title: "",
     urlPhoto: "",
     link: "",
+    linkText: "",
     description: "",
     descriptionShort: "",
   });
@@ -91,6 +93,7 @@ const ManageNews = () => {
       title: "",
       urlPhoto: "",
       link: "",
+      linkText: "",
       description: "",
       descriptionShort: "",
       videoLink: "",
@@ -103,6 +106,7 @@ const ManageNews = () => {
       title: "",
       urlPhoto: "",
       link: "",
+      linkText: "",
       description: "",
       descriptionShort: "",
       videoLink: "",
@@ -124,6 +128,7 @@ const ManageNews = () => {
       title: "",
       urlPhoto: "",
       link: "",
+      linkText: "",
       description: "",
       descriptionShort: "",
       videoLink: "",
@@ -138,6 +143,7 @@ const ManageNews = () => {
       title: currentNews.title,
       urlPhoto: currentNews.urlPhoto,
       link: currentNews.link,
+      linkText: currentNews.linkText,
       description: currentNews.description,
       descriptionShort: currentNews.descriptionShort,
       videoLink: currentNews.videoLink,
@@ -285,6 +291,20 @@ const ManageNews = () => {
                         </div>
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
+                          <p>Link Text:</p>
+                          <input
+                            placeholder={item.linkText}
+                            value={updateNewsData.linkText}
+                            onChange={(e) =>
+                              setUpdateNewsData((prev) => ({
+                                ...prev,
+                                linkText: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
                           <p>Video:</p>
                           <input
                             placeholder={item.videoLink}
@@ -323,6 +343,11 @@ const ManageNews = () => {
                           {" "}
                           <p>Link:</p>
                           <p>{item.link}</p>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          {" "}
+                          <p>Link Text:</p>
+                          <p>{item.linkText}</p>
                         </div>
                         <div className="d-flex flex-row justify-content-between">
                           {" "}

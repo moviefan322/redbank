@@ -3,6 +3,7 @@ export default interface UpdateNewsReq {
   title: string;
   urlPhoto: string;
   link?: string;
+  linkText?: string;
   description: string;
   descriptionShort: string;
   videoLink?: string;
