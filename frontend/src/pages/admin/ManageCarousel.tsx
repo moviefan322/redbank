@@ -346,13 +346,13 @@ const ManageCarousel = () => {
                     <>
                       {" "}
                       <button
-                        className="btn btn-success ms-5"
+                        className="btn btn-success ms-md-5  mt-2 mt-md-0"
                         onClick={handleUpdate}
                       >
                         Save
                       </button>
                       <button
-                        className="btn btn-danger ms-5"
+                        className="btn btn-danger ms-md-5 mt-2 mt-md-0"
                         onClick={handleRevert}
                       >
                         Revert

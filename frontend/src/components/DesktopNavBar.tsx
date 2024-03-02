@@ -23,9 +23,11 @@ const DesktopNavBar = () => {
         </div>
 
         <div>
-          <button className={`noStyleButt ${styles.dropHead}`}>
-            E-NEWSLETTER
-          </button>
+          <Link href="/newsletter">
+            <button className={`noStyleButt ${styles.dropHead}`}>
+              E-NEWSLETTER
+            </button>
+          </Link>
         </div>
         <div>
           <Link href="/news">

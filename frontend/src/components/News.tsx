@@ -89,7 +89,7 @@ const Upcoming = () => {
                   }}
                 ></div>
                 <div className={styles.descText}>
-                  <p className={styles.overlayText}>
+                  <p className={`${styles.overlayText} mt-2`}>
                     {newsItem.createdAt
                       ? `${new Date(newsItem.createdAt).toLocaleDateString()}`
                       : ""}
