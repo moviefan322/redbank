@@ -29,7 +29,7 @@ function NewsPage(props: Props): JSX.Element {
         />
       </Head>
       <h1 className="text-center mt-5">News</h1>
-      <div className="py-5 d-flex flex-column align-items-center align-items-md-start">
+      <div className="py-5 d-flex flex-column align-items-center">
         {/* <NewsSearch onSearch={findNewsHandler} /> */}
         {allNews.map((news) => {
           return (
@@ -38,7 +38,7 @@ function NewsPage(props: Props): JSX.Element {
               href={`/news/${news._id}`}
               className="nostyle-link"
             >
-              <div className="d-flex flex-column align-items-center align-items-md-start mb-5 mx-5">
+              <div className="d-flex flex-column align-items-center mb-5 mx-5">
                 <div
                   // className={styles.imageWrapper}
                   style={{
@@ -51,16 +51,12 @@ function NewsPage(props: Props): JSX.Element {
                     height: "250px",
                   }}
                 ></div>
-                <h1 className="mt-3 mb-0 align-self-md-start">{news.title}</h1>
-                <p className="align-self-end align-self-md-start">
+                <h1 className="mt-3 mb-0">{news.title}</h1>
+                <p>
                   <small>{new Date(news.createdAt).toLocaleDateString()}</small>
                 </p>
-                <p className="align-self-start fw-bold">
-                  {news.descriptionShort}
-                </p>
-                <p
-                  className={`${styles.description} align-self-start text-start`}
-                >
+                <p className="fw-bold">{news.descriptionShort}</p>
+                <p className={`${styles.description} text-center w-75`}>
                   {news.description}
                 </p>
               </div>
