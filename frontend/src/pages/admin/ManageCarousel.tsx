@@ -161,15 +161,18 @@ const ManageCarousel = () => {
         <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
           <CustomCarousel />
         </Modal>
-        <h1 className={`${styles.header} my-5 p-3`}>
+        <h1 className={`${styles.header} my-5 p-3 text-center mx-3`}>
           Carousel Management Desk
         </h1>
-        <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-evenly w-100 mb-5">
           <button className="btn-primary btn" onClick={openPreviewModal}>
             View Carousel
           </button>
 
-          <button className="btn-success btn" onClick={openPostModal}>
+          <button
+            className="btn-success btn mt-2 mt-md-0"
+            onClick={openPostModal}
+          >
             Add New Item
           </button>
         </div>
@@ -189,7 +192,9 @@ const ManageCarousel = () => {
                 key={index}
                 className="d-flex flex-column align-items-center py-3"
               >
-                <div className={`${styles.carouselItem} d-flex flex-row`}>
+                <div
+                  className={`${styles.carouselItem} d-flex flex-column flex-md-row align-items-center `}
+                >
                   <div
                     className="w-50"
                     style={{
@@ -288,55 +293,55 @@ const ManageCarousel = () => {
                     </div>
                   )}
                 </div>
+                <Modal
+                  isOpen={isSinglePreviewOpen}
+                  onClose={closeSinglePreviewModal}
+                >
+                  <Carousel id="myCarousel">
+                    <Carousel.Item interval={5000}>
+                      <div
+                        className={`${styles.carouselItemPrev} d-flex flex-column justify-content-center align-items-center`}
+                        style={{
+                          height: "90vh",
+                          background: `#151515 url("${
+                            editModeIndex === previewModeIndex
+                              ? updateCarouselData.urlPhoto
+                              : carouselItems[previewModeIndex!].urlPhoto
+                          }") no-repeat center center`,
+                          backgroundSize: "cover",
+                          backgroundAttachment: "scroll",
+                        }}
+                      >
+                        <div className={`${styles.matte}`}></div>
+                        <h1>
+                          {editModeIndex === previewModeIndex
+                            ? updateCarouselData.title
+                            : carouselItems[previewModeIndex!].title}
+                        </h1>
+                        <Link
+                          href={
+                            editModeIndex === previewModeIndex
+                              ? updateCarouselData.link
+                              : carouselItems[previewModeIndex!].link
+                          }
+                          className={`${styles.carouselButt}`}
+                        >
+                          {editModeIndex === previewModeIndex
+                            ? updateCarouselData.linkText
+                            : carouselItems[previewModeIndex!].linkText}
+                        </Link>
+                      </div>
+                    </Carousel.Item>
+                  </Carousel>
+                </Modal>
 
-                <div className="mt-4 d-flex flex-row justify-content-end w-100">
+                <div className="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center w-100">
                   <button
                     className="btn btn-secondary"
                     onClick={() => handleOpenPreview(index)}
                   >
                     Preview
                   </button>
-                  <Modal
-                    isOpen={isSinglePreviewOpen}
-                    onClose={closeSinglePreviewModal}
-                  >
-                    <Carousel id="myCarousel">
-                      <Carousel.Item interval={5000}>
-                        <div
-                          className={`${styles.carouselItemPrev} d-flex flex-column justify-content-center align-items-center`}
-                          style={{
-                            height: "90vh",
-                            background: `#151515 url("${
-                              editModeIndex === previewModeIndex
-                                ? updateCarouselData.urlPhoto
-                                : carouselItems[previewModeIndex!].urlPhoto
-                            }") no-repeat center center`,
-                            backgroundSize: "cover",
-                            backgroundAttachment: "scroll",
-                          }}
-                        >
-                          <div className={`${styles.matte}`}></div>
-                          <h1>
-                            {editModeIndex === previewModeIndex
-                              ? updateCarouselData.title
-                              : carouselItems[previewModeIndex!].title}
-                          </h1>
-                          <Link
-                            href={
-                              editModeIndex === previewModeIndex
-                                ? updateCarouselData.link
-                                : carouselItems[previewModeIndex!].link
-                            }
-                            className={`${styles.carouselButt}`}
-                          >
-                            {editModeIndex === previewModeIndex
-                              ? updateCarouselData.linkText
-                              : carouselItems[previewModeIndex!].linkText}
-                          </Link>
-                        </div>
-                      </Carousel.Item>
-                    </Carousel>
-                  </Modal>
                   {editModeIndex === index ? (
                     <>
                       {" "}
@@ -357,13 +362,13 @@ const ManageCarousel = () => {
                     <>
                       {" "}
                       <button
-                        className="btn btn-warning ms-5"
+                        className="btn btn-warning ms-md-5 mt-2 mt-md-0"
                         onClick={() => handleEditModeButton(index)}
                       >
                         Edit
                       </button>
                       <button
-                        className="btn btn-danger ms-5"
+                        className="btn btn-danger ms-md-5 mt-2 mt-md-0"
                         onClick={() => {
                           setAreYouSureModalOpen(true);
                           setCurrentItemId(item._id);
