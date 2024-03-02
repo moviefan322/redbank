@@ -161,8 +161,8 @@ const ManageNews = () => {
                         {submitError && submitError}
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
-                          <p>Subject Line:</p>
-                          <p>{item.subject_line}</p>
+                          <p className="w-75">Text:</p>
+                          <p className="text-end">{item.subject_line}</p>
                         </div>
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
@@ -191,8 +191,8 @@ const ManageNews = () => {
                       <div className="ms-5 w-75 align-self-center">
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
-                          <p>Subject Line:</p>
-                          <p>{item.subject_line}</p>
+                          <p className="w-75">Text:</p>
+                          <p className="text-end">{item.subject_line}</p>
                         </div>
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
