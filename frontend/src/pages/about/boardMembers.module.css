@@ -1,0 +1,11 @@
+.nameBox {
+  background-color: rgb(225, 223, 223);
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.name {
+  color: brown;
+  font-weight: bolder;
+  margin-bottom: 0;
+}

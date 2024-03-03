@@ -40,7 +40,9 @@ const DesktopNavBar = () => {
           </button>
           <div className={`${styles.dropdown}`}>
             <ul className={styles.noStyleLi}>
-              <li>BOARD MEMBERS</li>
+              <Link className="nostyle-link" href="/about/boardMembers">
+                <li>BOARD MEMBERS</li>
+              </Link>
               <li>CONTACT US</li>
             </ul>
           </div>

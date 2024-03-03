@@ -16,6 +16,7 @@ import newsRoutes from "./routes/newsRoutes.js";
 import uploadImageRoutes from "./routes/uploadImageRoutes.js";
 import carouselItemRoutes from "./routes/carouselItemRoutes.js";
 import newsletterRoutes from "./routes/newsletterRoutes.js";
+import boardMemberRoutes from "./routes/boardMemberRoutes.js";
 
 connectDB();
 
@@ -46,6 +47,7 @@ app.use("/api/events", eventRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/upload", uploadImageRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/boardMembers", boardMemberRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

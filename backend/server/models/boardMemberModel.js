@@ -12,7 +12,7 @@ const BoardMemberSchema = mongoose.Schema(
     },
     department: {
       type: String,
-      required: true,
+      required: false,
     },
     officerOrDirector: {
       type: String,
