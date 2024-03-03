@@ -162,7 +162,7 @@ const ManageCarousel = () => {
           <CustomCarousel />
         </Modal>
         <h1 className={`${styles.header} my-5 p-3 text-center mx-3`}>
-          Carousel Management Desk
+          Carousel Management Portal
         </h1>
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-evenly w-100 mb-5">
           <button className="btn-primary btn" onClick={openPreviewModal}>
@@ -406,7 +406,7 @@ const ManageCarousel = () => {
             ))}
           </div>
         </div>
-        <div className="d-flex flex-row justify-content-end pb-5 w-100">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
           <Link className="admin-link" href="/admin">
             <button className="mb-5 d-flex flex-row align-items-center btn-admin">
               <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin

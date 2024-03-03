@@ -248,9 +248,11 @@ const ManageNews = () => {
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
                 <div className="d-flex flex-column align-items-center w-100">
-                  <div className={`${styles.newsItem} d-flex flex-row w-75`}>
+                  <div
+                    className={`${styles.newsItem} d-flex flex-column flex-md-row`}
+                  >
                     <div
-                      className="w-50 align-self-center"
+                      className="w-50 align-self-center my-3"
                       style={{
                         height: "300px",
                         width: "300px",
@@ -392,7 +394,7 @@ const ManageNews = () => {
                     </div>
                   )}
 
-                  <div className="mt-4 d-flex flex-row justify-content-center w-100">
+                  <div className="mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center w-100">
                     <button
                       className="btn btn-secondary"
                       onClick={() => handleOpenPreview(index)}
@@ -410,14 +412,14 @@ const ManageNews = () => {
                       <>
                         {" "}
                         <button
-                          className="btn btn-success ms-5"
+                          className="btn btn-success ms-md-5 mt-2 mt-md-0"
                           onClick={handleUpdate}
                           disabled={!isDescriptionValid}
                         >
                           Save
                         </button>
                         <button
-                          className="btn btn-danger ms-5"
+                          className="btn btn-danger ms-md-5 mt-2 mt-md-0"
                           onClick={handleRevert}
                         >
                           Revert
@@ -427,13 +429,13 @@ const ManageNews = () => {
                       <>
                         {" "}
                         <button
-                          className="btn btn-warning ms-5"
+                          className="btn btn-warning ms-md-5 mt-2 mt-md-0"
                           onClick={() => handleEditModeButton(index)}
                         >
                           Edit
                         </button>
                         <button
-                          className="btn btn-danger ms-5"
+                          className="btn btn-danger ms-md-5 mt-2 mt-md-0"
                           onClick={() => {
                             setAreYouSureModalOpen(true);
                             setCurrentItemId(item._id);
@@ -472,7 +474,7 @@ const ManageNews = () => {
             ))}
           </div>
         </div>
-        <div className="d-flex flex-row justify-content-end pb-5 w-100">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
           <Link className="admin-link" href="/admin">
             <button className="mb-5 d-flex flex-row align-items-center btn-admin">
               <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin

@@ -60,6 +60,7 @@ function NewsPage(props: Props): JSX.Element {
                   {news.description}
                 </p>
               </div>
+              <hr />
             </Link>
           );
         })}
