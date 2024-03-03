@@ -1,15 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config({ path: "../../.env" });
 import mongoose from "mongoose";
+import connectDB from "../config/db.js";
 import BoardMember from "../models/boardMemberModel.js";
 import { boardMembers } from "./boardMembers.js";
 
 // MongoDB connection string
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+connectDB();
 
 const seedDB = async () => {
   await BoardMember.deleteMany({});

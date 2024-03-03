@@ -40,7 +40,7 @@ export const boardMembers = [
     name: "Angela Courtney",
     department: "Sweetest Sin Lingerie Shop",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "Acya User",
@@ -73,20 +73,20 @@ export const boardMembers = [
     name: "Courtney Schroeder",
     department: "Two River Theater",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "Darren McConnell",
     position: "Borough Administrator",
     department: "",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "Jay Herman",
     department: "Downtown Investors",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "John Anderson",
@@ -142,7 +142,7 @@ export const boardMembers = [
     name: "Stephen Catania",
     department: "The Cheese Cave",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "Steven Denholtz",
@@ -155,7 +155,7 @@ export const boardMembers = [
     position: "Architect",
     department: "",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "Erik Horowitz",
@@ -168,7 +168,7 @@ export const boardMembers = [
     position: "Attorney",
     department: "Ed McKenna Attorney at Law",
     officerOrDirector: "Director",
-    executiveCommitteeMember: false,
+    executiveCommitteeMember: true,
   },
   {
     name: "Ingeborg Perndorfer",
@@ -193,5 +193,11 @@ export const boardMembers = [
     department: "Red Bank Artisan Collective",
     officerOrDirector: "Director",
     executiveCommitteeMember: false,
+  },
+  {
+    name: "Mary Demont",
+    department: "Barbizon of Red Bank",
+    officerOrDirector: "Director",
+    executiveCommitteeMember: true,
   },
 ];
