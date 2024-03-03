@@ -6,7 +6,7 @@ import GiftCard from "../models/giftCardModel.js";
 // @access  Public
 
 const getAllGiftCards = asyncHandler(async (req, res) => {
-  const giftCard = await GiftCard.find({}).sort({ createdAt: -1 });
+  const giftCard = await GiftCard.find({});
   res.json(giftCard);
 });
 
