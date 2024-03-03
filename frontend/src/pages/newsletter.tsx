@@ -33,7 +33,7 @@ const NewsletterPage = () => {
           return (
             <div
               key={index}
-              className={`${styles.newslettersItem} mb-4 d-flex flex-column align-items-center justify-content-between mx-5`}
+              className={`${styles.newslettersItem} col-md-3 mb-4 d-flex flex-column align-items-center justify-content-between mx-5`}
             >
               <Link className="nostyle-link" href={newslettersItem.url}>
                 <div
