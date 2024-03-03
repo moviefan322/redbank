@@ -36,7 +36,7 @@ const BoardMembers = () => {
   return (
     <div className="py-5 w-75 mx-auto">
       <div className="mx-auto">
-        <h1 className="text-center my-5">Board of Directors</h1>
+        <h1 className="text-center my-5 brown">Board of Directors</h1>
         <p>
           Red Bank River Center is governed by a board of trustees who oversee
           our small but versatile staff. The board of trustees comprises
@@ -47,11 +47,17 @@ const BoardMembers = () => {
       </div>
       <div className="mt-5">
         <h2>Officers</h2>
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap mx-auto">
           {officers.map((officer, index) => {
             return (
-              <div key={index} className={`${styles.nameBox} col-3`}>
-                <p className={styles.name}>{officer.name}</p>
+              <div
+                key={index}
+                className={`${styles.nameBox} col-12 col-md-3 mx-auto mx-md-2`}
+              >
+                <p className={styles.name}>
+                  {officer.executiveCommitteeMember && "*"}
+                  {officer.name}
+                </p>
                 <small>
                   {officer.position} {officer.department}{" "}
                 </small>
@@ -65,8 +71,14 @@ const BoardMembers = () => {
         <div className="d-flex flex-wrap">
           {directors.map((director, index) => {
             return (
-              <div key={index} className={`${styles.nameBox} col-3`}>
-                <p className={styles.name}>{director.name}</p>
+              <div
+                key={index}
+                className={`${styles.nameBox} col-12 col-md-3 mx-auto mx-md-2`}
+              >
+                <p className={styles.name}>
+                  {director.executiveCommitteeMember && "*"}
+                  {director.name}
+                </p>
                 <small>
                   {director.position}
                   {director.position && director.department && ";"}{" "}

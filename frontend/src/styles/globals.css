@@ -109,3 +109,11 @@ body {
 .btn-admin .icon {
   vertical-align: middle;
 }
+
+.brown {
+  color: brown;
+}
+
+.bg-brown {
+  background-color: brown;
+}
