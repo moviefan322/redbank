@@ -1,0 +1,6 @@
+.image {
+  width: 300px;
+  height: 200px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/v1709481205/rebankbucks_fpmvdv.jpg")
+    no-repeat center/cover;
+}
