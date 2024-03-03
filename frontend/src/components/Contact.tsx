@@ -15,6 +15,8 @@ const Contact = () => {
     message: "",
   });
 
+  
+
   // Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -23,18 +25,12 @@ const Contact = () => {
     setFormState({ ...formState, [name]: value });
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted:", formState);
-    // Here you can handle the form submission, e.g., sending data to an API
-  };
 
   return (
     <div className="bg-dark p-3">
       <div className="w-100 bg-brown p-3">
         <h1 className="text-center text-light">Contact Us</h1>
-        <form onSubmit={handleSubmit}>
+        <form action="https://formspree.io/f/xgejyqbo" method="POST">
           <div className="d-flex flex-column">
             <label className="fw-bold text-light" htmlFor="name">
               Name:

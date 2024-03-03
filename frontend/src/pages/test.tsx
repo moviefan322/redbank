@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Contact from "@/components/Contact";
+import React from "react";
 
-const TroublesomeComponent = () => {
-  return <Contact />;
+const TestPoop = () => {
+  return <h1>I SHAT MY PANTS</h1>;
 };
 
-export default TroublesomeComponent;
+export default TestPoop;

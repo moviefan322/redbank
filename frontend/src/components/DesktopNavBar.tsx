@@ -43,7 +43,9 @@ const DesktopNavBar = () => {
               <Link className="nostyle-link" href="/about/boardMembers">
                 <li>BOARD MEMBERS</li>
               </Link>
-              <li>CONTACT US</li>
+              <Link className="nostyle-link" href="/about/contact">
+                <li>CONTACT US</li>
+              </Link>
             </ul>
           </div>
         </div>
