@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { resetSuccess } from "@/features/news/newsSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
@@ -42,21 +42,7 @@ const ManageNews = () => {
     descriptionShort: "",
     videoLink: "",
   });
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const newsItemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Redux
 
@@ -67,6 +53,10 @@ const ManageNews = () => {
     (state: any) => state.news,
     shallowEqual
   );
+
+  useEffect(() => {
+    newsItemRefs.current = newsItemRefs.current.slice(0, news.length);
+  }, [news]);
 
   useEffect(() => {
     if (updateSuccess) {
@@ -147,6 +137,11 @@ const ManageNews = () => {
       description: currentNews.description,
       descriptionShort: currentNews.descriptionShort,
       videoLink: currentNews.videoLink,
+    });
+
+    newsItemRefs.current[index]?.scrollIntoView({
+      behavior: "auto",
+      block: "start",
     });
 
     // Validate existing descriptions when entering edit mode
@@ -245,6 +240,7 @@ const ManageNews = () => {
             {news.map((item: News, index: number) => (
               <div
                 key={index}
+                ref={(el) => (newsItemRefs.current[index] = el)}
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
                 <div className="d-flex flex-column align-items-center w-100">
@@ -261,7 +257,7 @@ const ManageNews = () => {
                       }}
                     ></div>
                     {editModeIndex === index ? (
-                      <div className={`${styles.info} ms-5 w-100`}>
+                      <div className={`${styles.info} ms-5`}>
                         {submitError && submitError}
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
