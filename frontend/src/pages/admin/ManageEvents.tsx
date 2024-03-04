@@ -288,7 +288,7 @@ const ManageEvents = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='admin'>
+    <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
         <Modal
@@ -299,11 +299,14 @@ const ManageEvents = () => {
           <Upcoming />
         </Modal>
         <h1 className={`${styles.header} my-5 p-3`}>Event Management Desk</h1>
-        <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-evenly w-100 mb-5">
           <button className="btn-primary btn" onClick={openPreviewModal}>
             View Events
           </button>
-          <button className="btn-success btn" onClick={openPostModal}>
+          <button
+            className="mt-4 mt-md-0 btn-success btn"
+            onClick={openPostModal}
+          >
             Add New Item
           </button>
         </div>
@@ -324,9 +327,11 @@ const ManageEvents = () => {
               >
                 <div className="d-flex flex-column align-items-center">
                   {}
-                  <div className={`${styles.eventItem} d-flex flex-row`}>
+                  <div
+                    className={`${styles.eventItem} d-flex flex-column flex-md-row`}
+                  >
                     <div
-                      className="w-100 align-self-center"
+                      className="me-0 me-md-5 mb-5 mb-md-0"
                       style={{
                         height: "300px",
                         width: "300px",
@@ -554,9 +559,9 @@ const ManageEvents = () => {
                     </div>
                   )}
 
-                  <div className="mt-4 d-flex flex-row justify-content-center w-100">
+                  <div className="mt-4 d-flex flex-column align-items-center flex-md-row justify-content-center w-100">
                     <button
-                      className="btn btn-secondary"
+                      className="btn btn-secondary ms-0 ms-md-5"
                       onClick={() => handleOpenPreview(index)}
                     >
                       Preview
@@ -572,14 +577,14 @@ const ManageEvents = () => {
                       <>
                         {" "}
                         <button
-                          className="btn btn-success ms-5"
+                          className="btn btn-success ms-0 ms-md-5 mt-4 mt-md-0"
                           onClick={handleUpdate}
                           disabled={!isDescriptionValid}
                         >
                           Save
                         </button>
                         <button
-                          className="btn btn-danger ms-5"
+                          className="btn btn-danger ms-0 ms-md-5 mt-4 mt-md-0"
                           onClick={handleRevert}
                         >
                           Revert
@@ -589,13 +594,13 @@ const ManageEvents = () => {
                       <>
                         {" "}
                         <button
-                          className="btn btn-warning ms-5"
+                          className="btn btn-warning ms-0 ms-md-5 mt-4 mt-md-0"
                           onClick={() => handleEditModeButton(index)}
                         >
                           Edit
                         </button>
                         <button
-                          className="btn btn-danger ms-5"
+                          className="btn btn-danger ms-0 ms-md-5 mt-4 mt-md-0"
                           onClick={() => {
                             setAreYouSureModalOpen(true);
                             setCurrentItemId(item._id);
@@ -634,7 +639,7 @@ const ManageEvents = () => {
             ))}
           </div>
         </div>
-        <div className="d-flex flex-row justify-content-end pb-5 w-100">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
           <Link className="admin-link" href="/admin">
             <button className="mb-5 d-flex flex-row align-items-center btn-admin">
               <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin

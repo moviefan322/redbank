@@ -124,7 +124,7 @@ const ManageNews = () => {
             <NewsletterComponent />
           </Modal>
         </div>
-        <h1 className={`${styles.header} my-5 p-3`}>
+        <h1 className={`${styles.header} my-5 p-3 mx-3 text-center`}>
           Newsletter Management Desk
         </h1>
         <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
