@@ -67,6 +67,12 @@ const AdminPage = () => {
               >
                 Manage Newsletters
               </Link>
+              <Link
+                className="btn-admin admin-link fs-4 border border-2 border-light w-75 my-2"
+                href="/admin/ManageGiftCards"
+              >
+                Manage Gift Cards
+              </Link>
             </div>
           </div>
         ) : (

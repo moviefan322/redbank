@@ -5,7 +5,7 @@ import eventReducer from "@/features/events/eventSlice";
 import newsReducer from "@/features/news/newsSlice";
 import imageUploadReducer from "@/features/upload/uploadSlice";
 import newsletterReducer from "@/features/newsletter/newsletterSlice";
-import giftCardReducer from "@/features/giftcards/giftCardSlice";
+import giftCardReducer from "@/features/giftCards/giftCardSlice";
 import { authApi } from "@/services/auth/authService";
 
 export const store = configureStore({
