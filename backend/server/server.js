@@ -17,6 +17,7 @@ import newsletterRoutes from "./routes/newsletterRoutes.js";
 import boardMemberRoutes from "./routes/boardMemberRoutes.js";
 import giftCardRoutes from "./routes/giftCardRoutes.js";
 import businessRoutes from "./routes/businessRoutes.js";
+import lodgingRoutes from "./routes/lodgingRoutes.js";
 
 connectDB();
 
@@ -50,6 +51,7 @@ app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/boardMembers", boardMemberRoutes);
 app.use("/api/giftCards", giftCardRoutes);
 app.use("/api/businesses", businessRoutes);
+app.use("/api/lodging", lodgingRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
