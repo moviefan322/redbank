@@ -6,6 +6,7 @@ import newsReducer from "@/features/news/newsSlice";
 import imageUploadReducer from "@/features/upload/uploadSlice";
 import newsletterReducer from "@/features/newsletter/newsletterSlice";
 import giftCardReducer from "@/features/giftCards/giftCardSlice";
+import boardMemberReducer from "@/features/boardMembers/boardMemberSlice";
 import { authApi } from "@/services/auth/authService";
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     news: newsReducer,
     newsletters: newsletterReducer,
     giftCards: giftCardReducer,
+    boardMembers: boardMemberReducer,
   },
   middleware: (getDefaultMiddleWare) =>
     getDefaultMiddleWare().concat(authApi.middleware),
