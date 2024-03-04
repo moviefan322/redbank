@@ -115,6 +115,14 @@ const ManageNews = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
+      <div className="d-flex flex-row justify-content-center pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mt-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
+        </div>
         <div className="w-100">
           <Modal
             isOpen={isPreviewModalOpen}
@@ -124,7 +132,7 @@ const ManageNews = () => {
             <NewsletterComponent />
           </Modal>
         </div>
-        <h1 className={`${styles.header} my-5 p-3 mx-3 text-center`}>
+        <h1 className={`${styles.header} mb-5 p-3 mx-3 text-center`}>
           Newsletter Management Desk
         </h1>
         <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
@@ -135,6 +143,10 @@ const ManageNews = () => {
 
         <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Newsletters</h2>
+          <small>
+            *Only upload photos here, for other modifications please make
+            changes on mailchimp
+          </small>
           <div className="d-flex flex-column align-items-center">
             {newsletters.map((item: Newsletter, index: number) => (
               <div
@@ -159,24 +171,26 @@ const ManageNews = () => {
                       }}
                     ></div>
                     {editModeIndex === index ? (
-                      <div className={`${styles.info} ms-0 ms-md-5`}>
+                      <div
+                        className={`ms-0 ms-md-5 text-center w-100 mx-5 d-flex d-md-block flex-column justify-content-center align-items-center mx-auto`}
+                      >
                         {submitError && submitError}
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
-                          <p className="w-75">Text:</p>
-                          <p className="text-end">{item.subject_line}</p>
+                          <p>Text:</p>
+                          <p className="mx-4 text-white">{item.subject_line}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Date Posted:</p>
-                          <p>
+                          <p className="text-white">
                             {new Date(item.create_time).toLocaleDateString()}
                           </p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Link:</p>
-                          <p>{item.url}</p>
+                          <p className="text-white">{item.url}</p>
                         </div>
                         <div className="float-end">
                           <div className="justify-self-end w-100 flex-grow-2">
@@ -191,22 +205,22 @@ const ManageNews = () => {
                       </div>
                     ) : (
                       <div className="ms-0 ms-md-5 w-75 align-self-center">
-                        <div className="d-flex flex-row justify-content-between align-items-center justify-content-center mx-auto">
+                        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center justify-content-center mx-auto">
                           {" "}
-                          <p className="w-75">Text:</p>
-                          <p className="text-end">{item.subject_line}</p>
+                          <p className="col-12 col-md-4">Text:</p>
+                          <p className="text-white">{item.subject_line}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Date Posted:</p>
-                          <p>
+                          <p className="text-white">
                             {new Date(item.create_time).toLocaleDateString()}
                           </p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Link:</p>
-                          <p>{item.url}</p>
+                          <p className="text-white">{item.url}</p>
                         </div>
                       </div>
                     )}
