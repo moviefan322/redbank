@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Business from "@/types/Business";
+import styles from "./businessDirectory.module.css";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const BusinessDirectory = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
@@ -64,14 +66,17 @@ const BusinessDirectory = () => {
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
+          className="noStyleButt"
         >
-          Previous
+          <FaChevronLeft />
         </button>
         {Array.from({ length: pageCount }, (_, i) => i + 1).map((number) => (
           <button
             key={number}
             onClick={() => handlePageChange(number)}
-            className={currentPage === number ? "active" : ""}
+            className={`${currentPage === number ? "active" : ""} ${
+              styles.paginationButton
+            }`}
           >
             {number}
           </button>
@@ -79,8 +84,9 @@ const BusinessDirectory = () => {
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === pageCount}
+          className="noStyleButt"
         >
-          Next
+          <FaChevronRight />
         </button>
       </div>
     </div>
