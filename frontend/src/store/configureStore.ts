@@ -8,6 +8,7 @@ import newsletterReducer from "@/features/newsletter/newsletterSlice";
 import giftCardReducer from "@/features/giftCards/giftCardSlice";
 import boardMemberReducer from "@/features/boardMembers/boardMemberSlice";
 import businessReducer from "@/features/businesses/businessSlice";
+import lodgingReducer from "@/features/lodging/lodgingSlice";
 import { authApi } from "@/services/auth/authService";
 
 export const store = configureStore({
@@ -22,6 +23,7 @@ export const store = configureStore({
     giftCards: giftCardReducer,
     boardMembers: boardMemberReducer,
     businesses: businessReducer,
+    lodging: lodgingReducer,
   },
   middleware: (getDefaultMiddleWare) =>
     getDefaultMiddleWare().concat(authApi.middleware),
