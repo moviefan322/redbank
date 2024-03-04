@@ -8,6 +8,7 @@ const BusinessDirectory = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(50);
   const [selectedLetter, setSelectedLetter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const fetchBusinesses = async () => {
@@ -35,11 +36,15 @@ const BusinessDirectory = () => {
     setCurrentPage(1);
   };
 
-  const filteredBusinesses = selectedLetter
-    ? businesses.filter((business) =>
-        business.name.toUpperCase().startsWith(selectedLetter)
-      )
-    : businesses;
+  const filteredBusinesses = businesses
+    .filter((business) =>
+      selectedLetter
+        ? business.name.toUpperCase().startsWith(selectedLetter)
+        : true
+    )
+    .filter((business) =>
+      searchQuery ? business.name.toUpperCase().includes(searchQuery) : true
+    );
 
   const pageCount = Math.ceil(filteredBusinesses.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -50,7 +55,7 @@ const BusinessDirectory = () => {
   );
 
   return (
-    <div className="w-75 d-flex flex-column justify-content-center align-items-center mx-auto mt-5">
+    <div className=" d-flex flex-column justify-content-center align-items-center mx-5 mt-5">
       <div className="flex-column justify-content-center align-items-center mx-auto text-center">
         <h1>Business Directory</h1>
         <h5> RED BANK GIFT CARD PROGRAM:</h5>
@@ -61,8 +66,8 @@ const BusinessDirectory = () => {
           directly from your favorite Red Bank restaurant or retailer.
         </h5>
       </div>
-      <div className="w-100 bg-secondary my-5 p-3">
-        <div className="letter-filter">
+      <div className="d-flex flex-row justify-content-between w-100 bg-secondary my-5 p-3">
+        <div className="d-flex flex-row justify-content-around w-100 me-3">
           {letters.map((letter) => (
             <button
               key={letter}
@@ -78,6 +83,14 @@ const BusinessDirectory = () => {
           >
             All
           </button>
+        </div>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} // Convert to uppercase if you are doing case-insensitive comparison
+            className="search-input"
+          />
         </div>
       </div>
       <div className="d-flex flex-wrap justify-content-center w-100">
