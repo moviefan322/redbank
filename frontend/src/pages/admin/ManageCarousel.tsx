@@ -206,7 +206,7 @@ const ManageCarousel = () => {
                   ></div>
                   {editModeIndex === index ? (
                     <div className={`${styles.info} ms-5 w-75`}>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column py-3 py-md-1 flex-md-row justify-content-between">
                         {" "}
                         <p>title:</p>
                         <input
@@ -220,7 +220,7 @@ const ManageCarousel = () => {
                           }
                         ></input>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column py-3 py-md-1 flex-md-row justify-content-between">
                         {" "}
                         <p>link text:</p>
                         <input
@@ -234,7 +234,7 @@ const ManageCarousel = () => {
                           }
                         ></input>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column py-3 py-md-1 flex-md-row justify-content-between">
                         {" "}
                         <p>url endpoint:</p>
                         <input
@@ -248,7 +248,7 @@ const ManageCarousel = () => {
                           }
                         ></input>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column py-3 py-md-1 flex-md-row justify-content-between">
                         {" "}
                         <p>sequence number:</p>
                         <input
@@ -270,25 +270,25 @@ const ManageCarousel = () => {
                     </div>
                   ) : (
                     <div className="ms-5 w-75">
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>title:</p>
-                        <p>{item.title}</p>
+                        <p className='text-white'>{item.title}</p>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>link text:</p>
-                        <p>{item.linkText}</p>
+                        <p className='text-white'>{item.linkText}</p>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>url endpoint:</p>
-                        <p>{item.link}</p>
+                        <p className='text-white'>{item.link}</p>
                       </div>
-                      <div className="d-flex flex-row justify-content-between">
+                      <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>sequence number:</p>
-                        <p>{item.sequenceNo}</p>
+                        <p className='text-white'>{item.sequenceNo}</p>
                       </div>
                     </div>
                   )}
