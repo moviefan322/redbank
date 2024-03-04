@@ -11,6 +11,7 @@ import Loading from "@/components/loading";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import ImageUploader from "@/components/ImageUploader";
+import SorryDave from "@/components/SorryDave";
 import NewsletterComponent from "@/components/Newsletter";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import UpdateNewsletterReq from "@/types/UpdateNewsletterReq";
@@ -95,18 +96,7 @@ const ManageNews = () => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div className="d-flex flex-column justify-content-center">
-        <h1 className="mx-3 text-center">
-          {`I'm sorry Dave, I'm afraid I can't do that.`}
-        </h1>
-        <br />
-        <br />
-        <h5 className="text-center">
-          You must <Link href="/admin">log in</Link> to access this page.
-        </h5>
-      </div>
-    );
+    return <SorryDave />;
   }
 
   if (error) return <div>Error: {error}</div>;
@@ -115,7 +105,7 @@ const ManageNews = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-      <div className="d-flex flex-row justify-content-center pb-5 w-100">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
           <Link className="admin-link" href="/admin">
             <button className="mt-5 d-flex flex-row align-items-center btn-admin">
               <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin

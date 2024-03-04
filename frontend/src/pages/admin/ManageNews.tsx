@@ -16,6 +16,7 @@ import ImageUploader from "@/components/ImageUploader";
 import NewsDetail from "../news/[newsId]";
 import PostNewNews from "@/components/modals/PostNewNews";
 import NewsComponent from "@/components/News";
+import SorryDave from "@/components/SorryDave";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostNewsReq from "@/types/PostNewsReq";
 import UpdateNewsReq from "@/types/UpdateNewsReq";
@@ -189,18 +190,7 @@ const ManageNews = () => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div className="d-flex flex-column justify-content-center">
-        <h1 className="mx-3 text-center">
-          {`I'm sorry Dave, I'm afraid I can't do that.`}
-        </h1>
-        <br />
-        <br />
-        <h5 className="text-center">
-          You must <Link href="/admin">log in</Link> to access this page.
-        </h5>
-      </div>
-    );
+    return <SorryDave />;
   }
 
   if (error) return <div>Error: {error}</div>;

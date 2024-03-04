@@ -12,7 +12,7 @@ import Loading from "@/components/loading";
 import SorryDave from "@/components/SorryDave";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
-// import PostNewLodging from "@/components/modals/PostNewLodging";
+import PostNewLodging from "@/components/modals/PostNewLodging";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostLodgingReq from "@/types/PostLodgingReq";
 import UpdateLodgingReq from "@/types/UpdateLodgingReq";
@@ -158,12 +158,12 @@ const ManageLodging = () => {
           </button>
         </div>
 
-        {/* <PostNewLodging
+        <PostNewLodging
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}
           postLodgingData={postLodgingData}
           setPostLodgingData={setPostLodgingData}
-        /> */}
+        />
 
         <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Current Lodging</h2>

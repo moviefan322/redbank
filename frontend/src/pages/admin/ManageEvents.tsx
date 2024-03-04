@@ -14,6 +14,7 @@ import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import PostNewEvent from "@/components/modals/PostNewEvent";
 import Upcoming from "@/components/Upcoming";
+import SorryDave from "@/components/SorryDave";
 import EventDetail from "../events/[eventId]";
 import ImageUploader from "@/components/ImageUploader";
 import { FaCircleArrowLeft } from "react-icons/fa6";
@@ -271,18 +272,7 @@ const ManageEvents = () => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div className="d-flex flex-column justify-content-center">
-        <h1 className="mx-3 text-center">
-          {`I'm sorry Dave, I'm afraid I can't do that.`}
-        </h1>
-        <br />
-        <br />
-        <h5 className="text-center">
-          You must <Link href="/admin">log in</Link> to access this page.
-        </h5>
-      </div>
-    );
+    return <SorryDave />;
   }
 
   if (error) return <div>Error: {error}</div>;

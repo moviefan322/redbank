@@ -9,6 +9,7 @@ import {
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
+import SorryDave from "@/components/SorryDave";
 import Carousel from "react-bootstrap/Carousel";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
@@ -141,13 +142,7 @@ const ManageCarousel = () => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div className="d-flex flex-column justify-content-center">
-        <h1 className="mx-3 text-center">
-          You are not logged in, Admin.... if that is your real name
-        </h1>
-      </div>
-    );
+    return <SorryDave />;
   }
 
   if (error) return <div>Error: {error}</div>;
