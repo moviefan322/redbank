@@ -138,7 +138,7 @@ const ManageBoardMembers = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-        <h1 className={`${styles.header} my-5 p-3`}>
+        <h1 className={`${styles.header} my-5 p-3 text-center mx-3`}>
           BoardMember Management Desk
         </h1>
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-evenly w-100 mb-5">
@@ -146,7 +146,7 @@ const ManageBoardMembers = () => {
             className="mt-4 mt-md-0 btn-success btn"
             onClick={openPostModal}
           >
-            Add New Gift Card
+            Add New Board Member
           </button>
         </div>
 
@@ -173,7 +173,7 @@ const ManageBoardMembers = () => {
                     {editModeIndex === index ? (
                       <div className={`${styles.info} ms-5 w-75`}>
                         {submitError && submitError}
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Name:</p>
                           <input
@@ -187,7 +187,7 @@ const ManageBoardMembers = () => {
                             }
                           ></input>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Department:</p>
                           <input
@@ -201,7 +201,7 @@ const ManageBoardMembers = () => {
                             }
                           ></input>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Position:</p>
                           <input
@@ -215,9 +215,9 @@ const ManageBoardMembers = () => {
                             }
                           ></input>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           <p>Officer/Director:</p>
-                          <div className="d-flex flex-row">
+                          <div className="d-flex flex-column flex-md-row my-1">
                             <div className="d-flex flex-row form-check form-check-inline">
                               <input
                                 className="justify-self-center me-2"
@@ -271,9 +271,9 @@ const ManageBoardMembers = () => {
                           </div>
                         </div>
 
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           <p>Exec Committee:</p>
-                          <div className="d-flex flex-row">
+                          <div className="d-flex flex-column flex-md-row my-1">
                             <div className="d-flex flex-row form-check form-check-inline">
                               <input
                                 className="justify-self-center me-2"
@@ -329,30 +329,30 @@ const ManageBoardMembers = () => {
                       </div>
                     ) : (
                       <div className="ms-5 w-75 align-self-center">
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Name:</p>
-                          <p>{item.name}</p>
+                          <p className="text-white ms-5">{item.name}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Department:</p>
-                          <p>{item.department}</p>
+                          <p className="text-white ms-5">{item.department}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Position:</p>
-                          <p>{item.position}</p>
+                          <p className="text-white ms-5">{item.position}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Officer/Director:</p>
-                          <p>{item.officerOrDirector}</p>
+                          <p className="text-white ms-5">{item.officerOrDirector}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Executive Committee Member:</p>
-                          <p>{item.executiveCommitteeMember.toString()}</p>
+                          <p className="text-white ms-5">{item.executiveCommitteeMember ? 'Yes' : 'No'}</p>
                         </div>
                       </div>
                     )}
