@@ -1,123 +1,132 @@
 import React, { useState, useEffect } from "react";
-import { resetSuccess } from "@/features/businesses/businessSlice";
+import { resetSuccess } from "@/features/lodging/lodgingSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
-  getAllBusinesses,
-  deleteBusiness,
-  updateBusiness,
-} from "@/features/businesses/businessActions";
+  getAllLodging,
+  deleteLodging,
+  updateLodging,
+} from "@/features/lodging/lodgingActions";
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
 import SorryDave from "@/components/SorryDave";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
-import PostNewBusiness from "@/components/modals/PostNewBusiness";
+// import PostNewLodging from "@/components/modals/PostNewLodging";
 import { FaCircleArrowLeft } from "react-icons/fa6";
-import PostBusinessReq from "@/types/PostBusinessReq";
-import UpdateBusinessReq from "@/types/UpdateBusinessReq";
-import Business from "@/types/Business";
-import styles from "./ManageBusinesses.module.css";
+import PostLodgingReq from "@/types/PostLodgingReq";
+import UpdateLodgingReq from "@/types/UpdateLodgingReq";
+import Lodging from "@/types/Lodging";
+import styles from "./ManageLodging.module.css";
 
-const ManageBusinesses = () => {
+const ManageLodging = () => {
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [currentItemId, setCurrentItemId] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
-  const [updateBusinessData, setUpdateBusinessData] =
-    useState<UpdateBusinessReq>({
-      _id: "",
-      name: "",
-      address: "",
-      phoneNumber: "",
-      website: "",
-    });
-
-  // Redux
-
-  const dispatch = useAppDispatch();
-  const { isLoggedIn } = useUserDetails();
-
-  const { businesses, loading, error, updateSuccess } = useAppSelector(
-    (state: any) => state.businesses,
-    shallowEqual
-  );
-
-  useEffect(() => {
-    if (updateSuccess) {
-      dispatch(getAllBusinesses());
-      dispatch(resetSuccess());
-    }
-  }, [updateSuccess]);
-
-  const [postBusinessData, setPostBusinessData] = useState<PostBusinessReq>({
+  const [updateLodgingData, setUpdateLodgingData] = useState<UpdateLodgingReq>({
+    _id: "",
     name: "",
     address: "",
     phoneNumber: "",
     website: "",
   });
 
+  // Redux
+
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useUserDetails();
+
+  const { lodging, loading, error, updateSuccess } = useAppSelector(
+    (state: any) => state.lodging,
+    shallowEqual
+  );
+
+  useEffect(() => {
+    if (updateSuccess) {
+      dispatch(getAllLodging());
+      dispatch(resetSuccess());
+    }
+  }, [updateSuccess]);
+
+  const [postLodgingData, setPostLodgingData] = useState<PostLodgingReq>({
+    name: "",
+    address: "",
+    phoneNumber: "",
+    website: "",
+    description: "",
+    city: "",
+  });
+
   // Modals
   const openPostModal = () => {
-    setPostBusinessData({
+    setPostLodgingData({
       name: "",
       address: "",
       phoneNumber: "",
       website: "",
+      description: "",
+      city: "",
     });
     setPostModalOpen(true);
   };
 
   const closePostModal = () => {
     setPostModalOpen(false);
-    setPostBusinessData({
+    setPostLodgingData({
       name: "",
       address: "",
       phoneNumber: "",
       website: "",
+      description: "",
+      city: "",
     });
   };
 
   // Logic
 
   useEffect(() => {
-    dispatch(getAllBusinesses());
+    dispatch(getAllLodging());
   }, [dispatch]);
 
   const handleRevert = () => {
     setEditModeIndex(null);
-    setUpdateBusinessData({
+    setUpdateLodgingData({
       _id: "",
       name: "",
       address: "",
       phoneNumber: "",
       website: "",
+      description: "",
+      city: "",
     });
   };
 
   const handleEditModeButton = (index: number) => {
     setEditModeIndex(index);
-    const currentBusiness = businesses[index];
-    setUpdateBusinessData({
-      _id: currentBusiness._id,
-      name: currentBusiness.name,
-      address: currentBusiness.address,
-      phoneNumber: currentBusiness.phoneNumber,
-      website: currentBusiness.website,
+    const currentLodging = lodging[index];
+    setUpdateLodgingData({
+      _id: currentLodging._id,
+      name: currentLodging.name,
+      address: currentLodging.address,
+      phoneNumber: currentLodging.phoneNumber,
+      website: currentLodging.website,
+      description: currentLodging.description,
+      city: currentLodging.city,
     });
   };
 
   const handleUpdate = (e: any) => {
     e.preventDefault();
 
-    dispatch(updateBusiness(updateBusinessData));
+    dispatch(updateLodging(updateLodgingData));
     setEditModeIndex(null);
     setSubmitError("");
   };
 
   const handleDelete = () => {
-    dispatch(deleteBusiness(currentItemId));
+    dispatch(deleteLodging(currentItemId));
     setAreYouSureModalOpen(false);
   };
 
@@ -139,36 +148,34 @@ const ManageBusinesses = () => {
             </button>
           </Link>
         </div>
-        <h1 className={`${styles.header} mb-5 p-3`}>
-          Business Management Desk
-        </h1>
+        <h1 className={`${styles.header} mb-5 p-3`}>Lodging Management Desk</h1>
         <div className="d-flex flex-column align-items-center justify-content-evenly w-100 mb-5">
           <button
             className="mt-4 mt-md-0 btn-success btn"
             onClick={openPostModal}
           >
-            Add New Business
+            Add New Lodging
           </button>
         </div>
 
-        <PostNewBusiness
+        {/* <PostNewLodging
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}
-          postBusinessData={postBusinessData}
-          setPostBusinessData={setPostBusinessData}
-        />
+          postLodgingData={postLodgingData}
+          setPostLodgingData={setPostLodgingData}
+        /> */}
 
         <div className="d-flex flex-column align-items-center pb-5">
-          <h2 className="py-3">Current Businesses</h2>
+          <h2 className="py-3">Current Lodging</h2>
           <div className="d-flex flex-column align-items-center">
-            {businesses.map((item: Business, index: number) => (
+            {lodging.map((item: Lodging, index: number) => (
               <div
                 key={index}
                 className="d-flex flex-column align-items-center py-3 my-5 mx-0 mx-md-3"
               >
                 <div className="d-flex flex-column align-items-center">
                   <div
-                    className={`${styles.businessItem} d-flex flex-column flex-md-row`}
+                    className={`${styles.lodgingItem} d-flex flex-column flex-md-row`}
                   >
                     {editModeIndex === index ? (
                       <div className={`${styles.info} ms-5 w-100`}>
@@ -178,9 +185,9 @@ const ManageBusinesses = () => {
                           <p>Name:</p>
                           <input
                             placeholder={item.name}
-                            value={updateBusinessData.name}
+                            value={updateLodgingData.name}
                             onChange={(e) =>
-                              setUpdateBusinessData((prev) => ({
+                              setUpdateLodgingData((prev) => ({
                                 ...prev,
                                 name: e.target.value,
                               }))
@@ -192,9 +199,9 @@ const ManageBusinesses = () => {
                           <p>Address:</p>
                           <input
                             placeholder={item.address}
-                            value={updateBusinessData.address}
+                            value={updateLodgingData.address}
                             onChange={(e) =>
-                              setUpdateBusinessData((prev) => ({
+                              setUpdateLodgingData((prev) => ({
                                 ...prev,
                                 address: e.target.value,
                               }))
@@ -206,9 +213,9 @@ const ManageBusinesses = () => {
                           <p>Phone #:</p>
                           <input
                             placeholder={item.phoneNumber}
-                            value={updateBusinessData.phoneNumber}
+                            value={updateLodgingData.phoneNumber}
                             onChange={(e) =>
-                              setUpdateBusinessData((prev) => ({
+                              setUpdateLodgingData((prev) => ({
                                 ...prev,
                                 phoneNumber: e.target.value,
                               }))
@@ -220,11 +227,39 @@ const ManageBusinesses = () => {
                           <p>Website:</p>
                           <input
                             placeholder={item.website}
-                            value={updateBusinessData.website}
+                            value={updateLodgingData.website}
                             onChange={(e) =>
-                              setUpdateBusinessData((prev) => ({
+                              setUpdateLodgingData((prev) => ({
                                 ...prev,
                                 website: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-column flex-md-row py-2 justify-content-between w-50 mx-auto">
+                          {" "}
+                          <p>City:</p>
+                          <input
+                            placeholder={item.city}
+                            value={updateLodgingData.city}
+                            onChange={(e) =>
+                              setUpdateLodgingData((prev) => ({
+                                ...prev,
+                                city: e.target.value,
+                              }))
+                            }
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-column flex-md-row py-2 justify-content-between w-50 mx-auto">
+                          {" "}
+                          <p>Description:</p>
+                          <input
+                            placeholder={item.description}
+                            value={updateLodgingData.description}
+                            onChange={(e) =>
+                              setUpdateLodgingData((prev) => ({
+                                ...prev,
+                                description: e.target.value,
                               }))
                             }
                           ></input>
@@ -256,6 +291,18 @@ const ManageBusinesses = () => {
                           <p>Website:</p>
                           <p className="text-white ms-5 ms-md-0">
                             {item.website}
+                          </p>
+                        </div>
+                        <div className="d-flex flex-column flex-md-row justify-content-between col-12 col-md-6 mx-auto">
+                          {" "}
+                          <p>City:</p>
+                          <p className="text-white ms-5 ms-md-0">{item.city}</p>
+                        </div>
+                        <div className="d-flex flex-column justify-content-between col-12 col-md-6 mx-auto">
+                          {" "}
+                          <p>Description:</p>
+                          <p className="text-white ms-5 ms-md-0">
+                            {item.description}
                           </p>
                         </div>
                       </div>
@@ -341,4 +388,4 @@ const ManageBusinesses = () => {
   );
 };
 
-export default ManageBusinesses;
+export default ManageLodging;

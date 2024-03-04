@@ -85,6 +85,12 @@ const AdminPage = () => {
               >
                 Manage Businesses
               </Link>
+              <Link
+                className="btn-admin admin-link fs-4 border border-2 border-light w-75 my-2"
+                href="/admin/ManageLodging"
+              >
+                Manage Lodging
+              </Link>
             </div>
           </div>
         ) : (
