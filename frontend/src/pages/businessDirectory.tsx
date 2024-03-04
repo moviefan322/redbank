@@ -3,6 +3,8 @@ import Business from "@/types/Business";
 
 const BusinessDirectory = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(50);
 
   const fetchBusinesses = async () => {
     try {
@@ -20,7 +22,18 @@ const BusinessDirectory = () => {
     fetchBusinesses();
   }, []);
 
-  console.log(businesses);
+  // Calculate the total number of pages
+  const pageCount = Math.ceil(businesses.length / itemsPerPage);
+
+  // Change page
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Calculate the businesses to display on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = businesses.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <div className="w-75 d-flex flex-column justify-content-center align-items-center mx-auto mt-5">
       <div className="flex-column justify-content-center align-items-center mx-auto text-center">
@@ -35,7 +48,7 @@ const BusinessDirectory = () => {
       </div>
       <div className="w-100 bg-secondary my-5 p-3">SEARCH BAR</div>
       <div className="d-flex flex-wrap justify-content-center">
-        {businesses.map((business, index) => (
+        {currentItems.map((business, index) => (
           <div
             key={index}
             className="d-flex flex-column bg-brown m-3 justify-content-between align-items-center col-5 text-center text-white p-3"
@@ -46,6 +59,29 @@ const BusinessDirectory = () => {
             <h5>{business.website}</h5>
           </div>
         ))}
+      </div>
+      <div className="pagination">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        {Array.from({ length: pageCount }, (_, i) => i + 1).map((number) => (
+          <button
+            key={number}
+            onClick={() => handlePageChange(number)}
+            className={currentPage === number ? "active" : ""}
+          >
+            {number}
+          </button>
+        ))}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === pageCount}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
