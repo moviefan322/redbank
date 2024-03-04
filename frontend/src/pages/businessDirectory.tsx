@@ -7,6 +7,8 @@ const BusinessDirectory = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(50);
+  const [selectedLetter, setSelectedLetter] = useState("");
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const fetchBusinesses = async () => {
     try {
@@ -24,18 +26,29 @@ const BusinessDirectory = () => {
     fetchBusinesses();
   }, []);
 
-  // Calculate the total number of pages
-  const pageCount = Math.ceil(businesses.length / itemsPerPage);
-
-  // Change page
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  // Calculate the businesses to display on the current page
+  const handleLetterChange = (letter: string) => {
+    setSelectedLetter(letter);
+    setCurrentPage(1);
+  };
+
+  const filteredBusinesses = selectedLetter
+    ? businesses.filter((business) =>
+        business.name.toUpperCase().startsWith(selectedLetter)
+      )
+    : businesses;
+
+  const pageCount = Math.ceil(filteredBusinesses.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = businesses.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredBusinesses.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
   return (
     <div className="w-75 d-flex flex-column justify-content-center align-items-center mx-auto mt-5">
       <div className="flex-column justify-content-center align-items-center mx-auto text-center">
@@ -48,8 +61,26 @@ const BusinessDirectory = () => {
           directly from your favorite Red Bank restaurant or retailer.
         </h5>
       </div>
-      <div className="w-100 bg-secondary my-5 p-3">SEARCH BAR</div>
-      <div className="d-flex flex-wrap justify-content-center">
+      <div className="w-100 bg-secondary my-5 p-3">
+        <div className="letter-filter">
+          {letters.map((letter) => (
+            <button
+              key={letter}
+              onClick={() => handleLetterChange(letter)}
+              className={selectedLetter === letter ? "active" : ""}
+            >
+              {letter}
+            </button>
+          ))}
+          <button
+            onClick={() => handleLetterChange("")}
+            className={!selectedLetter ? "active" : ""}
+          >
+            All
+          </button>
+        </div>
+      </div>
+      <div className="d-flex flex-wrap justify-content-center w-100">
         {currentItems.map((business, index) => (
           <div
             key={index}
