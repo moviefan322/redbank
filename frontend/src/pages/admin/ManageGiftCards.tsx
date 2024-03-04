@@ -104,7 +104,7 @@ const ManageGiftCards = () => {
   };
 
   if (!isLoggedIn) {
-    return <SorryDave />
+    return <SorryDave />;
   }
 
   if (error) return <div>Error: {error}</div>;
@@ -113,7 +113,15 @@ const ManageGiftCards = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-        <h1 className={`${styles.header} my-5 p-3`}>
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mt-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
+        </div>
+        <h1 className={`${styles.header} mb-5 p-3 mx-4`}>
           GiftCard Management Desk
         </h1>
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-evenly w-100 mb-5">
@@ -140,15 +148,14 @@ const ManageGiftCards = () => {
                 key={index}
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
-                <div className="d-flex flex-column flex-md-row align-items-center">
-                  {}
+                <div className="d-flex flex-column align-items-center">
                   <div
                     className={`${styles.giftCardItem} d-flex flex-column flex-md-row`}
                   >
                     {editModeIndex === index ? (
-                      <div className={`${styles.info} ms-5 w-75`}>
+                      <div className={`${styles.info} ms-5 w-100`}>
                         {submitError && submitError}
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-row justify-content-between align-items-center">
                           {" "}
                           <p>Name:</p>
                           <input
@@ -164,11 +171,11 @@ const ManageGiftCards = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="ms-5 w-75 align-self-center">
+                      <div className="ms-5 col-12 align-self-center">
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
-                          <p>Name:</p>
-                          <p>{item.name}</p>
+                          <p className="col-3 text-end">Name:</p>
+                          <p className="text-white col-9 ms-3">{item.name}</p>
                         </div>
                       </div>
                     )}
