@@ -128,7 +128,15 @@ const ManageBusinesses = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-        <h1 className={`${styles.header} my-5 p-3`}>
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mt-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
+        </div>
+        <h1 className={`${styles.header} mb-5 p-3`}>
           Business Management Desk
         </h1>
         <div className="d-flex flex-column align-items-center justify-content-evenly w-100 mb-5">
