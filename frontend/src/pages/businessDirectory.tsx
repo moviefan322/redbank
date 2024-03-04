@@ -34,11 +34,11 @@ const BusinessDirectory = () => {
         </h5>
       </div>
       <div className="w-100 bg-secondary my-5 p-3">SEARCH BAR</div>
-      <div>
+      <div className="d-flex flex-wrap justify-content-center">
         {businesses.map((business, index) => (
           <div
             key={index}
-            className="d-flex flex-column bg-brown m-3 justify-content-between align-items-center w-75 text-center text-white p-3"
+            className="d-flex flex-column bg-brown m-3 justify-content-between align-items-center col-5 text-center text-white p-3"
           >
             <h3>{business.name}</h3>
             <h5>{business.address}</h5>
