@@ -8,11 +8,11 @@ const BusinessSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
+      required: false,
     },
     phoneNumber: {
       type: String,
-      required: true,
+      required: false,
     },
     website: {
       type: String,

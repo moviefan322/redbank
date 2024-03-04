@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./giftCard.module.css";
 
 const GiftCard = () => {
+  const [giftCards, setGiftCards] = useState<any[]>([]);
+
+  const fetchGiftCards = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/giftCards`
+      );
+      const data = await res.json();
+      setGiftCards(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGiftCards();
+  }, []);
+
+  console.log(giftCards);
   return (
     <div>
       <div className="d-flex flex-column flex-md-row justify-content-center align-items-center bg-dark p-5">
@@ -22,7 +41,7 @@ const GiftCard = () => {
           </Link>
         </div>
       </div>
-      <div className='py-5 mx-4'>
+      <div className="py-5 mx-4">
         <h2 className="mx-auto text-center">Description</h2>
         <ul>
           <li className="fw-bold">Available in any amount $5-$250</li>
@@ -39,11 +58,20 @@ const GiftCard = () => {
           <li>Tap to pay coming soon!</li>
         </ul>
       </div>
-      <div className='mx-4'>
+      <div className="mx-4">
         <h5 className="fw-bold">
           Red Bank Bucks is accepted at these fine downtown Red Bank
           establishments:
         </h5>
+        <div className="d-flex flex-wrap">
+          {giftCards.map((giftCard, index) => {
+            return (
+              <div className="col-6 col-md-4 my-2" key={index}>
+                {giftCard.name}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

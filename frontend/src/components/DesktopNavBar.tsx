@@ -50,9 +50,11 @@ const DesktopNavBar = () => {
           </div>
         </div>
         <div>
-          <button className={`noStyleButt ${styles.dropHead}`}>
-            GIFT CARDS
-          </button>
+          <Link className="nostyle-link" href="/giftCard">
+            <button className={`noStyleButt ${styles.dropHead}`}>
+              GIFT CARDS
+            </button>
+          </Link>
         </div>
         <div>
           <button className={`noStyleButt ${styles.dropHead}`}>
