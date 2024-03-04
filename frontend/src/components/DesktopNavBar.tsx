@@ -57,9 +57,11 @@ const DesktopNavBar = () => {
           </Link>
         </div>
         <div>
-          <button className={`noStyleButt ${styles.dropHead}`}>
-            BUSINESS DIRECTORY
-          </button>
+          <Link className="nostyle-link" href="/businessDirectory">
+            <button className={`noStyleButt ${styles.dropHead}`}>
+              BUSINESS DIRECTORY
+            </button>
+          </Link>
         </div>
         <div className={`noStyleButt ${styles.dropHead}`}>
           <button className={`noStyleButt fw-bold`}>VISIT</button>
