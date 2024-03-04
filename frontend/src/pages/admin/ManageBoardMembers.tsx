@@ -11,7 +11,7 @@ import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
-// import PostNewBoardMember from "@/components/modals/PostNewBoardMember";
+import PostNewBoardMember from "@/components/modals/PostNewBoardMember";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostBoardMemberReq from "@/types/PostBoardMemberReq";
 import UpdateBoardMemberReq from "@/types/UpdateBoardMemberReq";
@@ -150,12 +150,12 @@ const ManageBoardMembers = () => {
           </button>
         </div>
 
-        {/* <PostNewBoardMember
+        <PostNewBoardMember
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}
           postBoardMemberData={postBoardMemberData}
           setPostBoardMemberData={setPostBoardMemberData}
-        /> */}
+        />
 
         <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Current BoardMembers</h2>
@@ -347,12 +347,16 @@ const ManageBoardMembers = () => {
                         <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Officer/Director:</p>
-                          <p className="text-white ms-5">{item.officerOrDirector}</p>
+                          <p className="text-white ms-5">
+                            {item.officerOrDirector}
+                          </p>
                         </div>
                         <div className="d-flex flex-column flex-md-row my-1 justify-content-between">
                           {" "}
                           <p>Executive Committee Member:</p>
-                          <p className="text-white ms-5">{item.executiveCommitteeMember ? 'Yes' : 'No'}</p>
+                          <p className="text-white ms-5">
+                            {item.executiveCommitteeMember ? "Yes" : "No"}
+                          </p>
                         </div>
                       </div>
                     )}

@@ -128,3 +128,13 @@ body {
   color: rgb(64, 255, 47);
   overflow-y: scroll;
 }
+
+.radio-group {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.radio-label {
+  margin-right: auto; /* Ensures the label is pushed to the left */
+}
