@@ -10,7 +10,6 @@ const LodgingSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-
     address: {
       type: String,
       required: false,
@@ -20,6 +19,10 @@ const LodgingSchema = mongoose.Schema(
       required: false,
     },
     website: {
+      type: String,
+      required: false,
+    },
+    description: {
       type: String,
       required: false,
     },
