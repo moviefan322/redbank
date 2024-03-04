@@ -11,8 +11,7 @@ import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
-// import PostNewGiftCard from "@/components/modals/PostNewGiftCard";
-import ImageUploader from "@/components/ImageUploader";
+import PostNewGiftCard from "@/components/modals/PostNewGiftCard";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostGiftCardReq from "@/types/PostGiftCardReq";
 import UpdateGiftCardReq from "@/types/UpdateGiftCardReq";
@@ -136,12 +135,12 @@ const ManageGiftCards = () => {
           </button>
         </div>
 
-        {/* <PostNewGiftCard
+        <PostNewGiftCard
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}
           postGiftCardData={postGiftCardData}
           setPostGiftCardData={setPostGiftCardData}
-        /> */}
+        />
 
         <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Current GiftCards</h2>
