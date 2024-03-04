@@ -73,6 +73,12 @@ const AdminPage = () => {
               >
                 Manage Gift Cards
               </Link>
+              <Link
+                className="btn-admin admin-link fs-4 border border-2 border-light w-75 my-2"
+                href="/admin/ManageBoardMembers"
+              >
+                Manage Board Members
+              </Link>
             </div>
           </div>
         ) : (

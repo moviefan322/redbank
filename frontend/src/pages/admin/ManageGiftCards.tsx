@@ -9,6 +9,7 @@ import {
 import { shallowEqual } from "react-redux";
 import Modal from "@/components/modals/Modal";
 import Loading from "@/components/loading";
+import SorryDave from "@/components/SorryDave";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
 import PostNewGiftCard from "@/components/modals/PostNewGiftCard";
@@ -103,18 +104,7 @@ const ManageGiftCards = () => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div className="d-flex flex-column justify-content-center">
-        <h1 className="mx-3 text-center">
-          {`I'm sorry Dave, I'm afraid I can't do that.`}
-        </h1>
-        <br />
-        <br />
-        <h5 className="text-center">
-          You must <Link href="/admin">log in</Link> to access this page.
-        </h5>
-      </div>
-    );
+    return <SorryDave />
   }
 
   if (error) return <div>Error: {error}</div>;
