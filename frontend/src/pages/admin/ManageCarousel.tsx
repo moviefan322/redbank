@@ -155,13 +155,21 @@ const ManageCarousel = () => {
   console.log(currentItemId);
 
   return (
-    <div className='admin'>
+    <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mt-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
+        </div>
         <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
           <CustomCarousel />
         </Modal>
-        <h1 className={`${styles.header} my-5 p-3 text-center mx-3`}>
+        <h1 className={`${styles.header} mb-5 p-3 text-center mx-3`}>
           Carousel Management Portal
         </h1>
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-evenly w-100 mb-5">
@@ -273,22 +281,22 @@ const ManageCarousel = () => {
                       <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>title:</p>
-                        <p className='text-white'>{item.title}</p>
+                        <p className="text-white">{item.title}</p>
                       </div>
                       <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>link text:</p>
-                        <p className='text-white'>{item.linkText}</p>
+                        <p className="text-white">{item.linkText}</p>
                       </div>
                       <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>url endpoint:</p>
-                        <p className='text-white'>{item.link}</p>
+                        <p className="text-white">{item.link}</p>
                       </div>
                       <div className="d-flex flex-column flex-md-row justify-content-between">
                         {" "}
                         <p>sequence number:</p>
-                        <p className='text-white'>{item.sequenceNo}</p>
+                        <p className="text-white">{item.sequenceNo}</p>
                       </div>
                     </div>
                   )}

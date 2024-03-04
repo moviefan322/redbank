@@ -206,9 +206,17 @@ const ManageNews = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='admin'>
+    <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mt-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
+        </div>
         <div className="w-100">
           <Modal
             isOpen={isPreviewModalOpen}
@@ -218,7 +226,7 @@ const ManageNews = () => {
             <NewsComponent />
           </Modal>
         </div>
-        <h1 className={`${styles.header} my-5 p-3`}>News Management Desk</h1>
+        <h1 className={`${styles.header} mb-5 p-3`}>News Management Desk</h1>
         <div className="d-flex flex-row justify-content-evenly w-100 mb-5">
           <button className="btn-primary btn" onClick={openPreviewModal}>
             View News
@@ -257,9 +265,9 @@ const ManageNews = () => {
                       }}
                     ></div>
                     {editModeIndex === index ? (
-                      <div className={`${styles.info} ms-5`}>
+                      <div className={`${styles.info} mx-3 mx-md-5`}>
                         {submitError && submitError}
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column py-2 flex-md-row justify-content-between">
                           {" "}
                           <p>Title:</p>
                           <input
@@ -273,7 +281,7 @@ const ManageNews = () => {
                             }
                           ></input>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column py-2 flex-md-row justify-content-between">
                           {" "}
                           <p>Link:</p>
                           <input
@@ -287,7 +295,7 @@ const ManageNews = () => {
                             }
                           ></input>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column py-2 flex-md-row justify-content-between">
                           {" "}
                           <p>Link Text:</p>
                           <input
@@ -301,7 +309,7 @@ const ManageNews = () => {
                             }
                           ></input>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column py-2 flex-md-row justify-content-between">
                           {" "}
                           <p>Video:</p>
                           <input
@@ -327,44 +335,46 @@ const ManageNews = () => {
                       </div>
                     ) : (
                       <div className="ms-5 w-75 align-self-center">
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Title:</p>
-                          <p>{item.title}</p>
+                          <p className="text-white">{item.title}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Date Posted:</p>
                           <p>{new Date(item.createdAt).toLocaleDateString()}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Link:</p>
-                          <p>{item.link}</p>
+                          <p className="text-white">{item.link}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Link Text:</p>
-                          <p>{item.linkText}</p>
+                          <p className="text-white">{item.linkText}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Video Link:</p>
-                          <p>{item.videoLink}</p>
+                          <p className="text-white">{item.videoLink}</p>
                         </div>
                       </div>
                     )}
                   </div>
                   {editModeIndex !== index ? (
-                    <div className="w-75 my-3">
-                      <div>Short Description: {item.descriptionShort}</div>
+                    <div className="my-3 mx-5">
+                      <div>
+                        Short Description: <br /> <span className="text-white">{item.descriptionShort}</span>
+                      </div>
                       <div className="my-3">
                         {" "}
-                        Full Description: {sanitizeData(item.description)}
+                        Full Description: <br /> <span className="text-white">{sanitizeData(item.description)}</span>
                       </div>
                     </div>
                   ) : (
-                    <div className="w-75 my-3">
+                    <div className="my-3 mx-5">
                       <div className="d-flex flex-column justify-content-between">
                         {" "}
                         <p>Short Description:</p>
