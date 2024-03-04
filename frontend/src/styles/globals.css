@@ -117,3 +117,14 @@ body {
 .bg-brown {
   background-color: brown;
 }
+
+.admin {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  font-family: monospace;
+  color: rgb(64, 255, 47);
+  overflow-y: scroll;
+}

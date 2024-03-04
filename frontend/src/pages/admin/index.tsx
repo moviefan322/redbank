@@ -33,7 +33,7 @@ const AdminPage = () => {
 
   console.log(data);
   return (
-    <>
+    <div className="admin">
       <div className="d-flex flex-column align-self-center">
         <h1 className="text-center mx-auto my-5">Admin Portal</h1>
 
@@ -94,7 +94,7 @@ const AdminPage = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

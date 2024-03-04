@@ -288,7 +288,7 @@ const ManageEvents = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className='admin'>
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
         <Modal
@@ -643,7 +643,7 @@ const ManageEvents = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

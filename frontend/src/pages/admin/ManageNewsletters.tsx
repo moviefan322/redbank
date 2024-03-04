@@ -112,7 +112,7 @@ const ManageNews = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
         <div className="w-100">
@@ -142,9 +142,11 @@ const ManageNews = () => {
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
                 <div className="d-flex flex-column align-items-center w-100">
-                  <div className={`${styles.newsItem} d-flex flex-row w-75`}>
+                  <div
+                    className={`${styles.newsItem} d-flex flex-column flex-md-row w-100 align-items-center`}
+                  >
                     <div
-                      className="w-50 align-self-center"
+                      className="align-self-center mb-5 mb-md-0"
                       style={{
                         height: "200px",
                         width: "200px",
@@ -157,7 +159,7 @@ const ManageNews = () => {
                       }}
                     ></div>
                     {editModeIndex === index ? (
-                      <div className={`${styles.info} ms-5 w-100`}>
+                      <div className={`${styles.info} ms-0 ms-md-5`}>
                         {submitError && submitError}
                         <div className="d-flex flex-row justify-content-between">
                           {" "}
@@ -188,8 +190,8 @@ const ManageNews = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="ms-5 w-75 align-self-center">
-                        <div className="d-flex flex-row justify-content-between">
+                      <div className="ms-0 ms-md-5 w-75 align-self-center">
+                        <div className="d-flex flex-row justify-content-between align-items-center justify-content-center mx-auto">
                           {" "}
                           <p className="w-75">Text:</p>
                           <p className="text-end">{item.subject_line}</p>
@@ -244,7 +246,7 @@ const ManageNews = () => {
             ))}
           </div>
         </div>
-        <div className="d-flex flex-row justify-content-end pb-5 w-100">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
           <Link className="admin-link" href="/admin">
             <button className="mb-5 d-flex flex-row align-items-center btn-admin">
               <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
@@ -253,7 +255,7 @@ const ManageNews = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

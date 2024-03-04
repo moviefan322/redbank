@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
   if (admin) {
     return (
       <Provider store={store}>
-        <div className={styles.admin}>
+        <div>
           <Component {...pageProps} />
         </div>
       </Provider>
@@ -57,11 +57,11 @@ export default function App({ Component, pageProps }: AppProps) {
             menuOpen ? `${styles.slide}` : ""
           }`}
         >
-          <div className={styles.desktopNav}>
+          <div className="d-none d-md-block">
             <DesktopNavBar />
           </div>
 
-          <div className={styles.mobileNav}>
+          <div className="d-block d-md-none">
             <MobileNavBar toggleMenu={toggleMenu} isMenuOpen={menuOpen} />
           </div>
 

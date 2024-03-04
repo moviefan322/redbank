@@ -206,7 +206,7 @@ const ManageNews = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className='admin'>
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
         <div className="w-100">
@@ -479,7 +479,7 @@ const ManageNews = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

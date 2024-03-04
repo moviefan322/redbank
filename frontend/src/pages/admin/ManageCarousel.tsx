@@ -155,7 +155,7 @@ const ManageCarousel = () => {
   console.log(currentItemId);
 
   return (
-    <>
+    <div className='admin'>
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
         <Modal isOpen={isPreviewModalOpen} onClose={closePreviewModal}>
@@ -415,7 +415,7 @@ const ManageCarousel = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
