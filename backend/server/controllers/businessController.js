@@ -6,7 +6,7 @@ import Business from "../models/businessModel.js";
 // @access  Public
 
 const getAllBusinesses = asyncHandler(async (req, res) => {
-  const business = await Business.find({});
+  const business = await Business.find({}).sort({ name: 1 });
   res.json(business);
 });
 

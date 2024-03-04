@@ -12,7 +12,7 @@ import Loading from "@/components/loading";
 import SorryDave from "@/components/SorryDave";
 import Link from "next/link";
 import useUserDetails from "@/hooks/userCredentials";
-// import PostNewBusiness from "@/components/modals/PostNewBusiness";
+import PostNewBusiness from "@/components/modals/PostNewBusiness";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostBusinessReq from "@/types/PostBusinessReq";
 import UpdateBusinessReq from "@/types/UpdateBusinessReq";
@@ -136,16 +136,16 @@ const ManageBusinesses = () => {
             className="mt-4 mt-md-0 btn-success btn"
             onClick={openPostModal}
           >
-            Add New Gift Card
+            Add New Business
           </button>
         </div>
 
-        {/* <PostNewBusiness
+        <PostNewBusiness
           postModalOpen={postModalOpen}
           closePostModal={closePostModal}
           postBusinessData={postBusinessData}
           setPostBusinessData={setPostBusinessData}
-        /> */}
+        />
 
         <div className="d-flex flex-column align-items-center pb-5">
           <h2 className="py-3">Current Businesses</h2>
