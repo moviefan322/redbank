@@ -291,6 +291,14 @@ const ManageEvents = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
+      <div className="d-flex flex-row justify-content-center pb-5 w-100">
+          <Link className="admin-link" href="/admin">
+            <button className="mt-5 d-flex flex-row align-items-center btn-admin">
+              <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
+              Portal
+            </button>
+          </Link>
+        </div>
         <Modal
           isOpen={isPreviewModalOpen}
           onClose={closePreviewModal}
@@ -298,7 +306,7 @@ const ManageEvents = () => {
         >
           <Upcoming />
         </Modal>
-        <h1 className={`${styles.header} my-5 p-3`}>Event Management Desk</h1>
+        <h1 className={`${styles.header} mb-5 p-3`}>Event Management Desk</h1>
         <div className="d-flex flex-column flex-md-row align-items-center justify-content-evenly w-100 mb-5">
           <button className="btn-primary btn" onClick={openPreviewModal}>
             View Events
@@ -346,7 +354,7 @@ const ManageEvents = () => {
                     {editModeIndex === index ? (
                       <div className={`${styles.info} ms-5 w-75`}>
                         {submitError && submitError}
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Title:</p>
                           <input
@@ -361,7 +369,7 @@ const ManageEvents = () => {
                           ></input>
                         </div>
                         <div
-                          className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                          className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
                         >
                           <p>Date:</p>
                           <select
@@ -403,7 +411,7 @@ const ManageEvents = () => {
                             })}
                           </select>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
                           <input
@@ -418,7 +426,7 @@ const ManageEvents = () => {
                           ></input>
                         </div>
                         <div
-                          className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                          className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
                         >
                           <p>Start Time:</p>
                           <select
@@ -447,7 +455,7 @@ const ManageEvents = () => {
                           </select>
                         </div>
                         <div
-                          className={`d-flex flex-row justify-content-between ${styles.timeSelect}`}
+                          className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
                         >
                           <p>End Time:</p>
                           <select
@@ -488,36 +496,36 @@ const ManageEvents = () => {
                       </div>
                     ) : (
                       <div className="ms-5 w-75 align-self-center">
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Title:</p>
-                          <p>{item.title}</p>
+                          <p className='text-white'>{item.title}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Date:</p>
-                          <p>{`${
+                          <p className='text-white'>{`${
                             months[new Date(item.date).getMonth()]
                           } ${new Date(item.date).getDate()}, ${new Date(
                             item.date
                           ).getFullYear()}`}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
-                          <p>{item.allDay ? "True" : "False"}</p>
+                          <p className='text-white'>{item.allDay ? "True" : "False"}</p>
                         </div>
                         {!item.allDay && (
                           <>
-                            <div className="d-flex flex-row justify-content-between">
+                            <div className="d-flex flex-column flex-md-row justify-content-between">
                               {" "}
                               <p>Start Time:</p>
-                              <p>{item.startTime}</p>
+                              <p className='text-white'>{item.startTime}</p>
                             </div>
-                            <div className="d-flex flex-row justify-content-between">
+                            <div className="d-flex flex-column flex-md-row justify-content-between">
                               {" "}
                               <p>End Time:</p>
-                              <p>{item.endTime}</p>
+                              <p className='text-white'>{item.endTime}</p>
                             </div>
                           </>
                         )}
@@ -526,10 +534,10 @@ const ManageEvents = () => {
                   </div>
                   {editModeIndex !== index ? (
                     <div className="w-75 my-3">
-                      <div>Short Description: {item.descriptionShort}</div>
+                      <div>Short Description: <br /> <span className="text-white">{item.descriptionShort}</span></div>
                       <div className="my-3">
                         {" "}
-                        Full Description: {sanitizeData(item.description)}
+                        Full Description: <br /> <span className="text-white">{sanitizeData(item.description)}</span>
                       </div>
                     </div>
                   ) : (
