@@ -5,17 +5,7 @@ import PostNewsReq from "@/types/PostNewsReq";
 import UpdateNewsReq from "@/types/UpdateNewsReq";
 import { RootState } from "../../store/configureStore";
 
-let backendUrl: string;
-if (process.env.NODE_ENV === "development") {
-  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
-} else {
-  backendUrl = "";
-}
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 
 export const getAllNews = createAsyncThunk<
   News[],

@@ -1,0 +1,15 @@
+.imageBG {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 300px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/v1709604640/hotel_avt7th.webp")
+    no-repeat center/cover;
+}
+
+.headerDiv {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 3rem 8rem;
+}

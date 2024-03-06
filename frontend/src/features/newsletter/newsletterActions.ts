@@ -4,12 +4,7 @@ import Newsletter from "../../types/Newsletter";
 import UpdateNewsletterReq from "@/types/UpdateNewsletterReq";
 import { RootState } from "../../store/configureStore";
 
-let backendUrl: string;
-if (process.env.NODE_ENV === "development") {
-  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
-} else {
-  backendUrl = "";
-}
+const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 
 export const getAllNewsletters = createAsyncThunk<
   Newsletter[],

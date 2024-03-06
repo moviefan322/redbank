@@ -5,12 +5,7 @@ import PostBoardMemberReq from "@/types/PostBoardMemberReq";
 import UpdateBoardMemberReq from "@/types/UpdateBoardMemberReq";
 import { RootState } from "../../store/configureStore";
 
-let backendUrl: string;
-if (process.env.NODE_ENV === "development") {
-  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
-} else {
-  backendUrl = "";
-}
+const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 
 export const getAllBoardMembers = createAsyncThunk<
   BoardMember[],

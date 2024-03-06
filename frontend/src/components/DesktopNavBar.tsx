@@ -67,8 +67,12 @@ const DesktopNavBar = () => {
           <button className={`noStyleButt fw-bold`}>VISIT</button>
           <div className={`${styles.dropdown}`}>
             <ul className={styles.noStyleLi}>
-              <li>PARKING</li>
-              <li>LODGING</li>
+              <Link className="nostyle-link" href="/parking">
+                <li>PARKING</li>
+              </Link>
+              <Link className="nostyle-link" href="/lodging">
+                <li>LODGING</li>
+              </Link>
             </ul>
           </div>
         </div>

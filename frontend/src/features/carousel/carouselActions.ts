@@ -5,12 +5,8 @@ import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import { RootState } from "@/store/configureStore";
 import UpdateCarouselItemReq from "@/types/UpdateCarouselItemReq";
 
-let backendUrl: string;
-if (process.env.NODE_ENV === "development") {
-  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
-} else {
-  backendUrl = "";
-}
+const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+
 const config = {
   headers: {
     "Content-Type": "application/json",

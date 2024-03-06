@@ -3,12 +3,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import LoginData from "../../types/LoginData";
 import LoginRes from "../../types/LoginRes";
 
-let backendUrl: string;
-if (process.env.NODE_ENV === "development") {
-  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
-} else {
-  backendUrl = "";
-}
+
+const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+
 const config = {
   headers: {
     "Content-Type": "application/json",
