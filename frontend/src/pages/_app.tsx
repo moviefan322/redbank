@@ -15,7 +15,6 @@ import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Redbank</title>
         <meta name="description" content="Description of my page" />
-        <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+        <link rel="icon" href="/rblogo.svg" type="image/svg+xml" />
 
         {/* You can add more tags here as needed */}
       </Head>
