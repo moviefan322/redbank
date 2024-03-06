@@ -15,12 +15,9 @@ const initialState: ImageUploaderState = {
   error: null,
 };
 
-let backendUrl: string;
-if (process.env.NODE_ENV === "development") {
-  backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
-} else {
-  backendUrl = "";
-}
+
+  const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+
 
 export const uploadImage = createAsyncThunk<
   string,
