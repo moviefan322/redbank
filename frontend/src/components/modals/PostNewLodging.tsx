@@ -45,9 +45,9 @@ const PostNewLodging = ({
           <h2 className="py-3">Add New Lodging</h2>
           {error && <p className="text-danger">{error}</p>}
           <div className="d-flex flex-column align-items-center">
-            <div className={`d-flex flex-row`}>
+            <div className={`d-flex flex-column flex-md-row`}>
               <div className={`ms-5 w-75`}>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Name:</p>
                   <input
@@ -61,7 +61,7 @@ const PostNewLodging = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Address:</p>
                   <input
@@ -75,7 +75,7 @@ const PostNewLodging = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Phone #:</p>
                   <input
@@ -89,7 +89,7 @@ const PostNewLodging = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Website:</p>
                   <input
@@ -103,7 +103,7 @@ const PostNewLodging = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>City:</p>
                   <input
@@ -117,7 +117,7 @@ const PostNewLodging = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Description:</p>
                   <textarea

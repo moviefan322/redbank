@@ -356,19 +356,26 @@ const ManageNews = () => {
                   {editModeIndex !== index ? (
                     <div className="my-3 mx-5">
                       <div>
-                        Short Description: <br /> <span className="text-white">{item.descriptionShort}</span>
+                        Short Description: <br />{" "}
+                        <span className="text-white">
+                          {item.descriptionShort}
+                        </span>
                       </div>
                       <div className="my-3">
                         {" "}
-                        Full Description: <br /> <span className="text-white">{sanitizeData(item.description)}</span>
+                        Full Description: <br />{" "}
+                        <span className="text-white">
+                          {sanitizeData(item.description)}
+                        </span>
                       </div>
                     </div>
                   ) : (
-                    <div className="my-3 mx-5">
-                      <div className="d-flex flex-column justify-content-between">
+                    <div className="my-3 mx-5 col-10">
+                      <div className="d-flex flex-column justify-content-between col-12">
                         {" "}
                         <p>Short Description:</p>
                         <textarea
+                          className={styles.textareaSm}
                           placeholder={item.descriptionShort}
                           value={updateNewsData.descriptionShort}
                           onChange={(e) =>
@@ -380,6 +387,7 @@ const ManageNews = () => {
                         {" "}
                         <p>Full Description:</p>
                         <textarea
+                          className={styles.textarea}
                           placeholder={item.description}
                           value={updateNewsData.description}
                           onChange={(e) =>

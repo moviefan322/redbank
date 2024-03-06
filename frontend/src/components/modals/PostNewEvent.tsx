@@ -108,7 +108,7 @@ const PostNewEvent = ({
           <h2 className="py-3">Add New Event</h2>
           {error && <p className="text-danger">{error}</p>}
           <div className="d-flex flex-column align-items-center">
-            <div className={`d-flex flex-row`}>
+            <div className={`d-flex flex-column flex-md-row`}>
               <div
                 className="w-100 align-self-center"
                 style={{
@@ -118,7 +118,7 @@ const PostNewEvent = ({
                 }}
               ></div>
               <div className={`ms-5 w-75`}>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>title:</p>
                   <input
@@ -132,7 +132,7 @@ const PostNewEvent = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   <p>Date:</p>
                   <select
                     value={month}
@@ -170,7 +170,7 @@ const PostNewEvent = ({
                     })}
                   </select>
                 </div>
-                <div className="d-flex flex-row justify-content-end">
+                <div className="d-flex flex-column flex-md-row justify-content-end">
                   <p className="flex-grow-2 w-100">All Day Event:</p>
                   <input
                     type="checkbox"
@@ -184,7 +184,7 @@ const PostNewEvent = ({
                   ></input>
                 </div>
 
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   <p>Start Time:</p>
                   <select
                     value={startHour}
@@ -211,7 +211,7 @@ const PostNewEvent = ({
                     ))}
                   </select>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   <p>End Time:</p>
                   <select
                     value={endHour}

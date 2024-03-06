@@ -45,8 +45,15 @@ const deleteNews = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const createNews = asyncHandler(async (req, res) => {
-  const { title, urlPhoto, link, description, descriptionShort, videoLink } =
-    req.body;
+  const {
+    title,
+    urlPhoto,
+    link,
+    linkText,
+    description,
+    descriptionShort,
+    videoLink,
+  } = req.body;
 
   const news = new News({
     title,
@@ -67,8 +74,15 @@ const createNews = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateNews = asyncHandler(async (req, res) => {
-  const { title, urlPhoto, link, linkText, description, descriptionShort, videoLink } =
-    req.body;
+  const {
+    title,
+    urlPhoto,
+    link,
+    linkText,
+    description,
+    descriptionShort,
+    videoLink,
+  } = req.body;
 
   const news = await News.findById(req.params._id);
 

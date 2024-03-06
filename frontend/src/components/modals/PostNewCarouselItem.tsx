@@ -71,9 +71,8 @@ const PostNewCarouselItem = ({
           <h2 className="py-3">Add New Carousel Item</h2>
           {error && <p className="text-danger">{error}</p>}
           <div className="d-flex flex-column align-items-center">
-            <div className={`d-flex flex-row`}>
+            <div className={`d-flex flex-column flex-md-row align-items-center`}>
               <div
-                className="w-50"
                 style={{
                   height: "200px",
                   width: "200px",
@@ -81,7 +80,7 @@ const PostNewCarouselItem = ({
                 }}
               ></div>
               <div className={`ms-5 w-75`}>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>title:</p>
                   <input
@@ -95,7 +94,7 @@ const PostNewCarouselItem = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>link text:</p>
                   <input
@@ -109,7 +108,7 @@ const PostNewCarouselItem = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>url endpoint:</p>
                   <input
@@ -123,7 +122,7 @@ const PostNewCarouselItem = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>sequence number:</p>
                   <input

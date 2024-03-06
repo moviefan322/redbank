@@ -64,7 +64,7 @@ const PostNewNews = ({
           <h2 className="py-3">Add New News</h2>
           {error && <p className="text-danger">{error}</p>}
           <div className="d-flex flex-column align-items-center">
-            <div className={`d-flex flex-row`}>
+            <div className={`d-flex flex-column flex-md-row`}>
               <div
                 className="w-100 align-self-center"
                 style={{
@@ -74,7 +74,7 @@ const PostNewNews = ({
                 }}
               ></div>
               <div className={`ms-5 w-75`}>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Title:</p>
                   <input
@@ -88,7 +88,7 @@ const PostNewNews = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Link:</p>
                   <input
@@ -102,7 +102,21 @@ const PostNewNews = ({
                     }
                   ></input>
                 </div>
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-column flex-md-row justify-content-between">
+                  {" "}
+                  <p>Link Text:</p>
+                  <input
+                    placeholder="Link Text"
+                    value={postNewsData.linkText}
+                    onChange={(e) =>
+                      setPostNewsData({
+                        ...postNewsData,
+                        linkText: e.target.value,
+                      })
+                    }
+                  ></input>
+                </div>
+                <div className="d-flex flex-column flex-md-row justify-content-between">
                   {" "}
                   <p>Embedded Video URL:</p>
                   <input
