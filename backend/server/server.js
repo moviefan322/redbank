@@ -24,8 +24,8 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_ORIGIN,
-  // origin: `*`,
+  // origin: process.env.FRONTEND_ORIGIN,
+  origin: `*`,
   credentials: true,
 };
 
