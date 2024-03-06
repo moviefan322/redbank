@@ -24,7 +24,7 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-  origin: `${process.env.FRONTEND_ORIGIN}`,
+  origin: process.env.FRONTEND_ORIGIN,
   // origin: `*`,
   credentials: true,
 };
@@ -54,15 +54,17 @@ app.use("/api/giftCards", giftCardRoutes);
 app.use("/api/businesses", businessRoutes);
 app.use("/api/lodging", lodgingRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  // Adjusted to match the Docker container's directory structure
-  app.use(express.static(path.join(__dirname, "public")));
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "public", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => res.send("Server is ready"));
-}
+// if (process.env.NODE_ENV === "production") {
+//   // Adjusted to match the Docker container's directory structure
+//   app.use(express.static(path.join(__dirname, "public")));
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname, "public", "index.html"))
+//   );
+// } else {
+app.get("/", (req, res) =>
+  res.send(`Running, accepting requests from ${process.env.FRONTEND_ORIGIN}`)
+);
+// }
 
 app.use(notFound);
 app.use(errorHandler);
