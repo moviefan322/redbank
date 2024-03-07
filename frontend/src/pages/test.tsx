@@ -1,7 +1,8 @@
 import React from "react";
+import SearchComponent from "@/components/SearchComponent";
 
 const TestPoop = () => {
-  return <h1>I SHAT MY PANTS</h1>;
+  return <SearchComponent />;
 };
 
 export default TestPoop;
