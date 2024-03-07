@@ -65,7 +65,7 @@ const Lodging = () => {
               key={index}
             >
               {lodge.description && <p>{lodge.description}</p>}
-              <p>{lodge.name}</p>
+              <strong>{lodge.name}</strong>
               <p>{lodge.address}</p>
               <p>{lodge.phoneNumber.toString()}</p>
               <p>{lodge.website}</p>
@@ -85,7 +85,7 @@ const Lodging = () => {
                   key={index}
                 >
                   {lodge.description && <p>{lodge.description}</p>}
-                  <p>{lodge.name}</p>
+                  <strong>{lodge.name}</strong>
                   <p>{lodge.address}</p>
                   <p>{lodge.phoneNumber && lodge.phoneNumber.toString()}</p>
                   <p>{lodge.website}</p>

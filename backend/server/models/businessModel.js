@@ -24,7 +24,7 @@ const BusinessSchema = mongoose.Schema(
   }
 );
 
-BusinessSchema.index({ name: "text" });
+BusinessSchema.index({ name: "text", website: "text" });
 
 const Business = mongoose.model("Business", BusinessSchema);
 

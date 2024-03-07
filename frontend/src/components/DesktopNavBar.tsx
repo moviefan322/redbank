@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import styles from "./DesktopNavBar.module.css";
+import SearchComponent from "./SearchComponent";
 
 const DesktopNavBar = () => {
   return (
@@ -77,7 +78,7 @@ const DesktopNavBar = () => {
           </div>
         </div>
         <FaMagnifyingGlass className="m-3" />
-        <button className={`noStyleButt ${styles.dropHead}`}>SEARCH</button>
+        <SearchComponent />
       </div>
     </>
   );
