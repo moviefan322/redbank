@@ -1,0 +1,6 @@
+.parkingImage {
+  width: 450px;
+  height: 300px;
+  background: url("https://res.cloudinary.com/dnaj4dehf/image/upload/v1709758936/Screenshot_2024-03-06_at_4.00.22_PM_unna7s.png")
+    no-repeat center/cover;
+}
