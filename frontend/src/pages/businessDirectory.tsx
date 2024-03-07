@@ -55,7 +55,7 @@ const BusinessDirectory = () => {
   );
 
   return (
-    <div className=" d-flex flex-column justify-content-center align-items-center mx-5 mt-5">
+    <div className=" d-flex flex-column justify-content-center align-items-center mx-5 my-5">
       <div className="flex-column justify-content-center align-items-center mx-auto text-center">
         <h1>Business Directory</h1>
         <h5> RED BANK GIFT CARD PROGRAM:</h5>
@@ -67,7 +67,7 @@ const BusinessDirectory = () => {
         </h5>
       </div>
       <div className="d-flex flex-row justify-content-between w-100 bg-secondary my-5 p-3">
-        <div className="d-flex flex-row justify-content-around w-100 me-3">
+        <div className="d-none d-md-flex flex-row justify-content-around w-100 me-3">
           {letters.map((letter) => (
             <button
               key={letter}
@@ -93,11 +93,11 @@ const BusinessDirectory = () => {
           />
         </div>
       </div>
-      <div className="d-flex flex-wrap justify-content-center w-100">
+      <div className="d-flex flex-wrap justify-content-center col-12">
         {currentItems.map((business, index) => (
           <div
             key={index}
-            className="d-flex flex-column bg-brown m-3 justify-content-between align-items-center col-5 text-center text-white p-3"
+            className="d-flex flex-column bg-brown m-3 justify-content-between align-items-center col-12 col-md-5 text-center text-white p-3"
           >
             <h3>{business.name}</h3>
             <h5>{business.address}</h5>
@@ -114,17 +114,20 @@ const BusinessDirectory = () => {
         >
           <FaChevronLeft />
         </button>
-        {Array.from({ length: pageCount }, (_, i) => i + 1).map((number) => (
-          <button
-            key={number}
-            onClick={() => handlePageChange(number)}
-            className={`${currentPage === number ? "active" : ""} ${
-              styles.paginationButton
-            }`}
-          >
-            {number}
-          </button>
-        ))}
+        <span className="d-none d-md-block">
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map((number) => (
+            <button
+              key={number}
+              onClick={() => handlePageChange(number)}
+              className={`${currentPage === number ? "active" : ""} ${
+                styles.paginationButton
+              }`}
+            >
+              {number}
+            </button>
+          ))}
+        </span>
+
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === pageCount}

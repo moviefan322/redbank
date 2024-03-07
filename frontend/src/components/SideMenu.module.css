@@ -37,6 +37,9 @@
 }
 
 .noStyleLi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   text-decoration: none;
   list-style-type: none;
   color: inherit;

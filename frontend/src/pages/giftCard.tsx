@@ -58,7 +58,7 @@ const GiftCard = () => {
           <li>Tap to pay coming soon!</li>
         </ul>
       </div>
-      <div className="mx-4">
+      <div className="mx-4 pb-5">
         <h5 className="fw-bold">
           Red Bank Bucks is accepted at these fine downtown Red Bank
           establishments:

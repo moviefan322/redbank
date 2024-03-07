@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import styles from "./Foot.module.css";
 
@@ -18,11 +19,23 @@ const Foot = () => {
           <p>732-842-4244</p>
         </div>
         <div>
-          <button className={styles.contactButt}>CONTACT</button>
+          <Link href="/about/contact" className="nostyle-link">
+            <button className={styles.contactButt}>CONTACT</button>
+          </Link>
         </div>
         <div>
-          <FaInstagram size={60} />
-          <FaFacebook size={60} />
+          <Link
+            className="nostyle-link text-white"
+            href="https://www.instagram.com/redbankvisitorscenter/"
+          >
+            <FaInstagram size={60} />
+          </Link>
+          <Link
+            className="nostyle-link text-white ms-3"
+            href="https://www.facebook.com/RedBankVisitorsCenter"
+          >
+            <FaFacebook size={60} />
+          </Link>
         </div>
       </div>
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center m-3">

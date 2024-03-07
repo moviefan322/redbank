@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Foot />
         </div>
         <div className={styles.mobileNav}>
-          <SideMenu isOpen={menuOpen} />
+          <SideMenu isOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
       </Provider>
     </>

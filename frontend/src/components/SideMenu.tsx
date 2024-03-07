@@ -5,9 +5,10 @@ import Link from "next/link";
 
 interface SideMenuProps {
   isOpen: boolean;
+  setMenuOpen: (arg: boolean) => void;
 }
 
-const SideMenu = ({ isOpen }: SideMenuProps) => {
+const SideMenu = ({ isOpen, setMenuOpen }: SideMenuProps) => {
   const [showVisitMenu, setShowVisitMenu] = useState(false);
   const [showAboutMenu, setShowAboutMenu] = useState(false);
 
@@ -16,19 +17,25 @@ const SideMenu = ({ isOpen }: SideMenuProps) => {
       <ul className={styles.customList}>
         <li>
           <Link href="/events" className="nostyle-link">
-            EVENTS
+            <button className="noStyleButt" onClick={() => setMenuOpen(false)}>
+              EVENTS
+            </button>
           </Link>
         </li>
         <li>
           {" "}
           <Link href="/newsletter" className="nostyle-link">
-            NEWSLETTER
+            <button className="noStyleButt" onClick={() => setMenuOpen(false)}>
+              NEWSLETTER
+            </button>
           </Link>
         </li>
         <li>
           {" "}
           <Link href="/news" className="nostyle-link">
-            NEWS
+            <button className="noStyleButt" onClick={() => setMenuOpen(false)}>
+              NEWS
+            </button>
           </Link>
         </li>
         <li>
@@ -41,21 +48,39 @@ const SideMenu = ({ isOpen }: SideMenuProps) => {
           </button>
           {showAboutMenu && (
             <ul className={styles.noStyleLi}>
-              <li>BOARD MEMBERS</li>
-              <li>CONTACT US</li>
+              <Link href="/about/boardMembers" className="nostyle-link">
+                <button
+                  className="noStyleButt"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <li>BOARD MEMBERS</li>
+                </button>
+              </Link>
+              <Link href="/about/contact" className="nostyle-link">
+                <button
+                  className="noStyleButt"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <li>CONTACT US</li>
+                </button>
+              </Link>
             </ul>
           )}
         </li>
         <li>
           {" "}
-          <Link href="/giftcards" className="nostyle-link">
-            GIFT CARDS
+          <Link href="/giftCard" className="nostyle-link">
+            <button className="noStyleButt" onClick={() => setMenuOpen(false)}>
+              GIFT CARDS
+            </button>
           </Link>
         </li>
         <li>
           {" "}
-          <Link href="/news" className="nostyle-link">
-            BUSINESS DIRECTORY
+          <Link href="/businessDirectory" className="nostyle-link">
+            <button className="noStyleButt" onClick={() => setMenuOpen(false)}>
+              BUSINESS DIRECTORY
+            </button>
           </Link>
         </li>
         <li>
@@ -68,8 +93,22 @@ const SideMenu = ({ isOpen }: SideMenuProps) => {
           </button>
           {showVisitMenu && (
             <ul className={styles.noStyleLi}>
-              <li>LODGING</li>
-              <li>PARKING</li>
+              <Link href="/lodging" className="nostyle-link">
+                <button
+                  className="noStyleButt"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <li>LODGING</li>
+                </button>
+              </Link>
+              <Link href="/parking" className="nostyle-link">
+                <button
+                  className="noStyleButt"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <li>PARKING</li>
+                </button>
+              </Link>
             </ul>
           )}
         </li>
