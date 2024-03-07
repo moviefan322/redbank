@@ -32,6 +32,8 @@ const LodgingSchema = mongoose.Schema(
   }
 );
 
+LodgingSchema.index({ name: "text", description: "text" });
+
 const Lodging = mongoose.model("Lodging", LodgingSchema);
 
 export default Lodging;

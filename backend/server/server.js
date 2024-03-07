@@ -18,6 +18,7 @@ import boardMemberRoutes from "./routes/boardMemberRoutes.js";
 import giftCardRoutes from "./routes/giftCardRoutes.js";
 import businessRoutes from "./routes/businessRoutes.js";
 import lodgingRoutes from "./routes/lodgingRoutes.js";
+import searchRoutes from "./routes/searchRoutes.js";
 
 connectDB();
 
@@ -53,6 +54,7 @@ app.use("/api/boardMembers", boardMemberRoutes);
 app.use("/api/giftCards", giftCardRoutes);
 app.use("/api/businesses", businessRoutes);
 app.use("/api/lodging", lodgingRoutes);
+app.use("/api/search", searchRoutes);
 
 // if (process.env.NODE_ENV === "production") {
 //   // Adjusted to match the Docker container's directory structure

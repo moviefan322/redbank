@@ -40,6 +40,12 @@ const EventSchema = mongoose.Schema(
   }
 );
 
+EventSchema.index({
+  title: "text",
+  description: "text",
+  descriptionShort: "text",
+});
+
 const Event = mongoose.model("Event", EventSchema);
 
 export default Event;

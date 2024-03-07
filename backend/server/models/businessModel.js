@@ -24,6 +24,8 @@ const BusinessSchema = mongoose.Schema(
   }
 );
 
+BusinessSchema.index({ name: "text" });
+
 const Business = mongoose.model("Business", BusinessSchema);
 
 export default Business;
