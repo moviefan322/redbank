@@ -7,7 +7,7 @@ interface LodgingsByCity {
   [key: string]: Lodging[];
 }
 
-const Lodging = () => {
+const LodgingPage = () => {
   const [lodging, setLodging] = useState<Lodging[]>([]);
 
   const fetchLodging = async () => {
@@ -99,4 +99,4 @@ const Lodging = () => {
   );
 };
 
-export default Lodging;
+export default LodgingPage;
