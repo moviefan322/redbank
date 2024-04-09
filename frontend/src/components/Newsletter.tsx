@@ -50,11 +50,12 @@ const Upcoming = () => {
 
   return (
     <div className="d-flex flex-column align-items-center pb-5">
-      <Link className="nostyle-link" href="/newsletter">
+      <Link className="nostyle-link pb-0 mb-0" href="/newsletter">
         <h4 className={`fs-2 my-4 fw-bold`}>
           <u>RED BANK BEAT</u>
         </h4>
       </Link>
+      <button className="noStyleButt orangeButt mt-0">Subscribe</button>
       <div
         className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3 w-100`}
       >
