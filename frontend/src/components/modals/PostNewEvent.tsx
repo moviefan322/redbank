@@ -6,6 +6,7 @@ import { resetUploadState } from "@/features/upload/uploadSlice";
 import ImageUploader from "../ImageUploader";
 import PostEventReq from "@/types/PostEventReq";
 import styles from "./PostNewCarouselItem.module.css";
+import { start } from "repl";
 
 interface PostNewEventProps {
   postModalOpen: boolean;
@@ -83,7 +84,9 @@ const PostNewEvent = ({
         )}:${endMinute.padStart(2, "0")}`;
         updatedPostEventData.endTime = formattedEndTime;
 
-        if (startHour > endHour) {
+        if (+startHour > +endHour) {
+          console.log(startHour, endHour, +startHour > +endHour);
+          console.log(typeof startHour, typeof endHour);
           return setError("End time must be later than start time.");
         }
       } else {
