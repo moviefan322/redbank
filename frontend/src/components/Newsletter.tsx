@@ -15,6 +15,7 @@ const Upcoming = () => {
 
   const fetchNewsletters = async () => {
     try {
+      console.log("fetching newsletters");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/newsletter`
       );
@@ -22,7 +23,7 @@ const Upcoming = () => {
       setNewsletters(data as Newsletter[]);
       setDisplayedNewsletters(data.slice(0, 3));
     } catch (error) {
-      console.log(error);
+      console.log("error fetching newsletters", error);
     }
   };
 

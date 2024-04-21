@@ -4,7 +4,7 @@ import axios from "axios";
 
 const getMailchimpData = async () => {
   const url =
-    "https://us7.api.mailchimp.com/3.0/campaigns?folder_id=c64693791f";
+    "https://us7.api.mailchimp.com/3.0/campaigns?folder_id=c64693791f&sort_field=send_time&sort_dir=DESC";
   const apiKey = process.env.MAILCHIMP_API_KEY;
   try {
     const response = await axios.get(url, {
@@ -22,12 +22,16 @@ const getNewsletters = asyncHandler(async (req, res) => {
     const mailchimpData = await getMailchimpData();
     const newsletters = await Newsletter.find({});
 
-    const newMailChimpCampaigns = mailchimpData.campaigns.filter(
-      (campaign) =>
-        !newsletters.some(
-          (newsletter) => newsletter.mailchimp_id === campaign.id
-        )
+    console.log("running");
+
+    const newsletterIds = new Set(
+      newsletters.map((newsletter) => newsletter.mailchimp_id)
     );
+    const newMailChimpCampaigns = mailchimpData.campaigns.filter(
+      (campaign) => !newsletterIds.has(campaign.id)
+    );
+
+    console.log(mailchimpData.campaigns);
 
     for (const campaign of newMailChimpCampaigns) {
       const newNewsletter = new Newsletter({
