@@ -2,6 +2,36 @@ import asyncHandler from "express-async-handler";
 import Newsletter from "../models/newsletterModel.js";
 import axios from "axios";
 
+const postToMailingList = async (email, firstName, lastName) => {
+  const url = "https://us7.api.mailchimp.com/3.0/lists/d6e266c429/members";
+  const apiKey = process.env.MAILCHIMP_API_KEY;
+
+  const data = {
+    email_address: email,
+    status: "subscribed",
+    merge_fields: {
+      FNAME: firstName,
+      LNAME: lastName,
+    },
+  };
+
+  try {
+    const response = await axios.post(url, data, {
+      auth: {
+        username: "anystring",
+        password: apiKey,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error adding subscriber to Mailchimp:", error);
+    throw new Error("Error adding subscriber to Mailchimp");
+  }
+};
+
 const getMailchimpData = async () => {
   const url =
     "https://us7.api.mailchimp.com/3.0/campaigns?folder_id=c64693791f&sort_field=send_time&sort_dir=DESC";
@@ -65,4 +95,4 @@ const updateNewsletter = asyncHandler(async (req, res) => {
   }
 });
 
-export { getNewsletters, updateNewsletter };
+export { getNewsletters, updateNewsletter, postToMailingList };
