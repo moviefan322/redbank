@@ -19,6 +19,7 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostCarouselItemReq from "@/types/PostCarouselItemReq";
 import UpdateCarouselItemReq from "@/types/UpdateCarouselItemReq";
 import CarouselItem from "@/types/CarouselItem";
+import ImageUploader from "@/components/ImageUploader";
 import styles from "./ManageCarousel.module.css";
 
 const ManageCarousel = () => {
@@ -198,15 +199,28 @@ const ManageCarousel = () => {
                 <div
                   className={`${styles.carouselItem} d-flex flex-column flex-md-row align-items-center `}
                 >
-                  <div
-                    className="w-50"
-                    style={{
-                      height: "200px",
-                      width: "200px",
-                      background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
-                      backgroundAttachment: "scroll",
-                    }}
-                  ></div>
+                  {editModeIndex === index ? (
+                    <div
+                      className="w-50"
+                      style={{
+                        height: "200px",
+                        width: "200px",
+                        background: `#151515 url("${updateCarouselData.urlPhoto}") no-repeat center center / cover`,
+                        backgroundAttachment: "scroll",
+                      }}
+                    ></div>
+                  ) : (
+                    <div
+                      className="w-50"
+                      style={{
+                        height: "200px",
+                        width: "200px",
+                        background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
+                        backgroundAttachment: "scroll",
+                      }}
+                    ></div>
+                  )}
+
                   {editModeIndex === index ? (
                     <div className={`${styles.info} ms-5 w-75`}>
                       <div className="d-flex flex-column py-3 py-md-1 flex-md-row justify-content-between">
@@ -268,7 +282,11 @@ const ManageCarousel = () => {
                         />
                       </div>
                       <div className="float-end">
-                        <button className="btn-admin">Upload New Photo</button>
+                        <ImageUploader
+                          data={updateCarouselData}
+                          setData={setUpdateCarouselData}
+                          buttonText="Upload New Photo"
+                        />
                       </div>
                     </div>
                   ) : (
