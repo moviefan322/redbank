@@ -25,7 +25,7 @@ const Parking = () => {
         </div>
       </div>
       <div className="flex-wrap d-flex align-items-center mx-auto col-10">
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">1</h5>
           <hr />
           <p className="fw-bold text-center">NJ Transit Parking Lot</p>
@@ -33,7 +33,7 @@ const Parking = () => {
           <li>Free public Parking after 11am.</li>
         </div>
 
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">2</h5>
           <hr />
           <p className="fw-bold text-center">NJ Transit Parking Lot</p>
@@ -41,7 +41,7 @@ const Parking = () => {
           <li>Free public Parking after 11am.</li>
         </div>
 
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">3</h5>
           <hr />
           <p className="fw-bold text-center">Gold Street Lot</p>
@@ -49,7 +49,7 @@ const Parking = () => {
           <li>Permit parking only in designated spaces from 9am-2pm.</li>
         </div>
 
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">4</h5>
           <hr />
           <p className="fw-bold text-center">White Street Lot</p>
@@ -57,21 +57,21 @@ const Parking = () => {
           <li>Permit parking only in designated spaces from 9am-2pm.</li>
         </div>
 
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">5</h5>
           <hr />
           <p className="fw-bold text-center">White Street Lot</p>
           <li>Paid public parking</li>
         </div>
 
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">6</h5>
           <hr />
           <p className="fw-bold text-center">Mechanic Street Small Lot</p>
           <li>Paid public parking</li>
         </div>
 
-        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-5">
+        <div className="d-flex flex-column mt-5 col-9 col-md-5 mx-auto">
           <h5 className="text-center">7</h5>
           <hr />
           <p className="fw-bold text-center">

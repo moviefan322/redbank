@@ -17,20 +17,20 @@ const DesktopNavBar = () => {
       <div
         className={`d-flex flex-row justify-content-between align-items-center mx-5`}
       >
-        <div>
+        <div className={styles.fitWords}>
           <Link href="/events">
             <button className={`noStyleButt ${styles.dropHead}`}>EVENTS</button>
           </Link>
         </div>
 
-        <div>
+        <div className={styles.fitWords}>
           <Link href="/newsletter">
             <button className={`noStyleButt ${styles.dropHead}`}>
               E-NEWSLETTER
             </button>
           </Link>
         </div>
-        <div>
+        <div className={styles.fitWords}>
           <Link href="/news">
             <button className={`noStyleButt ${styles.dropHead}`}>NEWS</button>
           </Link>
