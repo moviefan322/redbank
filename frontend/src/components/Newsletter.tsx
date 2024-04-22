@@ -49,6 +49,10 @@ const Upcoming = () => {
 
   console.log(newsletters);
 
+  if (newsletters.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="d-flex flex-column align-items-center pb-5">
       <Link className="nostyle-link pb-0 mb-0" href="/newsletter">
