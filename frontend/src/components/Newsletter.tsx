@@ -56,7 +56,13 @@ const Upcoming = () => {
           <u>RED BANK BEAT</u>
         </h4>
       </Link>
-      <button className="noStyleButt orangeButt mt-0">Subscribe</button>
+      <Link
+        href="https://redbank.us7.list-manage.com/subscribe?u=6e083c36bd6bcc1299d73bee2&id=d6e266c429"
+        className="nostyle-link"
+      >
+        <button className="noStyleButt orangeButt mt-0">Subscribe</button>
+      </Link>
+
       <div
         className={`d-flex flex-column flex-md-row justify-content-around mx-auto mt-3 w-100`}
       >
