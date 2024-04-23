@@ -24,10 +24,14 @@ const PostNewEvent = ({
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
   const [year, setYear] = useState("");
+  const [endMonth, setEndMonth] = useState("");
+  const [endDay, setEndDay] = useState("");
+  const [endYear, setEndYear] = useState("");
   const [startHour, setStartHour] = useState("");
   const [startMinute, setStartMinute] = useState("");
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
+  const [multiDay, setMultiDay] = useState(false);
 
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
@@ -36,6 +40,7 @@ const PostNewEvent = ({
     console.log("validation triggered");
     if (!postEventData.title.trim()) return "Title is required.";
     if (year === "" || month === "" || day === "") return "Date is required.";
+
     if (
       !postEventData.urlPhoto.trim() ||
       !postEventData.urlPhoto.startsWith("http")
@@ -97,9 +102,21 @@ const PostNewEvent = ({
       updatedPostEventData.endTime = "";
     }
 
+    if (multiDay) {
+      const formattedEndDate = `${endYear}-${endMonth.padStart(
+        2,
+        "0"
+      )}-${endDay.padStart(2, "0")}T00:00:00`;
+      if (new Date(formattedEndDate) < new Date(updatedPostEventData.date)) {
+        return setError("End date must be after the start date.");
+      }
+      updatedPostEventData.endDate = formattedEndDate;
+    }
+
     dispatch(postEvent(updatedPostEventData));
     handleCloseModal();
     setError("");
+    console.log(updatedPostEventData);
   };
 
   return (
@@ -173,6 +190,57 @@ const PostNewEvent = ({
                     })}
                   </select>
                 </div>
+                <div className="d-flex flex-column flex-md-row justify-content-end">
+                  <p className="flex-grow-2 w-100">Multi-Day Event:</p>
+                  <input
+                    type="checkbox"
+                    checked={multiDay}
+                    onChange={(e) => setMultiDay(e.target.checked)}
+                  ></input>
+                </div>
+                {multiDay && (
+                  <div className="d-flex flex-column flex-md-row justify-content-between">
+                    <p>End Date:</p>
+                    <select
+                      value={endMonth}
+                      onChange={(e) => setEndMonth(e.target.value)}
+                    >
+                      <option value="">Month</option>
+                      {[...Array(12)].map((_, index) => (
+                        <option key={index} value={index + 1}>
+                          {new Date(0, index).toLocaleString("default", {
+                            month: "long",
+                          })}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={endDay}
+                      onChange={(e) => setEndDay(e.target.value)}
+                    >
+                      <option value="">Day</option>
+                      {[...Array(31)].map((_, index) => (
+                        <option key={index} value={index + 1}>
+                          {index + 1}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={endYear}
+                      onChange={(e) => setEndYear(e.target.value)}
+                    >
+                      <option value="">Year</option>
+                      {[...Array(10)].map((_, index) => {
+                        const year = new Date().getFullYear() + index;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                )}
                 <div className="d-flex flex-column flex-md-row justify-content-end">
                   <p className="flex-grow-2 w-100">All Day Event:</p>
                   <input

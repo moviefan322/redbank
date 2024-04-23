@@ -89,6 +89,7 @@ const ManageEvents = () => {
     description: "",
     descriptionShort: "",
     date: "",
+    endDate: "",
     startTime: "",
     endTime: "",
     allDay: false,
@@ -105,6 +106,7 @@ const ManageEvents = () => {
       description: "",
       descriptionShort: "",
       date: "",
+      endDate: "",
       startTime: "",
       endTime: "",
       allDay: false,
@@ -119,6 +121,7 @@ const ManageEvents = () => {
       description: "",
       descriptionShort: "",
       date: "",
+      endDate: "",
       startTime: "",
       endTime: "",
       allDay: false,
@@ -142,6 +145,7 @@ const ManageEvents = () => {
       description: "",
       descriptionShort: "",
       date: "",
+      endDate: "",
       startTime: "",
       endTime: "",
       allDay: false,
@@ -159,6 +163,7 @@ const ManageEvents = () => {
       description: currentEvent.description,
       descriptionShort: currentEvent.descriptionShort,
       date: currentEvent.date,
+      endDate: currentEvent.endDate,
       startTime: currentEvent.startTime,
       endTime: currentEvent.endTime,
       allDay: currentEvent.allDay,
@@ -281,7 +286,7 @@ const ManageEvents = () => {
     <div className="admin">
       {loading && <Loading />}
       <div className="d-flex flex-column align-items-center">
-      <div className="d-flex flex-row justify-content-center pb-5 w-100">
+        <div className="d-flex flex-row justify-content-center pb-5 w-100">
           <Link className="admin-link" href="/admin">
             <button className="mt-5 d-flex flex-row align-items-center btn-admin">
               <FaCircleArrowLeft size={20} className="me-2" /> Back to Admin
@@ -489,12 +494,12 @@ const ManageEvents = () => {
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Title:</p>
-                          <p className='text-white'>{item.title}</p>
+                          <p className="text-white">{item.title}</p>
                         </div>
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Date:</p>
-                          <p className='text-white'>{`${
+                          <p className="text-white">{`${
                             months[new Date(item.date).getMonth()]
                           } ${new Date(item.date).getDate()}, ${new Date(
                             item.date
@@ -503,19 +508,21 @@ const ManageEvents = () => {
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
-                          <p className='text-white'>{item.allDay ? "True" : "False"}</p>
+                          <p className="text-white">
+                            {item.allDay ? "True" : "False"}
+                          </p>
                         </div>
                         {!item.allDay && (
                           <>
                             <div className="d-flex flex-column flex-md-row justify-content-between">
                               {" "}
                               <p>Start Time:</p>
-                              <p className='text-white'>{item.startTime}</p>
+                              <p className="text-white">{item.startTime}</p>
                             </div>
                             <div className="d-flex flex-column flex-md-row justify-content-between">
                               {" "}
                               <p>End Time:</p>
-                              <p className='text-white'>{item.endTime}</p>
+                              <p className="text-white">{item.endTime}</p>
                             </div>
                           </>
                         )}
@@ -524,10 +531,18 @@ const ManageEvents = () => {
                   </div>
                   {editModeIndex !== index ? (
                     <div className="w-75 my-3">
-                      <div>Short Description: <br /> <span className="text-white">{item.descriptionShort}</span></div>
+                      <div>
+                        Short Description: <br />{" "}
+                        <span className="text-white">
+                          {item.descriptionShort}
+                        </span>
+                      </div>
                       <div className="my-3">
                         {" "}
-                        Full Description: <br /> <span className="text-white">{sanitizeData(item.description)}</span>
+                        Full Description: <br />{" "}
+                        <span className="text-white">
+                          {sanitizeData(item.description)}
+                        </span>
                       </div>
                     </div>
                   ) : (

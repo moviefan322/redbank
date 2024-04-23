@@ -1,6 +1,7 @@
 export default interface PostEventReq {
   title: string;
   date: string;
+  endDate?: string;
   startTime?: string;
   endTime?: string;
   allDay: boolean;
