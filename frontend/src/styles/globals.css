@@ -25,7 +25,7 @@ body {
 }
 
 .noStyleButt:not(:disabled):hover {
-  color: brown;
+  color: #c41f35;
 }
 
 .carousel-indicators {
@@ -43,7 +43,7 @@ body {
 }
 
 .orangeButt {
-  background-color: brown;
+  background-color: #c41f35;
   color: white;
   padding: 0.3rem 1rem;
   font-size: 1.1rem;
@@ -103,7 +103,7 @@ body {
 }
 
 .nostyle-link:not(:disabled):hover {
-  color: brown;
+  color: bro#c41f35 wn;
 }
 
 .btn-admin .icon {
@@ -111,11 +111,11 @@ body {
 }
 
 .brown {
-  color: brown;
+  color: #c41f35;
 }
 
 .bg-brown {
-  background-color: brown;
+  background-color: #c41f35;
 }
 
 .admin {
