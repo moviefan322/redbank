@@ -45,6 +45,16 @@ const formatDate = (event: Event) => {
   }`;
 };
 
+const formatEndDate = (event: Event) => {
+  return `${months2[new Date(event.endDate!).getMonth()]} ${new Date(
+    event.endDate!
+  ).getDate()} ${
+    event.startTime && event.endTime
+      ? `| ${event.startTime} - ${event.endTime}`
+      : ""
+  }`;
+};
+
 const Upcoming = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [displayedEvents, setDisplayedEvents] = useState<Event[]>([]);
@@ -137,7 +147,10 @@ const Upcoming = () => {
                 </div>
                 <div className={styles.descText}>
                   <p>{event.title}</p>
-                  <p>{formatDate(event)}</p>
+                  <p>
+                    {formatDate(event)}
+                    {event.endDate && "-" + formatEndDate(event)}
+                  </p>
                 </div>
               </Link>
             </div>
