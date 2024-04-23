@@ -68,7 +68,7 @@ const LodgingPage = () => {
               <strong>{lodge.name}</strong>
               <p>{lodge.address}</p>
               <p>{lodge.phoneNumber.toString()}</p>
-              <p>{lodge.website}</p>
+              <a href={`http://${lodge.website}`}>Visit Website</a>
             </div>
           ))}
         </div>
@@ -88,7 +88,7 @@ const LodgingPage = () => {
                   <strong>{lodge.name}</strong>
                   <p>{lodge.address}</p>
                   <p>{lodge.phoneNumber && lodge.phoneNumber.toString()}</p>
-                  <p>{lodge.website}</p>
+                  <a href={`http://${lodge.website}`}>Visit Website</a>
                 </div>
               ))}
             </div>
