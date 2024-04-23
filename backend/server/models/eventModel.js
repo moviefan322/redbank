@@ -10,6 +10,10 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    endDate: {
+      type: String,
+      required: false,
+    },
     startTime: {
       type: String,
       required: false,
