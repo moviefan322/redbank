@@ -4,6 +4,7 @@ import Link from "next/link";
 import DOMPurify from "dompurify";
 import Event from "../../types/Event";
 import styles from "./eventDetail.module.css";
+import { formatTime } from "@/utils/formatTime";
 
 const months = [
   "January",
@@ -59,7 +60,8 @@ function EventDetail(props: Props) {
         <h5>
           {months[new Date(event.date).getMonth()]}{" "}
           {new Date(event.date).getDate()}{" "}
-          {!event.allDay! && `@ ${event.startTime}-${event.endTime}`}
+          {!event.allDay! &&
+            `@ ${formatTime(event.startTime!)}-${formatTime(event.endTime!)}`}
         </h5>
         <div
           className="m-3"

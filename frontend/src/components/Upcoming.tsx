@@ -4,6 +4,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import styles from "./Upcoming.module.css";
 import Link from "next/link";
 import Event from "../types/Event";
+import { formatTime } from "@/utils/formatTime";
 
 const months = [
   "JAN",
@@ -40,7 +41,7 @@ const formatDate = (event: Event) => {
     event.date
   ).getDate()} ${
     event.startTime && event.endTime
-      ? `| ${event.startTime} - ${event.endTime}`
+      ? `| ${formatTime(event.startTime)} - ${formatTime(event.endTime)}`
       : ""
   }`;
 };
@@ -51,7 +52,7 @@ const formatEndDate = (event: Event) => {
     event.endDate!
   ).getDate()} ${
     event.startTime && event.endTime
-      ? `| ${event.startTime} - ${event.endTime}`
+      ? `| ${formatTime(event.startTime)} - ${formatTime(event.endTime)}`
       : ""
   }`;
 };
