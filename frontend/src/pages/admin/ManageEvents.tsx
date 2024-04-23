@@ -184,6 +184,8 @@ const ManageEvents = () => {
     setMonth(new Date(currentEvent.date).getMonth() + 1);
     setDay(new Date(currentEvent.date).getDate());
     setYear(new Date(currentEvent.date).getFullYear());
+
+    console.log(currentEvent);
     if (currentEvent.endDate) {
       setEndMonth(new Date(currentEvent.endDate).getMonth() + 1);
       setEndDay(new Date(currentEvent.endDate).getDate());
@@ -501,7 +503,7 @@ const ManageEvents = () => {
                         >
                           <p>Start Time:</p>
                           <select
-                            value={startHour}
+                            value={+startHour}
                             onChange={(e) => setStartHour(e.target.value)}
                             disabled={updateEventData.allDay}
                           >
@@ -513,7 +515,7 @@ const ManageEvents = () => {
                             ))}
                           </select>
                           <select
-                            value={startMinute}
+                            value={+startMinute}
                             onChange={(e) => setStartMinute(e.target.value)}
                             disabled={updateEventData.allDay}
                           >
