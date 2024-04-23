@@ -70,6 +70,18 @@ const PostNewEvent = ({
       "0"
     )}T00:00:00`;
 
+    let formattedEndDate = "";
+    if (multiDay && (endMonth === "" || endDay === "" || endYear === "")) {
+      return setError("End date is required for multi-day events.");
+    }
+
+    if (multiDay) {
+      formattedEndDate = `${endYear}-${endMonth.padStart(
+        2,
+        "0"
+      )}-${endDay.padStart(2, "0")}T00:00:00`;
+    }
+
     const updatedPostEventData = {
       ...postEventData,
       date: new Date(formattedDate).toISOString(),
@@ -103,14 +115,10 @@ const PostNewEvent = ({
     }
 
     if (multiDay) {
-      const formattedEndDate = `${endYear}-${endMonth.padStart(
-        2,
-        "0"
-      )}-${endDay.padStart(2, "0")}T00:00:00`;
       if (new Date(formattedEndDate) < new Date(updatedPostEventData.date)) {
         return setError("End date must be after the start date.");
       }
-      updatedPostEventData.endDate = formattedEndDate;
+      updatedPostEventData.endDate = new Date(formattedEndDate).toISOString();
     }
 
     dispatch(postEvent(updatedPostEventData));

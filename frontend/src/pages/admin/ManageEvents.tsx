@@ -35,6 +35,9 @@ const ManageEvents = () => {
   const [month, setMonth] = useState(0);
   const [day, setDay] = useState(0);
   const [year, setYear] = useState(0);
+  const [endMonth, setEndMonth] = useState(0);
+  const [endDay, setEndDay] = useState(0);
+  const [endYear, setEndYear] = useState(0);
   const [startHour, setStartHour] = useState("");
   const [startMinute, setStartMinute] = useState("");
   const [endHour, setEndHour] = useState("");
@@ -47,6 +50,7 @@ const ManageEvents = () => {
     description: "",
     descriptionShort: "",
     date: "",
+    endDate: "",
     startTime: "",
     endTime: "",
     allDay: false,
@@ -180,6 +184,15 @@ const ManageEvents = () => {
     setMonth(new Date(currentEvent.date).getMonth() + 1);
     setDay(new Date(currentEvent.date).getDate());
     setYear(new Date(currentEvent.date).getFullYear());
+    if (currentEvent.endDate) {
+      setEndMonth(new Date(currentEvent.endDate).getMonth() + 1);
+      setEndDay(new Date(currentEvent.endDate).getDate());
+      setEndYear(new Date(currentEvent.endDate).getFullYear());
+    } else {
+      setEndMonth(0);
+      setEndDay(0);
+      setEndYear(0);
+    }
     if (currentEvent.startTime) {
       setStartHour(currentEvent.startTime.split(":")[0]);
       setStartMinute(currentEvent.startTime.split(":")[1]);
@@ -207,13 +220,26 @@ const ManageEvents = () => {
       .toString()
       .padStart(2, "0")}-${day.toString().padStart(2, "0")}T00:00:00`;
 
+    let formattedEndDate = "";
+    if (endMonth && endDay && endYear) {
+      // Adjust the month index to 0-based for JavaScript Date compatibility
+      const adjustedEndMonth = endMonth;
+
+      // Construct a date string using the adjusted month
+      formattedEndDate = `${endYear}-${adjustedEndMonth
+        .toString()
+        .padStart(2, "0")}-${endDay.toString().padStart(2, "0")}T00:00:00`;
+    }
+
     // Convert the string to a Date object and format it to ISO string
     const updatedDateISO = new Date(formattedDate).toISOString();
+    const updatedEndDateISO = new Date(formattedEndDate).toISOString();
 
     // Update the event data with the new date
     const updatedUpdateEventData: UpdateEventReq = {
       ...updateEventData,
       date: updatedDateISO,
+      endDate: updatedEndDateISO,
     };
 
     if (!updateEventData.allDay) {
@@ -281,6 +307,8 @@ const ManageEvents = () => {
   }
 
   if (error) return <div>Error: {error}</div>;
+
+  console.log(events);
 
   return (
     <div className="admin">
@@ -406,6 +434,54 @@ const ManageEvents = () => {
                             })}
                           </select>
                         </div>
+                        {updateEventData.endDate && (
+                          <div
+                            className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
+                          >
+                            <p>End Date:</p>
+                            <select
+                              value={endMonth}
+                              onChange={(e) => setEndMonth(+e.target.value)}
+                            >
+                              <option value="">Month</option>
+                              {[...Array(12)].map((_, index) => (
+                                <option key={index} value={index + 1}>
+                                  {new Date(0, index).toLocaleString(
+                                    "default",
+                                    {
+                                      month: "short",
+                                    }
+                                  )}
+                                </option>
+                              ))}
+                            </select>
+                            <select
+                              value={endDay}
+                              onChange={(e) => setEndDay(+e.target.value)}
+                            >
+                              <option value="">Day</option>
+                              {[...Array(31)].map((_, index) => (
+                                <option key={index} value={index + 1}>
+                                  {index + 1}
+                                </option>
+                              ))}
+                            </select>
+                            <select
+                              value={endYear}
+                              onChange={(e) => setEndYear(+e.target.value)}
+                            >
+                              <option value="">Year</option>
+                              {[...Array(10)].map((_, index) => {
+                                const year = new Date().getFullYear() + index;
+                                return (
+                                  <option key={year} value={year}>
+                                    {year}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        )}
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
@@ -505,6 +581,17 @@ const ManageEvents = () => {
                             item.date
                           ).getFullYear()}`}</p>
                         </div>
+                        {item.allDay && (
+                          <div className="d-flex flex-column flex-md-row justify-content-between">
+                            {" "}
+                            <p>End Date:</p>
+                            <p className="text-white">{`${
+                              months[new Date(item.endDate!).getMonth()]
+                            } ${new Date(item.endDate!).getDate()}, ${new Date(
+                              item.endDate!
+                            ).getFullYear()}`}</p>
+                          </div>
+                        )}
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
