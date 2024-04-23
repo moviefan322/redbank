@@ -25,7 +25,7 @@
   display: block;
 }
 
-@media (min-width: 568px) {
+@media (min-width: 1000px) {
   .desktopNav {
     display: block;
   }

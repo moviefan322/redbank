@@ -15,7 +15,7 @@ const DesktopNavBar = () => {
         <div className={styles.image2}></div>
       </div>
       <div
-        className={`d-flex flex-row justify-content-between align-items-center mx-5`}
+        className={`d-flex flex-row justify-content-between align-items-center mx-2`}
       >
         <div className={styles.fitWords}>
           <Link href="/events">
@@ -77,7 +77,7 @@ const DesktopNavBar = () => {
             </ul>
           </div>
         </div>
-        <FaMagnifyingGlass className="m-3" />
+
         <SearchComponent />
       </div>
     </>

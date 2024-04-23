@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const SearchComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,14 +13,16 @@ const SearchComponent = () => {
   };
 
   return (
-    <form onSubmit={handleSearch}>
+    <form className="d-none d-xl-inline" onSubmit={handleSearch}>
+      <button className="noStyleButt" type="submit">
+        <FaMagnifyingGlass className="m-3" />
+      </button>
       <input
         type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button type="submit">Search</button>
     </form>
   );
 };
