@@ -46,6 +46,7 @@ const formatDate = (event: Event) => {
 };
 
 const formatEndDate = (event: Event) => {
+  if (!event.endDate) return "";
   return `${months2[new Date(event.endDate!).getMonth()]} ${new Date(
     event.endDate!
   ).getDate()} ${
@@ -149,7 +150,7 @@ const Upcoming = () => {
                   <p>{event.title}</p>
                   <p>
                     {formatDate(event)}
-                    {event.endDate && "-" + formatEndDate(event)}
+                    {event.endDate ? " - " + formatEndDate(event) : ""}
                   </p>
                 </div>
               </Link>
