@@ -238,7 +238,9 @@ const ManageNews = () => {
             {news.map((item: News, index: number) => (
               <div
                 key={index}
-                ref={(el) => (newsItemRefs.current[index] = el)}
+                ref={(el) => {
+                  newsItemRefs.current[index] = el;
+                }}
                 className="d-flex flex-column align-items-center py-3 my-5 mx-3 w-100"
               >
                 <div className="d-flex flex-column align-items-center w-100">
