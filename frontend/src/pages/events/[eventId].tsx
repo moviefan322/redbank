@@ -60,6 +60,11 @@ function EventDetail(props: Props) {
         <h5>
           {months[new Date(event.date).getMonth()]}{" "}
           {new Date(event.date).getDate()}{" "}
+          {event.endDate
+            ? `- ${months[new Date(event.endDate).getMonth()]} ${new Date(
+                event.endDate
+              ).getDate()}`
+            : ""}
           {!event.allDay! &&
             `@ ${formatTime(event.startTime!)}-${formatTime(event.endTime!)}`}
         </h5>
