@@ -10,8 +10,12 @@ const getEvents = asyncHandler(async (req, res) => {
   const todayDateISO = moment().startOf("day").toISOString();
 
   const events = await Event.find({
-    date: { $gte: todayDateISO }, // Filters events from the start of today onwards
-  }).sort({ date: 1 }); // Sorts by date in ascending order
+    $or: [
+      { date: { $gte: todayDateISO } }, // Events that start today or later
+      { endDate: { $gte: todayDateISO } }, // Events that end today or later
+    ],
+  }).sort({ date: 1 }); // Still sorts by start date in ascending order
+
   console.log(events);
   res.json(events);
 });
@@ -54,6 +58,7 @@ const createEvent = asyncHandler(async (req, res) => {
   const {
     title,
     date,
+    endDate,
     startTime,
     endTime,
     allDay,
@@ -65,6 +70,7 @@ const createEvent = asyncHandler(async (req, res) => {
   const event = new Event({
     title,
     date,
+    endDate,
     startTime,
     endTime,
     allDay,
@@ -85,6 +91,7 @@ const updateEvent = asyncHandler(async (req, res) => {
   const {
     title,
     date,
+    endDate,
     startTime,
     endTime,
     allDay,
@@ -98,6 +105,7 @@ const updateEvent = asyncHandler(async (req, res) => {
   if (event) {
     if (title !== undefined) event.title = title;
     if (date !== undefined) event.date = date;
+    if (endDate !== undefined) event.endDate = endDate;
     if (startTime !== undefined) event.startTime = startTime;
     if (endTime !== undefined) event.endTime = endTime;
     if (allDay !== undefined) event.allDay = allDay;
