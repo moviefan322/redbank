@@ -40,7 +40,7 @@ const formatDate = (event: Event) => {
   return `${months2[new Date(event.date).getMonth()]} ${new Date(
     event.date
   ).getDate()} ${
-    event.startTime && event.endTime
+    event.startTime && event.endTime && !event.endDate
       ? `| ${formatTime(event.startTime)} - ${formatTime(event.endTime)}`
       : ""
   }`;
@@ -50,11 +50,7 @@ const formatEndDate = (event: Event) => {
   if (!event.endDate) return "";
   return `${months2[new Date(event.endDate!).getMonth()]} ${new Date(
     event.endDate!
-  ).getDate()} ${
-    event.startTime && event.endTime
-      ? `| ${formatTime(event.startTime)} - ${formatTime(event.endTime)}`
-      : ""
-  }`;
+  ).getDate()}`;
 };
 
 const Upcoming = () => {
