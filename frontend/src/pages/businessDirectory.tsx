@@ -66,7 +66,7 @@ const BusinessDirectory = () => {
           directly from your favorite Red Bank restaurant or retailer.
         </h5>
       </div>
-      <div className="d-flex flex-row justify-content-between w-100 bg-secondary my-5 p-3">
+      <div className="d-flex flex-row justify-content-between w-100 bg-brown my-5 p-3">
         <div className="d-none d-md-flex flex-row justify-content-around w-100 me-3">
           {letters.map((letter) => (
             <button
