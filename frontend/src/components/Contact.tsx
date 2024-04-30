@@ -15,8 +15,6 @@ const Contact = () => {
     message: "",
   });
 
-  
-
   // Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -25,12 +23,11 @@ const Contact = () => {
     setFormState({ ...formState, [name]: value });
   };
 
-
   return (
     <div className="bg-dark p-3">
       <div className="w-100 bg-brown p-3">
         <h1 className="text-center text-light">Contact Us</h1>
-        <form action="https://formspree.io/f/xgejyqbo" method="POST">
+        <form action="https://formspree.io/f/xjvnlwyj" method="POST">
           <div className="d-flex flex-column">
             <label className="fw-bold text-light" htmlFor="name">
               Name:
