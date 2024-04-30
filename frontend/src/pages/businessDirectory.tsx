@@ -68,23 +68,42 @@ const BusinessDirectory = () => {
       </div>
       <div className="d-flex flex-row justify-content-between w-100 bg-brown my-5 p-3">
         <div className="d-none d-md-flex flex-row justify-content-around w-100 me-3">
-          {letters.map((letter) => (
-            <button
-              key={letter}
-              onClick={() => handleLetterChange(letter)}
-              className={selectedLetter === letter ? "active" : ""}
+          <div className={`${styles.dropdownLetter} `}>
+            Filter by Letter:
+            <select
+              className={`form-select`}
+              value={selectedLetter}
+              onChange={(e) => handleLetterChange(e.target.value)}
+              aria-label="Select letter"
             >
-              {letter}
+              <option value="">All</option>
+              {letters.map((letter) => (
+                <option key={letter} value={letter}>
+                  {letter}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.letterButtons}>
+            {letters.map((letter) => (
+              <button
+                key={letter}
+                onClick={() => handleLetterChange(letter)}
+                className={selectedLetter === letter ? "active" : ""}
+              >
+                {letter}
+              </button>
+            ))}
+            <button
+              onClick={() => handleLetterChange("")}
+              className={!selectedLetter ? "active" : ""}
+            >
+              All
             </button>
-          ))}
-          <button
-            onClick={() => handleLetterChange("")}
-            className={!selectedLetter ? "active" : ""}
-          >
-            All
-          </button>
+          </div>
         </div>
-        <div className="search-bar">
+        <div className="search-bar align-self-center">
           <input
             type="text"
             placeholder="Search"
