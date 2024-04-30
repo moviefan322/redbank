@@ -47,7 +47,7 @@
   line-height: 1.2rem; /* Adjust line height for readability on small screens */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .container {
     flex-direction: row; /* Align elements horizontally on larger screens */
     justify-content: space-around; /* Space out elements evenly */
