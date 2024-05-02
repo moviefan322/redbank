@@ -62,36 +62,43 @@ const ImageUploader = <T extends {}>({
   };
 
   return (
-    <div className="d-flex flex-row align-items-center">
-      {file && (
-        <code style={imageUrl ? { display: "none" } : {}}>{file.name}</code>
-      )}
-      <input
-        id="file"
-        type="file"
-        onChange={handleSelectFile}
-        multiple={false}
-        style={{ display: "none" }} // Inline style for hiding
-      />
-      {!file ? (
-        <button
-          type="button"
-          onClick={() => document.getElementById("file")!.click()}
-          className={`${styles.chooseFile} btn-admin`}
-          style={imageUrl ? { display: "none" } : {}}
-        >
-          {buttonText}
-        </button>
-      ) : (
-        <button
-          type="button"
-          className="btn-admin-red"
-          onClick={handleCancel}
-          style={imageUrl ? { display: "none" } : {}}
-        >
-          X
-        </button>
-      )}
+    <div className="d-flex flex-column align-items-end">
+      <div className="d-flex flex-row align-items-center justify-content-end">
+        {file && (
+          <code
+            className={`${styles.filename}`}
+            style={imageUrl ? { display: "none" } : {}}
+          >
+            {file.name}
+          </code>
+        )}
+        <input
+          id="file"
+          type="file"
+          onChange={handleSelectFile}
+          multiple={false}
+          style={{ display: "none" }} // Inline style for hiding
+        />
+        {!file ? (
+          <button
+            type="button"
+            onClick={() => document.getElementById("file")!.click()}
+            className={`${styles.chooseFile} btn-admin`}
+            style={imageUrl ? { display: "none" } : {}}
+          >
+            {buttonText}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn-admin-red"
+            onClick={handleCancel}
+            style={imageUrl ? { display: "none" } : {}}
+          >
+            X
+          </button>
+        )}
+      </div>
 
       {imageUrl && (
         <>
@@ -102,9 +109,11 @@ const ImageUploader = <T extends {}>({
 
       {error && <FaExclamationTriangle className={styles.error} size={20} />}
       {file && !imageUrl && (
-        <button type="button" onClick={handleUpload} className="btn-admin">
-          {uploading ? "Uploading..." : "Upload"}
-        </button>
+        <>
+          <button type="button" onClick={handleUpload} className="btn-admin">
+            {uploading ? "Uploading..." : "Upload"}
+          </button>
+        </>
       )}
     </div>
   );

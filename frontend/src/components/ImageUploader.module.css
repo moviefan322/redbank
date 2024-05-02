@@ -1,3 +1,6 @@
-.chooseFile {
-  width: fit-content;
+.filename {
+  width: 100%;
+  overflow-x: hidden;
+  text-align: end;
+  margin-right: 5px;
 }
