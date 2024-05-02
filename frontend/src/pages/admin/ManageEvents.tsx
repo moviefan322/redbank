@@ -235,13 +235,16 @@ const ManageEvents = () => {
 
     // Convert the string to a Date object and format it to ISO string
     const updatedDateISO = new Date(formattedDate).toISOString();
-    const updatedEndDateISO = new Date(formattedEndDate).toISOString();
+    let updatedEndDateISO = "";
+    if (formattedEndDate) {
+      updatedEndDateISO = new Date(formattedEndDate).toISOString();
+    }
 
     // Update the event data with the new date
     const updatedUpdateEventData: UpdateEventReq = {
       ...updateEventData,
       date: updatedDateISO,
-      endDate: updatedEndDateISO,
+      ...(formattedEndDate ? { endDate: updatedEndDateISO } : {}),
     };
 
     if (!updateEventData.allDay) {
@@ -583,7 +586,7 @@ const ManageEvents = () => {
                             item.date
                           ).getFullYear()}`}</p>
                         </div>
-                        {item.allDay && (
+                        {item.endDate && (
                           <div className="d-flex flex-column flex-md-row justify-content-between">
                             {" "}
                             <p>End Date:</p>
