@@ -156,6 +156,7 @@ const ManageNews = () => {
 
   const handleUpdate = (e: any) => {
     e.preventDefault();
+    console.log(updateNewsData);
     dispatch(updateNews(updateNewsData));
     setEditModeIndex(null);
     setSubmitError("");
@@ -252,7 +253,11 @@ const ManageNews = () => {
                       style={{
                         height: "300px",
                         width: "300px",
-                        background: `#151515 url("${item.urlPhoto}") no-repeat center center / cover`,
+                        background: `#151515 url("${
+                          editModeIndex === index
+                            ? updateNewsData.urlPhoto
+                            : item.urlPhoto
+                        }") no-repeat center center / cover`,
                         backgroundAttachment: "scroll",
                       }}
                     ></div>
