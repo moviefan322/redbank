@@ -340,7 +340,9 @@ const ManageNews = () => {
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Date Posted:</p>
-                          <p>{new Date(item.createdAt).toLocaleDateString()}</p>
+                          <p className="text-white">
+                            {new Date(item.createdAt).toLocaleDateString()}
+                          </p>
                         </div>
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
