@@ -42,6 +42,7 @@ const ManageEvents = () => {
   const [startMinute, setStartMinute] = useState("");
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
+  const [multiDay, setMultiDay] = useState(false);
   const [submitError, setSubmitError] = useState<string>("");
   const [displayUploader, setDisplayUploader] = useState(false);
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
@@ -187,10 +188,12 @@ const ManageEvents = () => {
 
     console.log(currentEvent);
     if (currentEvent.endDate) {
+      setMultiDay(true);
       setEndMonth(new Date(currentEvent.endDate).getMonth() + 1);
       setEndDay(new Date(currentEvent.endDate).getDate());
       setEndYear(new Date(currentEvent.endDate).getFullYear());
     } else {
+      setMultiDay(false);
       setEndMonth(0);
       setEndDay(0);
       setEndYear(0);
@@ -211,8 +214,42 @@ const ManageEvents = () => {
     }
   };
 
+  const handleMultiDayChange = (isChecked: any) => {
+    setMultiDay(isChecked);
+    if (!isChecked) {
+      // Reset the endDate state fields
+      setEndMonth(0);
+      setEndDay(0);
+      setEndYear(0);
+      // Also reset the endDate in the updateEventData state to ensure it's not submitted
+      setUpdateEventData((prev) => ({
+        ...prev,
+        endDate: "",
+      }));
+    }
+  };
+
+  const validateDates = () => {
+    if (multiDay) {
+      if (!endMonth || !endDay || !endYear) {
+        return "End date is required for multi-day events.";
+      }
+      const startDate = new Date(year, month - 1, day);
+      const endDate = new Date(endYear, endMonth - 1, endDay);
+      if (endDate <= startDate) {
+        return "End date must be after the start date.";
+      }
+    }
+    return "";
+  };
+
   const handleUpdate = (e: any) => {
     e.preventDefault();
+    const dateError = validateDates();
+    if (dateError) {
+      setSubmitError(dateError);
+      return;
+    }
 
     // Adjust the month index to 0-based for JavaScript Date compatibility
     const adjustedMonth = month;
@@ -439,6 +476,64 @@ const ManageEvents = () => {
                             })}
                           </select>
                         </div>
+                        <div className="d-flex flex-column flex-md-row justify-content-end">
+                          <p className="flex-grow-2 w-100">Multi-Day Event:</p>
+                          <input
+                            type="checkbox"
+                            checked={multiDay}
+                            onChange={(e) =>
+                              handleMultiDayChange(e.target.checked)
+                            }
+                          ></input>
+                        </div>
+                        {multiDay && (
+                          <div
+                            className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
+                          >
+                            <p>End Date:</p>
+                            <select
+                              value={endMonth}
+                              onChange={(e) => setEndMonth(+e.target.value)}
+                            >
+                              <option value="">Month</option>
+                              {[...Array(12)].map((_, index) => (
+                                <option key={index} value={index + 1}>
+                                  {new Date(0, index).toLocaleString(
+                                    "default",
+                                    {
+                                      month: "long",
+                                    }
+                                  )}
+                                </option>
+                              ))}
+                            </select>
+                            <select
+                              value={endDay}
+                              onChange={(e) => setEndDay(+e.target.value)}
+                            >
+                              <option value="">Day</option>
+                              {[...Array(31)].map((_, index) => (
+                                <option key={index} value={index + 1}>
+                                  {index + 1}
+                                </option>
+                              ))}
+                            </select>
+                            <select
+                              value={endYear}
+                              onChange={(e) => setEndYear(+e.target.value)}
+                            >
+                              <option value="">Year</option>
+                              {[...Array(10)].map((_, index) => {
+                                const year = new Date().getFullYear() + index;
+                                return (
+                                  <option key={year} value={year}>
+                                    {year}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        )}
                         {updateEventData.endDate && (
                           <div
                             className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
