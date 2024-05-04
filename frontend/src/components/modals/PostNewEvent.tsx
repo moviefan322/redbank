@@ -45,7 +45,8 @@ const PostNewEvent = ({
       !postEventData.urlPhoto.trim() ||
       !postEventData.urlPhoto.startsWith("http")
     )
-      if (!postEventData.description.trim()) return "Description is required.";
+      return "Image is required";
+    if (!postEventData.description.trim()) return "Description is required.";
     if (!postEventData.descriptionShort.trim())
       return "Short description is required.";
     return "";

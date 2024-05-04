@@ -30,7 +30,8 @@ const PostNewNews = ({
       !postNewsData.urlPhoto.trim() ||
       !postNewsData.urlPhoto.startsWith("http")
     )
-      if (!postNewsData.description.trim()) return "Description is required.";
+      return "Image is required";
+    if (!postNewsData.description.trim()) return "Description is required.";
     if (!postNewsData.descriptionShort.trim())
       return "Short description is required.";
     return "";
