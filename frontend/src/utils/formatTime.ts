@@ -1,6 +1,13 @@
 export const formatTime = (rawDate: string) => {
   let date = rawDate;
   // if ends in 00, remove 00
+  if (date.startsWith("00")) {
+    if (date.endsWith("00")) {
+      return "12 AM";
+    } else {
+      return date.replace("00", "12") + " AM";
+    }
+  }
   if (date.endsWith("00")) {
     date = date.slice(0, -3);
   }

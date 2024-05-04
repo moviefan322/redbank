@@ -101,6 +101,13 @@ const ManageEvents = () => {
     urlPhoto: "",
   });
 
+  useEffect(() => {
+    console.log("Start Hour:", startHour, typeof startHour);
+    console.log("Start Minute:", startMinute, typeof startMinute);
+    console.log("End Hour:", endHour, typeof endHour);
+    console.log("End Minute:", endMinute, typeof endMinute);
+  }, [startHour, startMinute, endHour, endMinute]);
+
   // Modals
 
   const openPreviewModal = () => setPreviewModalOpen(true);
@@ -198,6 +205,8 @@ const ManageEvents = () => {
       setEndDay(0);
       setEndYear(0);
     }
+    console.log(currentEvent.startTime);
+    console.log(currentEvent.endTime);
     if (currentEvent.startTime) {
       setStartHour(currentEvent.startTime.split(":")[0]);
       setStartMinute(currentEvent.startTime.split(":")[1]);
@@ -418,7 +427,9 @@ const ManageEvents = () => {
                     ></div>
                     {editModeIndex === index ? (
                       <div className={`${styles.info} ms-5 w-75`}>
-                        {submitError && submitError}
+                        <p className="text-danger">
+                          {submitError && submitError}
+                        </p>
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>Title:</p>
@@ -613,7 +624,7 @@ const ManageEvents = () => {
                             ))}
                           </select>
                           <select
-                            value={+startMinute}
+                            value={startMinute}
                             onChange={(e) => setStartMinute(e.target.value)}
                             disabled={updateEventData.allDay}
                           >
@@ -630,7 +641,7 @@ const ManageEvents = () => {
                         >
                           <p>End Time:</p>
                           <select
-                            value={endHour}
+                            value={+endHour}
                             onChange={(e) => setEndHour(e.target.value)}
                             disabled={updateEventData.allDay}
                           >
