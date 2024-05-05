@@ -1,42 +1,57 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { shallowEqual } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { loginUser } from "../../features/auth/authActions";
-import { setCredentials } from "../../features/auth/authSlice";
-import { useGetUserDetailsQuery } from "@/services/auth/authService";
+import { RootState } from "../../store/configureStore";
 import useUserDetails from "@/hooks/userCredentials";
 import LoginData from "../../types/LoginData";
+import styles from "./index.module.css";
 
 const AdminPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
   const dispatch = useAppDispatch();
 
-  const { data, error, isLoggedIn } = useUserDetails();
+  const { data, isLoggedIn } = useUserDetails();
+  const { error } = useAppSelector((state: RootState) => state.auth) as {
+    error: string;
+  };
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
-      if (username && [password]) {
+      if (username && password) {
         const packageData: LoginData = {
           username,
           password,
         };
 
-        dispatch(loginUser(packageData));
+        await dispatch(loginUser(packageData));
+
+        if (!isLoggedIn && error) {
+          setLoginError("Invalid username or password.");
+        }
+      } else {
+        setLoginError("Please enter a username and password.");
       }
     } catch (error) {
-      console.error("There was an error fetching the data:", error);
+      setLoginError("An error occurred while logging in. Please try again.");
     }
   };
 
   console.log(data);
+  console.log(typeof error);
   return (
     <div className="admin">
       <div className="d-flex flex-column align-self-center">
         <h1 className="text-center mx-auto my-5">Admin Portal</h1>
-
         {isLoggedIn ? (
           <div>
             <h2 className="text-center mx-auto mt-5">Welcome, Admin</h2>
@@ -94,8 +109,18 @@ const AdminPage = () => {
             </div>
           </div>
         ) : (
-          <div className="d-flex flex-column my-5">
+          <div className="d-flex flex-column my-5 w-100">
             <h2 className="text-center mx-auto">Please Log In</h2>
+            {loginError && (
+              <div className={styles.errorContainer}>
+                <p className="text-center text-danger fw-bold">{loginError}</p>
+              </div>
+            )}
+            {error && (
+              <div className={styles.errorContainer}>
+                <p className="text-center text-danger fw-bold">{error}</p>
+              </div>
+            )}
             <form className="d-flex flex-column my-2">
               <input
                 className="mb-3"
