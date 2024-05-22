@@ -26,13 +26,13 @@ const Foot = () => {
         <div>
           <Link
             className="nostyle-link text-white"
-            href="https://www.instagram.com/redbankvisitorscenter/"
+            href="https://www.instagram.com/redbank_nj/"
           >
             <FaInstagram size={60} />
           </Link>
           <Link
             className="nostyle-link text-white ms-3"
-            href="https://www.facebook.com/RedBankVisitorsCenter"
+            href="https://www.facebook.com/RedBankRiverCenter"
           >
             <FaFacebook size={60} />
           </Link>
