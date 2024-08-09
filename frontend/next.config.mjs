@@ -4,7 +4,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // Redirect HTTP to HTTPS for redbank.org
         source: '/(.*)',
         has: [
           {
