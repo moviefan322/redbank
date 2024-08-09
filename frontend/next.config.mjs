@@ -4,23 +4,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // Redirect HTTP to HTTPS for www.redbankoktoberfest.com
-        source: '/(.*)',
-        has: [
-          {
-            type: 'header',
-            key: 'x-forwarded-proto',
-            value: 'http',
-          },
-          {
-            type: 'host',
-            value: 'www.redbankoktoberfest.com',
-          },
-        ],
-        destination: 'https://www.redbankoktoberfest.com/:path*',
-        permanent: true,
-      },
-      {
         // Redirect HTTP to HTTPS for redbank.org
         source: '/(.*)',
         has: [
