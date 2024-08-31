@@ -38,6 +38,12 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    sponsors: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Sponsor",
+      },
+    ],
   },
   {
     timestamps: true,

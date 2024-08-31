@@ -23,6 +23,11 @@ const sponsorSchema = mongoose.Schema(
       },
       min: [1, "Sequence number must be greater than 0"],
     },
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+      required: true,
+    },
   },
   {
     timestamps: true,
