@@ -5,6 +5,7 @@ import {
   postEvent,
   updateEvent,
   deleteEvent,
+  updateTiers,
 } from "./eventActions";
 import Event from "../../types/Event";
 
@@ -110,6 +111,23 @@ const eventSlice = createSlice({
         state.success = true;
       })
       .addCase(deleteEvent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(updateTiers.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(updateTiers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = state.events!.map((event) =>
+          event._id === action.payload._id ? action.payload : event
+        );
+        state.success = true;
+        state.updateSuccess = true;
+      })
+      .addCase(updateTiers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.success = false;

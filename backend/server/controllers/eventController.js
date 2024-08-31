@@ -98,6 +98,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     urlPhoto,
     description,
     descriptionShort,
+    tiers,
   } = req.body;
 
   const event = await Event.findById(req.params._id);
@@ -113,6 +114,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     if (description !== undefined) event.description = description;
     if (descriptionShort !== undefined)
       event.descriptionShort = descriptionShort;
+    if (tiers !== undefined) event.tiers = tiers;
 
     const updatedEvent = await event.save();
     res.json(updatedEvent);
@@ -133,6 +135,24 @@ const deleteAllEvents = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    add tiers to an event
+// @route   PUT /api/:id/tiers
+// @access  Private/Admin
+
+export const updateTiers = asyncHandler(async (req, res) => {
+  const { tiers } = req.body;
+  const event = await Event.findById(req.params.id);
+
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+
+  event.tiers = tiers;
+  const updatedEvent = await event.save();
+  res.json(updatedEvent);
+});
+
 export {
   getEvents,
   getEventById,
@@ -140,4 +160,5 @@ export {
   createEvent,
   updateEvent,
   deleteAllEvents,
+  updateTiers,
 };

@@ -7,6 +7,7 @@ import {
   createEvent,
   updateEvent,
   deleteAllEvents,
+  updateTiers,
 } from "../controllers/eventController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -20,5 +21,6 @@ router
   .get(getEventById)
   .put(protect, updateEvent)
   .delete(protect, deleteEvent);
+router.route("/:_id/tiers").put(protect, updateTiers);
 
 export default router;

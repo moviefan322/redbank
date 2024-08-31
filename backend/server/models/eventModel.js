@@ -40,8 +40,21 @@ const EventSchema = mongoose.Schema(
     },
     sponsors: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Sponsor",
+        tier: {
+          type: String,
+          required: true,
+        },
+        items: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Sponsor",
+          },
+        ],
+      },
+    ],
+    tiers: [
+      {
+        type: String,
       },
     ],
   },

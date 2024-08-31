@@ -44,7 +44,6 @@ const ManageEvents = () => {
   const [endMinute, setEndMinute] = useState("");
   const [multiDay, setMultiDay] = useState(false);
   const [submitError, setSubmitError] = useState<string>("");
-  const [displayUploader, setDisplayUploader] = useState(false);
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
     _id: "",
     title: "",
@@ -56,6 +55,8 @@ const ManageEvents = () => {
     endTime: "",
     allDay: false,
     urlPhoto: "",
+    tiers: [],
+    sponsors: [],
   });
   const months = [
     "Jan",
@@ -179,6 +180,8 @@ const ManageEvents = () => {
       startTime: currentEvent.startTime,
       endTime: currentEvent.endTime,
       allDay: currentEvent.allDay,
+      tiers: currentEvent.tiers,
+      sponsors: currentEvent.sponsors,
     });
 
     // Validate existing descriptions when entering edit mode
@@ -675,6 +678,12 @@ const ManageEvents = () => {
                             />
                           </div>
                         </div>
+
+                        <div className="">
+                          <div className="justify-self-end w-100 flex-grow-2">
+                            <button className="btn-admin">Add Sponsors</button>
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       <div className="ms-5 w-75 align-self-center">
@@ -724,6 +733,11 @@ const ManageEvents = () => {
                             </div>
                           </>
                         )}
+                        <div className="d-flex flex-column flex-md-row justify-content-between">
+                          {" "}
+                          <p>Sponsors:</p>
+                          <p className="text-white">Sponsor List</p>
+                        </div>
                       </div>
                     )}
                   </div>
