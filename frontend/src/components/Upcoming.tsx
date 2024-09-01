@@ -65,7 +65,7 @@ const Upcoming = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events`
       );
       const data = await res.json();
-      setEvents(data);
+      setEvents(data.filter((event: Event) => event.title !== "TEST"));
       setDisplayedEvents(data.slice(0, 3));
     } catch (error) {
       console.log(error);

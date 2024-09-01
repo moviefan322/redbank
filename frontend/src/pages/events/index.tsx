@@ -27,12 +27,14 @@ type Props = {
 
 function EventsPage(props: Props): JSX.Element {
   const router = useRouter();
-  const allEvents: Event[] = props.events;
+  const allEvents: Event[] = props.events.filter((event) => event.title !== "TEST");
 
   function findEventsHandler(year: string, month: string) {
     const fullPath: string = `/events/${year}/${month}`;
     router.push(fullPath);
   }
+
+  console.log(allEvents)
 
   return (
     <>
