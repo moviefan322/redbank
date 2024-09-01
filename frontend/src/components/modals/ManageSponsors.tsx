@@ -63,12 +63,12 @@ const ManageSponsors = ({
     setError("");
   };
 
-  const handleTierChange = (
+  const handleTierNameChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
     const newTiers = [...postTierData.tiers];
-    newTiers[index] = e.target.value;
+    newTiers[index].name = e.target.value; // Update the name of the tier
     setPostTierData({ ...postTierData, tiers: newTiers });
   };
 
@@ -79,17 +79,30 @@ const ManageSponsors = ({
 
   const postDefaultTiers = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setPostTierData({ ...postTierData, tiers: ["Gold", "Silver", "Bronze"] });
+    setPostTierData({
+      ...postTierData,
+      tiers: tierNames.slice(0, 3).map((name) => ({ name, sponsors: [] })),
+    });
   };
 
   const postDefaultTier = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setPostTierData({ ...postTierData, tiers: ["sponsors"] });
+    setPostTierData({
+      ...postTierData,
+      tiers: [{ name: "sponsors", sponsors: [] }],
+    });
   };
 
-  const handleAddTier = (tiers: string[]) => {
-    setPostTierData({ ...postTierData, tiers });
-    dispatch(updateTiers({ ...postTierData, tiers }));
+  const handleAddTier = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const newTiers = [
+      ...postTierData.tiers,
+      {
+        name: tierNames[postTierData.tiers.length] || `Tier ${postTierData.tiers.length + 1}`,
+        sponsors: [],
+      },
+    ];
+    setPostTierData({ ...postTierData, tiers: newTiers });
   };
 
   const deleteLastTier = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -98,18 +111,9 @@ const ManageSponsors = ({
     setPostTierData({ ...postTierData, tiers: newTiers });
   };
 
-  const AddTier = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const newTiers = [
-      ...postTierData.tiers,
-      tierNames[postTierData.tiers.length],
-    ];
-    setPostTierData({ ...postTierData, tiers: newTiers });
-  };
-
   const clearEventTiers = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    handleAddTier([]);
+    setPostTierData({ ...postTierData, tiers: [] });
   };
 
   if (!eventData) {
@@ -136,12 +140,12 @@ const ManageSponsors = ({
                 <div>
                   <p>Sponsorship Tiers</p>
                   <ul className="d-flex flex-column justify-content-center text-center list-group list-unstyled">
-                    {postTierData.tiers.map((tier: string, index: number) => (
+                    {postTierData.tiers.map((tier, index) => (
                       <li className="w-50 mx-auto" key={index}>
                         <div className="d-flex flex-row justify-content-center">
                           {editTierIndex !== index ? (
                             <>
-                              <h3 className="my-auto">{tier} </h3>
+                              <h3 className="my-auto">{tier.name} </h3>
                               <button
                                 type="button"
                                 onClick={() => setEditTierIndex(index)}
@@ -154,8 +158,8 @@ const ManageSponsors = ({
                             <>
                               <input
                                 type="text"
-                                value={postTierData.tiers[index]}
-                                onChange={(e) => handleTierChange(e, index)}
+                                value={tier.name}
+                                onChange={(e) => handleTierNameChange(e, index)}
                               />
                               <button
                                 type="button"
@@ -198,12 +202,12 @@ const ManageSponsors = ({
                 </div>
               )}
             </div>
-            <div className='d-flex flex-row'>
+            <div className="d-flex flex-row">
               <div className="d-flex flex-row justify-content-end">
                 <button
-                  onClick={AddTier}
+                  onClick={handleAddTier}
                   className="btn-admin ms-5"
-                  disabled={postTierData.tiers.length > 4}
+                  disabled={postTierData.tiers.length >= tierNames.length}
                 >
                   Add New Tier
                 </button>

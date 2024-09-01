@@ -1,5 +1,28 @@
 import mongoose from "mongoose";
 
+const SponsorSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    tier: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const EventSchema = mongoose.Schema(
   {
     title: {
@@ -38,23 +61,10 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    sponsors: [
-      {
-        tier: {
-          type: String,
-          required: true,
-        },
-        items: [
-          {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Sponsor",
-          },
-        ],
-      },
-    ],
     tiers: [
       {
-        type: String,
+        name: String,
+        sponsors: [SponsorSchema],
       },
     ],
   },

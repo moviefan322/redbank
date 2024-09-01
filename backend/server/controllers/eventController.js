@@ -140,7 +140,7 @@ const deleteAllEvents = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 
 const updateTiers = asyncHandler(async (req, res) => {
-  const { tiers } = req.body;
+  const { tiers } = req.body; // Expecting an array of tier objects with name and sponsors
   const event = await Event.findById(req.params._id);
 
   if (!event) {
@@ -148,10 +148,20 @@ const updateTiers = asyncHandler(async (req, res) => {
     throw new Error("Event not found");
   }
 
-  event.tiers = tiers;
+  // Update the event's tiers with the new data
+  event.tiers = tiers.map(tier => ({
+    name: tier.name,
+    sponsors: tier.sponsors.map(sponsor => ({
+      name: sponsor.name,
+      image: sponsor.image,
+      url: sponsor.url
+    }))
+  }));
+
   const updatedEvent = await event.save();
   res.json(updatedEvent);
 });
+
 
 export {
   getEvents,
