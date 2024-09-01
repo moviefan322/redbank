@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: false,
   async redirects() {
     return [
       // Redirect HTTP to HTTPS for redbank.org

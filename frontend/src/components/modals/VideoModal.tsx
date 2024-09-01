@@ -11,7 +11,7 @@ const VideoModal = ({ videoUrl }: videoModalProps) => {
     <div className="row">
       <div className="col-12 d-flex flex-column align-items-center">
         <div className="position-relative">
-          <img src="/redbankLogo1.png" className="img-fluid" />
+          {/* <Image src="/redbankLogo1.png" className="img-fluid" /> */}
           <a
             className="video-btn"
             data-bs-toggle="modal"
