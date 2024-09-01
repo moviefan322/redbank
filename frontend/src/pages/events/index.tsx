@@ -27,7 +27,7 @@ type Props = {
 
 function EventsPage(props: Props): JSX.Element {
   const router = useRouter();
-  const allEvents: Event[] = props.events.filter((event) => event.title !== "TEST");
+  const allEvents: Event[] = props.events;
 
   function findEventsHandler(year: string, month: string) {
     const fullPath: string = `/events/${year}/${month}`;
