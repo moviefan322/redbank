@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { shallowEqual } from "react-redux";
 import { updateTiers } from "@/features/events/eventActions";
 import { resetUploadState } from "@/features/upload/uploadSlice";
+import AddSponsorForm from "./AddSponsorForm";
 import UpdateEventTiersReq from "@/types/UpdateEventTiersReq";
 import styles from "./PostNewCarouselItem.module.css";
 import { FaTrashCan, FaPencil } from "react-icons/fa6";
@@ -22,16 +23,16 @@ const ManageSponsors = ({
 }: ManageSponsorsProps) => {
   const [error, setError] = useState("");
   const [editTierIndex, setEditTierIndex] = useState<number | null>(null);
-  const tierNames = ["Gold", "Silver", "Bronze", "Copper", "Tin"];
-
+  const [visibleAddSponsorForms, setVisibleAddSponsorForms] = useState<
+    boolean[]
+  >([]);
   const { events } = useAppSelector((state: any) => state.events, shallowEqual);
-
   const eventData = events.find((event: any) => event._id === eventId);
-
   const [postTierData, setPostTierData] = useState<UpdateEventTiersReq>({
     _id: eventId,
     tiers: eventData?.tiers || [], // Initialize with current event tiers
   });
+  const tierNames = ["Gold", "Silver", "Bronze", "Copper", "Tin"];
 
   const dispatch = useAppDispatch();
 
@@ -41,6 +42,7 @@ const ManageSponsors = ({
         _id: eventId,
         tiers: eventData.tiers,
       });
+      setVisibleAddSponsorForms(new Array(eventData.tiers.length).fill(false));
     }
   }, [eventData, eventId]);
 
@@ -98,7 +100,9 @@ const ManageSponsors = ({
     const newTiers = [
       ...postTierData.tiers,
       {
-        name: tierNames[postTierData.tiers.length] || `Tier ${postTierData.tiers.length + 1}`,
+        name:
+          tierNames[postTierData.tiers.length] ||
+          `Tier ${postTierData.tiers.length + 1}`,
         sponsors: [],
       },
     ];
@@ -114,6 +118,12 @@ const ManageSponsors = ({
   const clearEventTiers = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setPostTierData({ ...postTierData, tiers: [] });
+  };
+
+  const toggleAddSponsorForm = (index: number) => {
+    setVisibleAddSponsorForms((prevState) =>
+      prevState.map((visible, i) => (i === index ? !visible : visible))
+    );
   };
 
   if (!eventData) {
@@ -138,7 +148,6 @@ const ManageSponsors = ({
             <div className="d-flex flex-row">
               {postTierData.tiers.length > 0 && (
                 <div>
-                  <p>Sponsorship Tiers</p>
                   <ul className="d-flex flex-column justify-content-center text-center list-group list-unstyled">
                     {postTierData.tiers.map((tier, index) => (
                       <li className="w-50 mx-auto" key={index}>
@@ -178,9 +187,30 @@ const ManageSponsors = ({
                             </button>
                           )}
                         </div>
-                        <div>
-                          <p>Item</p>
-                        </div>
+                        <ul>
+                          {tier.sponsors.length > 0 && (
+                            <li>
+                              <p>Item</p>
+                            </li>
+                          )}
+                          <button
+                            className="btn-admin mx-auto"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleAddSponsorForm(index);
+                            }}
+                          >
+                            {visibleAddSponsorForms[index]
+                              ? "Hide Sponsor Form"
+                              : "Add Sponsor"}
+                          </button>
+                          {visibleAddSponsorForms[index] && (
+                            <AddSponsorForm
+                              index={index}
+                              setPostTierData={setPostTierData}
+                            />
+                          )}
+                        </ul>
                       </li>
                     ))}
                   </ul>
@@ -203,7 +233,7 @@ const ManageSponsors = ({
               )}
             </div>
             <div className="d-flex flex-row">
-              <div className="d-flex flex-row justify-content-end">
+              <div className="d-flex flex-row justify-content-center">
                 <button
                   onClick={handleAddTier}
                   className="btn-admin ms-5"
@@ -212,7 +242,7 @@ const ManageSponsors = ({
                   Add New Tier
                 </button>
               </div>
-              <div className="d-flex flex-row justify-content-end">
+              <div className="d-flex flex-row justify-content-center">
                 <button
                   onClick={clearEventTiers}
                   className="btn-admin-red ms-5"
