@@ -15,7 +15,6 @@ const Upcoming = () => {
 
   const fetchNewsletters = async () => {
     try {
-      console.log("fetching newsletters");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/newsletter`
       );
@@ -46,8 +45,6 @@ const Upcoming = () => {
     setDisplayedEnd(newEnd);
     setDisplayedNewsletters(newsletters.slice(newStart, newEnd));
   };
-
-  console.log(newsletters);
 
   if (newsletters.length === 0) {
     return <div>Loading...</div>;

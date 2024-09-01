@@ -24,7 +24,6 @@ const PostNewNews = ({
   const dispatch = useAppDispatch();
 
   const validateData = () => {
-    console.log("validation triggered");
     if (!postNewsData.title.trim()) return "Title is required.";
     if (
       !postNewsData.urlPhoto.trim() ||

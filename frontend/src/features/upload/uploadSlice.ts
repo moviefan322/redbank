@@ -62,7 +62,6 @@ export const imageUploaderSlice = createSlice({
         state.error = null;
       })
       .addCase(uploadImage.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.uploading = false;
         state.imageUrl = action.payload;
         state.error = null; // Ensure error is cleared upon successful upload

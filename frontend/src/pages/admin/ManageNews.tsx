@@ -156,7 +156,6 @@ const ManageNews = () => {
 
   const handleUpdate = (e: any) => {
     e.preventDefault();
-    console.log(updateNewsData);
     dispatch(updateNews(updateNewsData));
     setEditModeIndex(null);
     setSubmitError("");

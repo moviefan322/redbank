@@ -14,7 +14,6 @@ export const getAllEvents = createAsyncThunk<
   { rejectValue: string }
 >("events/getAll", async (_, { rejectWithValue }) => {
   try {
-    console.log("fetching");
     const response = await axios.get(`${backendUrl}/api/events`);
     return response.data;
   } catch (error: any) {

@@ -26,7 +26,6 @@ const PostNewCarouselItem = ({
   const dispatch = useAppDispatch();
 
   const validateData = () => {
-    console.log("validation triggered");
     if (!postCarouselData.title.trim()) return "Title is required.";
     if (!postCarouselData.linkText.trim()) return "Link text is required.";
     if (!postCarouselData.link.trim()) return "Link is required.";

@@ -139,9 +139,9 @@ const deleteAllEvents = asyncHandler(async (req, res) => {
 // @route   PUT /api/:id/tiers
 // @access  Private/Admin
 
-export const updateTiers = asyncHandler(async (req, res) => {
+const updateTiers = asyncHandler(async (req, res) => {
   const { tiers } = req.body;
-  const event = await Event.findById(req.params.id);
+  const event = await Event.findById(req.params._id);
 
   if (!event) {
     res.status(404);

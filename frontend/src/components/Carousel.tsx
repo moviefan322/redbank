@@ -37,8 +37,6 @@ function CustomCarousel() {
     fetchCarouselItems();
   }, []);
 
-  console.log("carouselItems: ", carouselItems);
-
   if (!carouselItems.length) {
     return <div>Loading...</div>;
   }

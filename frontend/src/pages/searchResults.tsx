@@ -42,8 +42,6 @@ const SearchResultsPage = () => {
     return <Loading />;
   }
 
-  console.log(results);
-
   return (
     <div className="col-10 mx-auto">
       <h2 className="py-5 text-center">Search Results</h2>

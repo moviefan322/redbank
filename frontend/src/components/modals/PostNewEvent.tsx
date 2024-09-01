@@ -37,7 +37,6 @@ const PostNewEvent = ({
   const dispatch = useAppDispatch();
 
   const validateData = () => {
-    console.log("validation triggered");
     if (!postEventData.title.trim()) return "Title is required.";
     if (year === "" || month === "" || day === "") return "Date is required.";
 
@@ -103,8 +102,6 @@ const PostNewEvent = ({
         updatedPostEventData.endTime = formattedEndTime;
 
         if (+startHour > +endHour) {
-          console.log(startHour, endHour, +startHour > +endHour);
-          console.log(typeof startHour, typeof endHour);
           return setError("End time must be later than start time.");
         }
       } else {
@@ -125,7 +122,6 @@ const PostNewEvent = ({
     dispatch(postEvent(updatedPostEventData));
     handleCloseModal();
     setError("");
-    console.log(updatedPostEventData);
   };
 
   return (

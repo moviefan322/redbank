@@ -17,6 +17,7 @@ import Upcoming from "@/components/Upcoming";
 import SorryDave from "@/components/SorryDave";
 import EventDetail from "../events/[eventId]";
 import ImageUploader from "@/components/ImageUploader";
+import ManageSponsors from "@/components/modals/ManageSponsors";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
 import UpdateEventReq from "@/types/UpdateEventReq";
@@ -28,6 +29,7 @@ const ManageEvents = () => {
   const [previewModeIndex, setPreviewModeIndex] = useState<number>(0);
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
   const [isSinglePreviewOpen, setSinglePreviewOpen] = useState(false);
+  const [isSponsorModalOpen, setSponsorModalOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [currentItemId, setCurrentItemId] = useState<string>("");
@@ -102,17 +104,12 @@ const ManageEvents = () => {
     urlPhoto: "",
   });
 
-  useEffect(() => {
-    console.log("Start Hour:", startHour, typeof startHour);
-    console.log("Start Minute:", startMinute, typeof startMinute);
-    console.log("End Hour:", endHour, typeof endHour);
-    console.log("End Minute:", endMinute, typeof endMinute);
-  }, [startHour, startMinute, endHour, endMinute]);
-
   // Modals
 
   const openPreviewModal = () => setPreviewModalOpen(true);
   const closePreviewModal = () => setPreviewModalOpen(false);
+  const openSponsorModal = () => setSponsorModalOpen(true);
+  const closeSponsorModal = () => setSponsorModalOpen(false);
   const openPostModal = () => {
     setPostEventData({
       title: "",
@@ -196,7 +193,6 @@ const ManageEvents = () => {
     setDay(new Date(currentEvent.date).getDate());
     setYear(new Date(currentEvent.date).getFullYear());
 
-    console.log(currentEvent);
     if (currentEvent.endDate) {
       setMultiDay(true);
       setEndMonth(new Date(currentEvent.endDate).getMonth() + 1);
@@ -208,8 +204,7 @@ const ManageEvents = () => {
       setEndDay(0);
       setEndYear(0);
     }
-    console.log(currentEvent.startTime);
-    console.log(currentEvent.endTime);
+
     if (currentEvent.startTime) {
       setStartHour(currentEvent.startTime.split(":")[0]);
       setStartMinute(currentEvent.startTime.split(":")[1]);
@@ -361,8 +356,6 @@ const ManageEvents = () => {
   }
 
   if (error) return <div>Error: {error}</div>;
-
-  console.log(events);
 
   return (
     <div className="admin">
@@ -681,7 +674,12 @@ const ManageEvents = () => {
 
                         <div className="">
                           <div className="justify-self-end w-100 flex-grow-2">
-                            <button className="btn-admin">Add Sponsors</button>
+                            <button
+                              onClick={openSponsorModal}
+                              className="btn-admin"
+                            >
+                              Add Sponsors
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -873,6 +871,11 @@ const ManageEvents = () => {
           </Link>
         </div>
       </div>
+      <ManageSponsors
+        isSponsorModalOpen={isSponsorModalOpen}
+        closeSponsorModal={closeSponsorModal}
+        eventId={updateEventData._id}
+      />
     </div>
   );
 };
