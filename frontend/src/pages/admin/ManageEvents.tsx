@@ -678,7 +678,7 @@ const ManageEvents = () => {
                               onClick={openSponsorModal}
                               className="btn-admin"
                             >
-                              Add Sponsors
+                              Manage Sponsors
                             </button>
                           </div>
                         </div>

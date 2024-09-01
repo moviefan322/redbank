@@ -64,11 +64,32 @@ body {
   border-radius: 0.3rem;
 }
 
+.limeButtIcon {
+  color: lime;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  margin-left: 0.5rem;
+}
+
+.limeButtIcon:not(:disabled):hover {
+  color: yellow;
+}
+
 .btn-admin {
   background-color: rgb(64, 255, 47);
   color: black;
   font-weight: bolder;
   text-decoration: none;
+}
+
+.btn-admin:disabled {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  font-weight: bolder;
+  text-decoration:line-through;
 }
 
 .btn-admin-red {
