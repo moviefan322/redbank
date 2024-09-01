@@ -48,7 +48,7 @@ function EventsPage(props: Props): JSX.Element {
       <h1 className="text-center mt-5">Upcoming Events</h1>
       <div className="d-flex flex-wrap align-items-center justify-content-center">
         {/* <EventSearch onSearch={findEventsHandler} /> */}
-        {allEvents.map((event) => {
+        {allEvents.filter((event) => event.title !== "TEST").map((event) => {
           return (
             <div
               key={event._id}
