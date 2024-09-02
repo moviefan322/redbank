@@ -10,6 +10,7 @@ export default interface UpdateEventReq {
   title?: string;
   date: string;
   endDate?: string;
+  rainDate?: string;
   startTime?: string;
   endTime?: string;
   allDay: boolean;
