@@ -227,7 +227,10 @@ const ManageSponsors = ({
         ...movedSponsor,
         name: updatedSponsor.name,
         image: updatedSponsor.image,
-        url: updatedSponsor.url,
+        url: updatedSponsor.image.imageUrl,
+        height: updatedSponsor.image.height,
+        width: updatedSponsor.image.width,
+        borderRadius: updatedSponsor.image.borderRadius,
       };
 
       // If the sponsor is moving to a different tier, update the new tier's sponsors

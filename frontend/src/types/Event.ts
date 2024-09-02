@@ -1,8 +1,8 @@
 import Sponsor from './Sponsor';
 
-interface EventSponsor {
-  tier: string;
-  items: Sponsor[];
+interface Tier {
+  name: string;
+  sponsors: Sponsor[];
 }
 
 export default interface Event {
@@ -16,8 +16,7 @@ export default interface Event {
   urlPhoto: string;
   description: string;
   descriptionShort: string;
-  tiers: string[];
-  sponsors: EventSponsor[];
+  tiers: Tier[];
   createdAt: string;
   updatedAt: string;
   _v: number;

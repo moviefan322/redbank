@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { getEvent } from "@/features/events/eventActions";
 import styles from "./test.module.css";
 import { formatTime } from "@/utils/formatTime";
-import Event  from "@/types/Event";
+import Event from "@/types/Event";
 
 const months = [
   "January",
@@ -30,7 +30,7 @@ function Test() {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const result = await dispatch(getEvent('66d3ab437dc7fae6669f6581'));
+      const result = await dispatch(getEvent("66d3ab437dc7fae6669f6581"));
       if (getEvent.fulfilled.match(result)) {
         setEvent(result.payload);
       } else {
@@ -56,6 +56,8 @@ function Test() {
       </div>
     );
   }
+
+  console.log(event);
 
   return (
     <Fragment>
@@ -96,6 +98,37 @@ function Test() {
         ></div>
         <h6>{event.descriptionShort}</h6>
         <div dangerouslySetInnerHTML={{ __html: event.description }} />
+        <div>
+          <h3 className="mt-5">Thank You To Our Sponsors!</h3>
+          <div className="d-flex flex-column mx-auto align-items-center justify-content-center mt-5">
+            {event.tiers.map((tier, tierIndex) => (
+              <div key={tierIndex} className="mb-5 mx-auto w-100 text-center">
+                <h5 className='mx-auto'>{tier.name}</h5>
+                <div className="d-flex flex-row justify-content-around w-100">
+                  {tier.sponsors.map((sponsor, sponsorIndex) => (
+                    <div
+                      key={sponsorIndex}
+                      className="d-flex flex-column align-items-center"
+                    >
+                      <div
+                        className="imagePreview mx-auto"
+                        style={{
+                          width: `${sponsor.image.width}px`,
+                          height: `${sponsor.image.height}px`,
+                          backgroundImage: `url(${sponsor.image.imageUrl})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                          borderRadius: `${sponsor.image.borderRadius}%`,
+                        }}
+                      ></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </Fragment>
   );
