@@ -59,6 +59,7 @@ const createEvent = asyncHandler(async (req, res) => {
     title,
     date,
     endDate,
+    rainDate,
     startTime,
     endTime,
     allDay,
@@ -77,6 +78,7 @@ const createEvent = asyncHandler(async (req, res) => {
     urlPhoto,
     description,
     descriptionShort,
+    rainDate
   });
 
   const createdEvent = await event.save();
@@ -99,6 +101,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     description,
     descriptionShort,
     tiers,
+    rainDate
   } = req.body;
 
   const event = await Event.findById(req.params._id);
@@ -115,6 +118,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     if (descriptionShort !== undefined)
       event.descriptionShort = descriptionShort;
     if (tiers !== undefined) event.tiers = tiers;
+    if (rainDate !== undefined) event.rainDate = rainDate;
 
     const updatedEvent = await event.save();
     res.json(updatedEvent);
