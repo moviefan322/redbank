@@ -1,0 +1,14 @@
+.eventDetail {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+    word-break: break-word;
+  
+  }
+  
+  @media screen and (min-width: 768px) {
+    .eventDetail {
+      width: 80%;
+    }
+  }
+  
