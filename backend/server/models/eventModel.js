@@ -58,6 +58,10 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    rainDate: {
+      type: String,
+      required: false,
+    },
     startTime: {
       type: String,
       required: false,
