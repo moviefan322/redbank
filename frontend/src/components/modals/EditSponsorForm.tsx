@@ -9,9 +9,15 @@ interface EditSponsorFormProps {
   updateSponsor: (
     tierIndex: number,
     sponsorIndex: number,
-    updatedSponsor: Sponsor
+    updatedSponsor: Sponsor,
+    newTierIndex: number,
+    newPositionIndex: number
   ) => void;
   toggleEditSponsorForm: (tierIndex: number, sponsorIndex: number) => void;
+  tiers: Array<{
+    name: string;
+    sponsors: Sponsor[];
+  }>;
 }
 
 interface ValidationResponse {
@@ -25,6 +31,7 @@ const EditSponsorForm = ({
   sponsor,
   updateSponsor,
   toggleEditSponsorForm,
+  tiers,
 }: EditSponsorFormProps) => {
   const [sponsorName, setSponsorName] = useState(sponsor.name);
   const [image, setImage] = useState(sponsor.image.imageUrl);
@@ -33,22 +40,33 @@ const EditSponsorForm = ({
   const [width, setWidth] = useState(sponsor.image.width);
   const [borderRadius, setBorderRadius] = useState(sponsor.image.borderRadius);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [newTierIndex, setNewTierIndex] = useState(tierIndex);
+  const [newPositionIndex, setNewPositionIndex] = useState(sponsorIndex);
 
   const handleUpdateSponsor = () => {
-    const updatedSponsor: Sponsor = {
+    const validationResponse = validateSponsorData({
       name: sponsorName,
       image: { imageUrl: image, height, width, borderRadius },
       url,
-    };
-
-    const validationResponse = validateSponsorData(updatedSponsor);
+    });
 
     if (!validationResponse.isValid) {
       setValidationErrors(validationResponse.errors);
       return;
     }
 
-    updateSponsor(tierIndex, sponsorIndex, updatedSponsor);
+    updateSponsor(
+      tierIndex,
+      sponsorIndex,
+      {
+        name: sponsorName,
+        image: { imageUrl: image, height, width, borderRadius },
+        url,
+      },
+      newTierIndex,
+      newPositionIndex
+    );
+
     toggleEditSponsorForm(tierIndex, sponsorIndex);
   };
 
@@ -109,6 +127,38 @@ const EditSponsorForm = ({
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Url Endpoint"
         />
+      </div>
+      <div className="d-flex flex-column align-items-center">
+        <label>Move to Tier:</label>
+        <select
+          value={newTierIndex}
+          onChange={(e) => setNewTierIndex(parseInt(e.target.value))}
+        >
+          {tiers.map((tier, index) => (
+            <option key={index} value={index}>
+              {tier.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="d-flex flex-column align-items-center">
+        <label>Position in Tier:</label>
+        <select
+          value={newPositionIndex}
+          onChange={(e) => setNewPositionIndex(parseInt(e.target.value))}
+        >
+          {Array(
+            newTierIndex === tierIndex
+              ? tiers[newTierIndex].sponsors.length
+              : tiers[newTierIndex].sponsors.length + 1
+          )
+            .fill(null)
+            .map((_, index) => (
+              <option key={index} value={index}>
+                {index + 1}
+              </option>
+            ))}
+        </select>
       </div>
       <div>
         {image ? (
@@ -192,7 +242,7 @@ const EditSponsorForm = ({
           }}
           className="btn-admin"
         >
-          Update Sponsor
+          Update
         </button>
         <button
           onClick={() => toggleEditSponsorForm(tierIndex, sponsorIndex)}

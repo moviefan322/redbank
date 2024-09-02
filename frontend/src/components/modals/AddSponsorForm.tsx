@@ -189,7 +189,7 @@ const AddSponsorForm = ({
           }}
           className="btn-admin"
         >
-          Add Sponsor
+          Save
         </button>
         <button
           onClick={() => toggleAddSponsorForm(index)}

@@ -159,6 +159,10 @@ const ManageSponsors = ({
       );
       return { ...prevData, tiers: newTiers };
     });
+
+    setVisibleEditSponsorForms((prevState) =>
+      prevState.map((tier, i) => (i === index ? [...tier, false] : tier))
+    );
   };
 
   const deleteSponsor = (tierIndex: number, sponsorIndex: number) => {
@@ -174,6 +178,15 @@ const ManageSponsors = ({
       });
       return { ...prevData, tiers: newTiers };
     });
+
+    setVisibleEditSponsorForms((prevState) =>
+      prevState.map((tier, i) => {
+        if (i === tierIndex) {
+          return tier.filter((_, j) => j !== sponsorIndex);
+        }
+        return tier;
+      })
+    );
   };
 
   const toggleEditSponsorForm = (tierIndex: number, sponsorIndex: number) => {
@@ -192,18 +205,47 @@ const ManageSponsors = ({
   const updateSponsorData = (
     tierIndex: number,
     sponsorIndex: number,
-    updatedSponsor: Sponsor
+    updatedSponsor: Sponsor,
+    newTierIndex: number,
+    newPositionIndex: number
   ) => {
     setPostTierData((prevData) => {
-      const newTiers = prevData.tiers.map((tier, i) => {
-        if (i === tierIndex) {
-          const updatedSponsors = tier.sponsors.map((sponsor, j) =>
-            j === sponsorIndex ? updatedSponsor : sponsor
-          );
-          return { ...tier, sponsors: updatedSponsors };
-        }
-        return tier;
-      });
+      // Make a deep copy of the tiers array
+      const newTiers = prevData.tiers.map((tier) => ({
+        ...tier,
+        sponsors: [...tier.sponsors],
+      }));
+
+      // Remove sponsor from the original tier
+      const [movedSponsor] = newTiers[tierIndex].sponsors.splice(
+        sponsorIndex,
+        1
+      );
+
+      // Clone the moved sponsor to avoid mutating the original object
+      const modifiedSponsor = {
+        ...movedSponsor,
+        name: updatedSponsor.name,
+        image: updatedSponsor.image,
+        url: updatedSponsor.url,
+      };
+
+      // If the sponsor is moving to a different tier, update the new tier's sponsors
+      if (newTierIndex !== tierIndex) {
+        newTiers[newTierIndex].sponsors.splice(
+          newPositionIndex,
+          0,
+          modifiedSponsor
+        );
+      } else {
+        // If staying within the same tier, insert the sponsor at the new position
+        newTiers[tierIndex].sponsors.splice(
+          newPositionIndex,
+          0,
+          modifiedSponsor
+        );
+      }
+
       return { ...prevData, tiers: newTiers };
     });
   };
@@ -305,6 +347,7 @@ const ManageSponsors = ({
                                         index,
                                         sponsorIndex
                                       )}
+                                      tiers={postTierData.tiers}
                                     />
                                   ) : (
                                     <div>
