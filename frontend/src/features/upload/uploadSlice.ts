@@ -7,12 +7,14 @@ interface ImageUploaderState {
   uploading: boolean;
   imageUrl: string | null;
   error: string | null;
+  success: boolean;
 }
 
 const initialState: ImageUploaderState = {
   uploading: false,
   imageUrl: null,
   error: null,
+  success: false,
 };
 
 
@@ -53,6 +55,7 @@ export const imageUploaderSlice = createSlice({
       state.uploading = false;
       state.imageUrl = null;
       state.error = null;
+      state.success = false;
     },
   },
   extraReducers: (builder) => {
@@ -60,15 +63,18 @@ export const imageUploaderSlice = createSlice({
       .addCase(uploadImage.pending, (state) => {
         state.uploading = true;
         state.error = null;
+        state.success = false;
       })
       .addCase(uploadImage.fulfilled, (state, action) => {
         state.uploading = false;
         state.imageUrl = action.payload;
         state.error = null; // Ensure error is cleared upon successful upload
+        state.success = true;
       })
       .addCase(uploadImage.rejected, (state, action) => {
         state.uploading = false;
         state.error = action.payload as string;
+        state.success = false;
       });
   },
 });

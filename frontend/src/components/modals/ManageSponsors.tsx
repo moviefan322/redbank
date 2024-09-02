@@ -5,10 +5,12 @@ import { shallowEqual } from "react-redux";
 import { updateTiers } from "@/features/events/eventActions";
 import { resetUploadState } from "@/features/upload/uploadSlice";
 import AddSponsorForm from "./AddSponsorForm";
+import EditSponsorForm from "./EditSponsorForm";
 import UpdateEventTiersReq from "@/types/UpdateEventTiersReq";
 import styles from "./PostNewCarouselItem.module.css";
 import { FaTrashCan, FaPencil } from "react-icons/fa6";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import Sponsor from "@/types/Sponsor";
 
 interface ManageSponsorsProps {
   isSponsorModalOpen: boolean;
@@ -26,6 +28,9 @@ const ManageSponsors = ({
   const [visibleAddSponsorForms, setVisibleAddSponsorForms] = useState<
     boolean[]
   >([]);
+  const [visibleEditSponsorForms, setVisibleEditSponsorForms] = useState<
+    boolean[][]
+  >([]);
   const { events } = useAppSelector((state: any) => state.events, shallowEqual);
   const eventData = events.find((event: any) => event._id === eventId);
   const [postTierData, setPostTierData] = useState<UpdateEventTiersReq>({
@@ -42,7 +47,13 @@ const ManageSponsors = ({
         _id: eventId,
         tiers: eventData.tiers,
       });
+
+      const initialVisibility = eventData.tiers.map((tier: any) =>
+        new Array(tier.sponsors.length).fill(false)
+      );
+
       setVisibleAddSponsorForms(new Array(eventData.tiers.length).fill(false));
+      setVisibleEditSponsorForms(initialVisibility);
     }
   }, [eventData, eventId]);
 
@@ -50,6 +61,9 @@ const ManageSponsors = ({
     setError("");
     dispatch(resetUploadState());
     closeSponsorModal();
+
+    setVisibleAddSponsorForms([]);
+    setVisibleEditSponsorForms([]);
   };
 
   const handleSubmitTiers = (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,8 +83,9 @@ const ManageSponsors = ({
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    const newTiers = [...postTierData.tiers];
-    newTiers[index].name = e.target.value; // Update the name of the tier
+    const newTiers = [...postTierData.tiers].map((tier, i) =>
+      i === index ? { ...tier, name: e.target.value } : tier
+    );
     setPostTierData({ ...postTierData, tiers: newTiers });
   };
 
@@ -106,13 +121,24 @@ const ManageSponsors = ({
         sponsors: [],
       },
     ];
+
     setPostTierData({ ...postTierData, tiers: newTiers });
+
+    setVisibleAddSponsorForms((prevState) => [...prevState, false]);
+    setVisibleEditSponsorForms((prevState) => [
+      ...prevState,
+      new Array(newTiers[newTiers.length - 1].sponsors.length).fill(false),
+    ]);
   };
 
   const deleteLastTier = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const newTiers = postTierData.tiers.slice(0, -1);
+
     setPostTierData({ ...postTierData, tiers: newTiers });
+
+    setVisibleAddSponsorForms((prevState) => prevState.slice(0, -1));
+    setVisibleEditSponsorForms((prevState) => prevState.slice(0, -1));
   };
 
   const clearEventTiers = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -124,6 +150,62 @@ const ManageSponsors = ({
     setVisibleAddSponsorForms((prevState) =>
       prevState.map((visible, i) => (i === index ? !visible : visible))
     );
+  };
+
+  const addSponsor = (index: number, sponsor: Sponsor) => {
+    setPostTierData((prevData) => {
+      const newTiers = prevData.tiers.map((tier, i) =>
+        i === index ? { ...tier, sponsors: [...tier.sponsors, sponsor] } : tier
+      );
+      return { ...prevData, tiers: newTiers };
+    });
+  };
+
+  const deleteSponsor = (tierIndex: number, sponsorIndex: number) => {
+    setPostTierData((prevData) => {
+      const newTiers = prevData.tiers.map((tier, i) => {
+        if (i === tierIndex) {
+          const newSponsors = tier.sponsors.filter(
+            (_, j) => j !== sponsorIndex
+          );
+          return { ...tier, sponsors: newSponsors };
+        }
+        return tier;
+      });
+      return { ...prevData, tiers: newTiers };
+    });
+  };
+
+  const toggleEditSponsorForm = (tierIndex: number, sponsorIndex: number) => {
+    setVisibleEditSponsorForms((prevState) => {
+      return prevState.map((tier, i) => {
+        if (i === tierIndex) {
+          return tier.map((visible, j) =>
+            j === sponsorIndex ? !visible : visible
+          );
+        }
+        return tier;
+      });
+    });
+  };
+
+  const updateSponsorData = (
+    tierIndex: number,
+    sponsorIndex: number,
+    updatedSponsor: Sponsor
+  ) => {
+    setPostTierData((prevData) => {
+      const newTiers = prevData.tiers.map((tier, i) => {
+        if (i === tierIndex) {
+          const updatedSponsors = tier.sponsors.map((sponsor, j) =>
+            j === sponsorIndex ? updatedSponsor : sponsor
+          );
+          return { ...tier, sponsors: updatedSponsors };
+        }
+        return tier;
+      });
+      return { ...prevData, tiers: newTiers };
+    });
   };
 
   if (!eventData) {
@@ -150,7 +232,7 @@ const ManageSponsors = ({
                 <div>
                   <ul className="d-flex flex-column justify-content-center text-center list-group list-unstyled">
                     {postTierData.tiers.map((tier, index) => (
-                      <li className="w-50 mx-auto" key={index}>
+                      <li className="mx-auto" key={index}>
                         <div className="d-flex flex-row justify-content-center">
                           {editTierIndex !== index ? (
                             <>
@@ -173,6 +255,7 @@ const ManageSponsors = ({
                               <button
                                 type="button"
                                 onClick={handleEditTierConfirm}
+                                className="limeButtIcon"
                               >
                                 <IoIosCheckmarkCircle />
                               </button>
@@ -180,6 +263,7 @@ const ManageSponsors = ({
                           )}
                           {index === postTierData.tiers.length - 1 && (
                             <button
+                              type="button"
                               onClick={deleteLastTier}
                               className="limeButtIcon"
                             >
@@ -187,29 +271,90 @@ const ManageSponsors = ({
                             </button>
                           )}
                         </div>
-                        <ul>
+                        <ul className="d-flex flex-column align-items-center justify-content-center list-unstyled">
                           {tier.sponsors.length > 0 && (
-                            <li>
-                              <p>Item</p>
-                            </li>
+                            <div className="d-flex flex-row">
+                              {tier.sponsors.map((sponsor, sponsorIndex) => (
+                                <li key={sponsorIndex}>
+                                  <div>{sponsor.name}</div>
+                                  {sponsor.image && (
+                                    <div
+                                      className="imagePreview mx-auto"
+                                      style={{
+                                        width: `${sponsor.image.width}px`,
+                                        height: `${sponsor.image.height}px`,
+                                        backgroundImage: `url(${sponsor.image.imageUrl})`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                        backgroundRepeat: "no-repeat",
+                                        borderRadius: `${sponsor.image.borderRadius}%`,
+                                      }}
+                                    ></div>
+                                  )}
+                                  {visibleEditSponsorForms[index] &&
+                                  visibleEditSponsorForms[index][
+                                    sponsorIndex
+                                  ] ? (
+                                    <EditSponsorForm
+                                      sponsorIndex={sponsorIndex}
+                                      tierIndex={index}
+                                      sponsor={sponsor}
+                                      updateSponsor={updateSponsorData}
+                                      toggleEditSponsorForm={toggleEditSponsorForm.bind(
+                                        null,
+                                        index,
+                                        sponsorIndex
+                                      )}
+                                    />
+                                  ) : (
+                                    <div>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          toggleEditSponsorForm(
+                                            index,
+                                            sponsorIndex
+                                          )
+                                        }
+                                        className="limeButtIcon"
+                                      >
+                                        <FaPencil />
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          deleteSponsor(index, sponsorIndex)
+                                        }
+                                        className="limeButtIcon"
+                                      >
+                                        <FaTrashCan />
+                                      </button>
+                                    </div>
+                                  )}
+                                </li>
+                              ))}
+                            </div>
                           )}
-                          <button
-                            className="btn-admin mx-auto"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              toggleAddSponsorForm(index);
-                            }}
-                          >
-                            {visibleAddSponsorForms[index]
-                              ? "Hide Sponsor Form"
-                              : "Add Sponsor"}
-                          </button>
-                          {visibleAddSponsorForms[index] && (
-                            <AddSponsorForm
-                              index={index}
-                              setPostTierData={setPostTierData}
-                            />
+                          {!visibleAddSponsorForms[index] && (
+                            <button
+                              className="btn-admin mx-auto"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleAddSponsorForm(index);
+                              }}
+                            >
+                              Add Sponsor
+                            </button>
                           )}
+                          <div>
+                            {visibleAddSponsorForms[index] && (
+                              <AddSponsorForm
+                                index={index}
+                                addSponsor={addSponsor}
+                                toggleAddSponsorForm={toggleAddSponsorForm}
+                              />
+                            )}
+                          </div>
                         </ul>
                       </li>
                     ))}

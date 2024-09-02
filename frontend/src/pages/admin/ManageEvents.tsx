@@ -661,16 +661,17 @@ const ManageEvents = () => {
                             ))}
                           </select>
                         </div>
-
-                        <div className="float-end">
-                          <div className="justify-self-end w-100 flex-grow-2">
-                            <ImageUploader
-                              data={updateEventData}
-                              setData={setUpdateEventData}
-                              buttonText="Upload New Image"
-                            />
+                        {!isSponsorModalOpen && (
+                          <div className="float-end">
+                            <div className="justify-self-end w-100 flex-grow-2">
+                              <ImageUploader
+                                data={updateEventData}
+                                setData={setUpdateEventData}
+                                buttonText="Upload New Image"
+                              />
+                            </div>
                           </div>
-                        </div>
+                        )}
 
                         <div className="">
                           <div className="justify-self-end w-100 flex-grow-2">

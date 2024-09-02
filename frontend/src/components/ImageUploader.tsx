@@ -25,7 +25,7 @@ interface ImageUploaderProps<T> {
 const ImageUploader = <T extends {}>({
   data,
   setData,
-  buttonText = "Upload File",
+  buttonText = "Upload Image",
   imageParam = "urlPhoto",
 }: ImageUploaderProps<T>) => {
   const [file, setFile] = useState<File | null>(null);

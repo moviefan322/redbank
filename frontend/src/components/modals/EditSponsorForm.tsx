@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import SponsorImageUploader from "@/components/SponsorImageUploader";
 import Sponsor from "@/types/Sponsor";
 
-interface AddSponsorFormProps {
-  index: number;
-  addSponsor: (index: number, sponsor: Sponsor) => void;
-  toggleAddSponsorForm: (index: number) => void;
+interface EditSponsorFormProps {
+  tierIndex: number;
+  sponsorIndex: number;
+  sponsor: Sponsor;
+  updateSponsor: (
+    tierIndex: number,
+    sponsorIndex: number,
+    updatedSponsor: Sponsor
+  ) => void;
+  toggleEditSponsorForm: (tierIndex: number, sponsorIndex: number) => void;
 }
 
 interface ValidationResponse {
@@ -13,40 +19,37 @@ interface ValidationResponse {
   errors: string[];
 }
 
-const AddSponsorForm = ({
-  index,
-  addSponsor,
-  toggleAddSponsorForm,
-}: AddSponsorFormProps) => {
-  const [sponsorName, setSponsorName] = useState("");
-  const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
-  const [height, setHeight] = useState(75);
-  const [width, setWidth] = useState(75);
-  const [borderRadius, setBorderRadius] = useState(0);
+const EditSponsorForm = ({
+  tierIndex,
+  sponsorIndex,
+  sponsor,
+  updateSponsor,
+  toggleEditSponsorForm,
+}: EditSponsorFormProps) => {
+  const [sponsorName, setSponsorName] = useState(sponsor.name);
+  const [image, setImage] = useState(sponsor.image.imageUrl);
+  const [url, setUrl] = useState(sponsor.url || "");
+  const [height, setHeight] = useState(sponsor.image.height);
+  const [width, setWidth] = useState(sponsor.image.width);
+  const [borderRadius, setBorderRadius] = useState(sponsor.image.borderRadius);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
-  const handleAddSponsor = () => {
-    const sponsorData: Sponsor = {
+  const handleUpdateSponsor = () => {
+    const updatedSponsor: Sponsor = {
       name: sponsorName,
       image: { imageUrl: image, height, width, borderRadius },
       url,
     };
 
-    const validationResponse = validateSponsorData(sponsorData);
+    const validationResponse = validateSponsorData(updatedSponsor);
 
     if (!validationResponse.isValid) {
       setValidationErrors(validationResponse.errors);
       return;
     }
 
-    addSponsor(index, sponsorData);
-
-    setSponsorName("");
-    setImage("");
-    setUrl("");
-    setValidationErrors([]);
-    toggleAddSponsorForm(index);
+    updateSponsor(tierIndex, sponsorIndex, updatedSponsor);
+    toggleEditSponsorForm(tierIndex, sponsorIndex);
   };
 
   const validateSponsorData = (sponsor: Sponsor): ValidationResponse => {
@@ -185,14 +188,14 @@ const AddSponsorForm = ({
         <button
           onClick={(e) => {
             e.preventDefault();
-            handleAddSponsor();
+            handleUpdateSponsor();
           }}
           className="btn-admin"
         >
-          Add Sponsor
+          Update Sponsor
         </button>
         <button
-          onClick={() => toggleAddSponsorForm(index)}
+          onClick={() => toggleEditSponsorForm(tierIndex, sponsorIndex)}
           className="btn-admin-red"
         >
           Cancel
@@ -202,4 +205,4 @@ const AddSponsorForm = ({
   );
 };
 
-export default AddSponsorForm;
+export default EditSponsorForm;

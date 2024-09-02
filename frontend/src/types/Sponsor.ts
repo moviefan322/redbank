@@ -1,5 +1,12 @@
+interface ImageSpecs {
+  imageUrl: string;
+  height: number;
+  width: number;
+  borderRadius: number;
+}
+
 export default interface Sponsor {
-    name: string;
-    image: string;
-    url?: string;
+  name: string;
+  image: ImageSpecs;
+  url?: string;
 }
