@@ -57,7 +57,7 @@ function EventDetail(props: Props) {
           href="/events"
         >{`<< All Events`}</Link>
         <h1 className="align-self-center">{event.title}</h1>
-        <h5>
+        <h4>
           {months[new Date(event.date).getMonth()]}{" "}
           {new Date(event.date).getDate()}{" "}
           {event.endDate
@@ -67,7 +67,14 @@ function EventDetail(props: Props) {
             : ""}
           {!event.allDay! &&
             `@ ${formatTime(event.startTime!)}-${formatTime(event.endTime!)}`}
-        </h5>
+        </h4>
+        {event.rainDate && (
+          <h5>
+            Rain Date: {months[new Date(event.rainDate).getMonth()]}{" "}
+            {new Date(event.rainDate).getDate()}{" "}
+          </h5>
+        )}
+
         <div
           className="m-3"
           style={{
