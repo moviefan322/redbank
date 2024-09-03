@@ -93,6 +93,10 @@ const EditSponsorForm = ({
       errors.push("Border radius must be between 0 and 100.");
     }
 
+    if (sponsor.url && !sponsor.url.startsWith("http")) {
+      errors.push("URL must start with http:// or https://");
+    }
+
     return {
       isValid: errors.length === 0,
       errors,

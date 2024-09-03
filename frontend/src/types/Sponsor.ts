@@ -3,6 +3,7 @@ interface ImageSpecs {
   height: number;
   width: number;
   borderRadius: number;
+  url?: string;
 }
 
 export default interface Sponsor {

@@ -241,14 +241,16 @@ const ManageSponsors = ({
       );
 
       // Clone the moved sponsor to avoid mutating the original object
-      const modifiedSponsor = {
+      const modifiedSponsor: Sponsor = {
         ...movedSponsor,
         name: updatedSponsor.name,
-        image: updatedSponsor.image,
-        url: updatedSponsor.image.imageUrl,
-        height: updatedSponsor.image.height,
-        width: updatedSponsor.image.width,
-        borderRadius: updatedSponsor.image.borderRadius,
+        image: {
+          imageUrl: updatedSponsor.image.imageUrl,
+          height: updatedSponsor.image.height,
+          width: updatedSponsor.image.width,
+          borderRadius: updatedSponsor.image.borderRadius,
+        },
+        url: updatedSponsor.url,
       };
 
       // If the sponsor is moving to a different tier, update the new tier's sponsors
@@ -432,10 +434,10 @@ const ManageSponsors = ({
                 <div className="text-center">
                   <p>Would you like to use tiered sponsorships?</p>
                   <div>
-                    <button type="button" onClick={postDefaultTiers}>
+                    <button className='btn-admin' type="button" onClick={postDefaultTiers}>
                       Yes
                     </button>
-                    <button type="button" onClick={postDefaultTier}>
+                    <button className='btn-admin' type="button" onClick={postDefaultTier}>
                       No
                     </button>
                   </div>

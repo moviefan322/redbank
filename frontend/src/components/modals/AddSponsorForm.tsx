@@ -33,6 +33,8 @@ const AddSponsorForm = ({
       url,
     };
 
+    console.log(sponsorData)
+
     const validationResponse = validateSponsorData(sponsorData);
 
     if (!validationResponse.isValid) {

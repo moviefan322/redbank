@@ -2,10 +2,15 @@ import React, { Fragment } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import DOMPurify from "dompurify";
-import Event from "../../types/Event";
-import OktoberFest from "@/components/OktoberFest";
-import styles from "./eventDetail.module.css";
+import Event from "../types/Event";
+import styles from "./OktoberFest.module.css";
 import { formatTime } from "@/utils/formatTime";
+import { Germania_One } from "@next/font/google";
+
+const germaniaOne = Germania_One({
+  weight: "400", // You can specify other options here
+  subsets: ["latin"], // Specify the subsets you want to load
+});
 
 const months = [
   "January",
@@ -26,7 +31,7 @@ type Props = {
   event: Event;
 };
 
-function EventDetail(props: Props) {
+function OktoberFest(props: Props) {
   const event: Event | undefined = props.event;
 
   const sanitizeData = (data: string) => {
@@ -44,12 +49,6 @@ function EventDetail(props: Props) {
     );
   }
 
-  if (event.title === "Red Bank Oktoberfest") {
-    return <OktoberFest event={event} />;
-  }
-
-  console.log(event);
-
   return (
     <Fragment>
       <Head>
@@ -63,7 +62,11 @@ function EventDetail(props: Props) {
           className="nostyle-link align-self-start mb-5 fw-bold"
           href="/events"
         >{`<< All Events`}</Link>
-        <h1 className={`align-self-center`}>{event.title}</h1>
+        <h1
+          className={`${germaniaOne.className} align-self-center ${styles.big} text-center`}
+        >
+          {event.title}
+        </h1>
         <h4>
           {months[new Date(event.date).getMonth()]}{" "}
           {new Date(event.date).getDate()}{" "}
@@ -98,11 +101,19 @@ function EventDetail(props: Props) {
         <div dangerouslySetInnerHTML={{ __html: event.description }} />
         {event.tiers.length > 0 && (
           <div>
-            <h3 className="mt-5">Thank You To Our Sponsors!</h3>
+            <h3
+              className={`${germaniaOne.className} ${styles.big2} mx-auto mt-5`}
+            >
+              Thank You To Our Sponsors!
+            </h3>
             <div className="d-flex flex-column mx-auto align-items-center justify-content-center mt-5">
               {event.tiers.map((tier, tierIndex) => (
                 <div key={tierIndex} className="mb-5 mx-auto w-100 text-center">
-                  <h5 className="mx-auto">{tier.name}</h5>
+                  <h1
+                    className={`${germaniaOne.className} ${styles.big2} mx-auto`}
+                  >
+                    {tier.name}
+                  </h1>
                   <div className="d-flex flex-row justify-content-around w-100">
                     {tier.sponsors.map((sponsor, sponsorIndex) => (
                       <div
@@ -110,7 +121,7 @@ function EventDetail(props: Props) {
                         className="d-flex flex-column align-items-center"
                       >
                         {sponsor.url ? (
-                          <Link href={sponsor.url} passHref>
+                          <Link href={sponsor.url}>
                             <div
                               className="imagePreview mx-auto"
                               style={{
@@ -151,34 +162,4 @@ function EventDetail(props: Props) {
   );
 }
 
-export async function getStaticProps(context: any) {
-  const eventId: string = context.params.eventId;
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/${eventId}`
-  );
-  const event: Event | undefined = await response.json();
-
-  return {
-    props: {
-      event,
-    },
-    revalidate: 30,
-  };
-}
-
-export async function getStaticPaths() {
-  // Example: Fetch a list of events
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events`
-  );
-  const events = await response.json();
-
-  // Generate the paths we want to pre-render based on events
-  const paths = events.map((event: Event) => ({
-    params: { eventId: event._id.toString() },
-  }));
-
-  return { paths, fallback: "blocking" }; // or fallback: true/false
-}
-
-export default EventDetail;
+export default OktoberFest;

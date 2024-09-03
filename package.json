@@ -12,5 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@fontsource/oldenburg": "^5.0.21",
+    "@next/font": "^14.2.7"
   }
 }
