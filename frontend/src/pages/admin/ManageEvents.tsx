@@ -22,6 +22,7 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
 import UpdateEventReq from "@/types/UpdateEventReq";
 import Event from "@/types/Event";
+import Tier from "@/types/Tier";
 import styles from "./ManageEvents.module.css";
 
 const ManageEvents = () => {
@@ -62,8 +63,7 @@ const ManageEvents = () => {
     endTime: "",
     allDay: false,
     urlPhoto: "",
-    tiers: [],
-    sponsors: [],
+    tiers: []
   });
   const months = [
     "Jan",
@@ -188,7 +188,6 @@ const ManageEvents = () => {
       endTime: currentEvent.endTime,
       allDay: currentEvent.allDay,
       tiers: currentEvent.tiers,
-      sponsors: currentEvent.sponsors,
     });
 
     // Validate existing descriptions when entering edit mode
@@ -322,11 +321,12 @@ const ManageEvents = () => {
       updatedEndDateISO = new Date(formattedEndDate).toISOString();
     }
 
-    // Update the event data with the new date
+    // Update the event data with the new date and ensure the tiers are included
     const updatedUpdateEventData: UpdateEventReq = {
       ...updateEventData,
       date: updatedDateISO,
       ...(formattedEndDate ? { endDate: updatedEndDateISO } : {}),
+      tiers: updateEventData.tiers || [], // Ensure tiers are preserved
     };
 
     let formattedRainDate = "";
@@ -346,7 +346,6 @@ const ManageEvents = () => {
       : "";
 
     // Update the event data with the new date
-
     if (rainDate) {
       updatedUpdateEventData.rainDate = updatedRainDateISO;
     } else {
@@ -378,11 +377,7 @@ const ManageEvents = () => {
       updatedUpdateEventData.endTime = "";
     }
 
-    dispatch(
-      updateEvent({
-        ...updatedUpdateEventData,
-      })
-    );
+    dispatch(updateEvent(updatedUpdateEventData));
     setEditModeIndex(null);
     setSubmitError("");
   };
@@ -411,6 +406,13 @@ const ManageEvents = () => {
       __html: DOMPurify.sanitize(data),
     });
     return <div dangerouslySetInnerHTML={sanitizedData()} />;
+  };
+
+  const handleSponsorUpdate = (updatedTiers: Tier[]) => {
+    setUpdateEventData(prev => ({
+      ...prev,
+      tiers: updatedTiers,
+    }));
   };
 
   if (!isLoggedIn) {
@@ -872,10 +874,7 @@ const ManageEvents = () => {
                             </div>
                             <div>
                               {item.tiers.map((tier: any, index: number) => (
-                                <div
-                                  className="d-flex flex-column"
-                                  key={index}
-                                >
+                                <div className="d-flex flex-column" key={index}>
                                   {tier.sponsors.map(
                                     (sponsor: any, sponsorIndex: number) => (
                                       <p key={sponsorIndex}>-{sponsor.name}</p>
@@ -1025,6 +1024,7 @@ const ManageEvents = () => {
         isSponsorModalOpen={isSponsorModalOpen}
         closeSponsorModal={closeSponsorModal}
         eventId={updateEventData._id}
+        onSponsorUpdate={handleSponsorUpdate}
       />
     </div>
   );

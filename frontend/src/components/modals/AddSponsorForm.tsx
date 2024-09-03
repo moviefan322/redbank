@@ -33,8 +33,6 @@ const AddSponsorForm = ({
       url,
     };
 
-    console.log(sponsorData)
-
     const validationResponse = validateSponsorData(sponsorData);
 
     if (!validationResponse.isValid) {
@@ -81,6 +79,10 @@ const AddSponsorForm = ({
       errors.push("Border radius must be between 0 and 100.");
     }
 
+    if (sponsor.url && !sponsor.url.startsWith("http")) {
+      errors.push("URL must start with 'http'.");
+    }
+
     return {
       isValid: errors.length === 0,
       errors,
@@ -123,55 +125,47 @@ const AddSponsorForm = ({
             <div
               className="imagePreview mx-auto"
               style={{
-                width: `${Math.max(50, Math.min(width, 350))}px`,
-                height: `${Math.max(50, Math.min(height, 350))}px`,
+                width: `${width}px`,
+                height: `${height}px`,
                 backgroundImage: `url(${image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
-                borderRadius: `${Math.max(0, Math.min(borderRadius, 100))}%`,
+                borderRadius: `${borderRadius}%`,
+                transition: "width 0.3s ease, height 0.3s ease, border-radius 0.3s ease",
               }}
             ></div>
             <div className="d-flex flex-column mx-auto">
               <div>
                 <label>Height: </label>
-                <br />
                 <input
-                  type="number"
+                  type="range"
+                  min="50"
+                  max="350"
                   value={height}
-                  onChange={(e) =>
-                    setHeight(
-                      Math.max(50, Math.min(parseInt(e.target.value), 350))
-                    )
-                  }
+                  onChange={(e) => setHeight(parseInt(e.target.value))}
                   placeholder="Height"
                 />
               </div>
               <div>
                 <label>Width: </label>
-                <br />
                 <input
-                  type="number"
+                  type="range"
+                  min="50"
+                  max="350"
                   value={width}
-                  onChange={(e) =>
-                    setWidth(
-                      Math.max(50, Math.min(parseInt(e.target.value), 350))
-                    )
-                  }
+                  onChange={(e) => setWidth(parseInt(e.target.value))}
                   placeholder="Width"
                 />
               </div>
               <div>
                 <label>Border Radius: </label>
-                <br />
                 <input
-                  type="number"
+                  type="range"
+                  min="0"
+                  max="100"
                   value={borderRadius}
-                  onChange={(e) =>
-                    setBorderRadius(
-                      Math.max(0, Math.min(parseInt(e.target.value), 100))
-                    )
-                  }
+                  onChange={(e) => setBorderRadius(parseInt(e.target.value))}
                   placeholder="Border Radius"
                 />
               </div>

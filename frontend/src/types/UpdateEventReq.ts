@@ -1,9 +1,4 @@
-import Sponsor from './Sponsor';
-
-interface Sponsors {
-  tier: string;
-  items: Sponsor[];
-}
+import Tier from './Tier';
 
 export default interface UpdateEventReq {
   _id: string;
@@ -17,6 +12,5 @@ export default interface UpdateEventReq {
   urlPhoto?: string;
   description?: string;
   descriptionShort?: string;
-  tiers?: string[];
-  sponsors?: Sponsors[];
+  tiers?: Tier[];
 }

@@ -11,17 +11,20 @@ import styles from "./PostNewCarouselItem.module.css";
 import { FaTrashCan, FaPencil } from "react-icons/fa6";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import Sponsor from "@/types/Sponsor";
+import Tier from "@/types/Tier";
 
 interface ManageSponsorsProps {
   isSponsorModalOpen: boolean;
   closeSponsorModal: () => void;
   eventId: string;
+  onSponsorUpdate: (updatedTiers: Tier[]) => void;
 }
 
 const ManageSponsors = ({
   isSponsorModalOpen,
   closeSponsorModal,
   eventId,
+  onSponsorUpdate,
 }: ManageSponsorsProps) => {
   const [error, setError] = useState("");
   const [editTierIndex, setEditTierIndex] = useState<number | null>(null);
@@ -77,6 +80,7 @@ const ManageSponsors = ({
     }
 
     dispatch(updateTiers(postTierData));
+    onSponsorUpdate(postTierData.tiers);
     handleCloseModal();
     setError("");
   };
@@ -434,10 +438,18 @@ const ManageSponsors = ({
                 <div className="text-center">
                   <p>Would you like to use tiered sponsorships?</p>
                   <div>
-                    <button className='btn-admin' type="button" onClick={postDefaultTiers}>
+                    <button
+                      className="btn-admin"
+                      type="button"
+                      onClick={postDefaultTiers}
+                    >
                       Yes
                     </button>
-                    <button className='btn-admin' type="button" onClick={postDefaultTier}>
+                    <button
+                      className="btn-admin"
+                      type="button"
+                      onClick={postDefaultTier}
+                    >
                       No
                     </button>
                   </div>
