@@ -865,11 +865,27 @@ const ManageEvents = () => {
                             </div>
                           </>
                         )}
-                        <div className="d-flex flex-column flex-md-row justify-content-between">
-                          {" "}
-                          <p>Sponsors:</p>
-                          <p className="text-white">Sponsor List</p>
-                        </div>
+                        {item.tiers.length > 0 && (
+                          <div className="d-flex flex-column flex-md-row justify-content-between">
+                            <div>
+                              <p>Sponsors:</p>
+                            </div>
+                            <div>
+                              {item.tiers.map((tier: any, index: number) => (
+                                <div
+                                  className="d-flex flex-column"
+                                  key={index}
+                                >
+                                  {tier.sponsors.map(
+                                    (sponsor: any, sponsorIndex: number) => (
+                                      <p key={sponsorIndex}>-{sponsor.name}</p>
+                                    )
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
