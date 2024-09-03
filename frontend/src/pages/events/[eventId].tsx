@@ -103,7 +103,7 @@ function EventDetail(props: Props) {
               {event.tiers.map((tier, tierIndex) => (
                 <div key={tierIndex} className="mb-5 mx-auto w-100 text-center">
                   <h3 className="mx-auto">{tier.name}</h3>
-                  <div className="d-flex flex-row justify-content-around w-100">
+                  <div className="d-flex flex-md-row flex-column justify-content-around w-100">
                     {tier.sponsors.map((sponsor, sponsorIndex) => (
                       <div
                         key={sponsorIndex}
