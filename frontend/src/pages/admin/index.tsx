@@ -45,9 +45,7 @@ const AdminPage = () => {
       setLoginError("An error occurred while logging in. Please try again.");
     }
   };
-
-  console.log(data);
-  console.log(typeof error);
+  
   return (
     <div className="admin">
       <div className="d-flex flex-column align-self-center">

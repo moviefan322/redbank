@@ -47,8 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Redbank</title>
         <meta name="description" content="Description of my page" />
         <link rel="icon" href="/rblogo.svg" type="image/svg+xml" />
-
-        {/* You can add more tags here as needed */}
       </Head>
       <Provider store={store}>
         <div

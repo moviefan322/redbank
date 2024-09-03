@@ -23,8 +23,6 @@ const NewsletterPage = () => {
     fetchNewsletters();
   }, []);
 
-  console.log(allNewsletters);
-
   return (
     <div>
       <h1 className="text-center my-5">Red Bank Beat</h1>

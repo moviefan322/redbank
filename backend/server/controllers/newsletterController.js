@@ -52,16 +52,12 @@ const getNewsletters = asyncHandler(async (req, res) => {
     const mailchimpData = await getMailchimpData();
     const newsletters = await Newsletter.find({});
 
-    console.log("running");
-
     const newsletterIds = new Set(
       newsletters.map((newsletter) => newsletter.mailchimp_id)
     );
     const newMailChimpCampaigns = mailchimpData.campaigns.filter(
       (campaign) => !newsletterIds.has(campaign.id)
     );
-
-    console.log(mailchimpData.campaigns);
 
     for (const campaign of newMailChimpCampaigns) {
       const newNewsletter = new Newsletter({

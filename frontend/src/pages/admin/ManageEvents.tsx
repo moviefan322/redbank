@@ -17,10 +17,12 @@ import Upcoming from "@/components/Upcoming";
 import SorryDave from "@/components/SorryDave";
 import EventDetail from "../events/[eventId]";
 import ImageUploader from "@/components/ImageUploader";
+import ManageSponsors from "@/components/modals/ManageSponsors";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
 import UpdateEventReq from "@/types/UpdateEventReq";
 import Event from "@/types/Event";
+import Tier from "@/types/Tier";
 import styles from "./ManageEvents.module.css";
 
 const ManageEvents = () => {
@@ -28,6 +30,7 @@ const ManageEvents = () => {
   const [previewModeIndex, setPreviewModeIndex] = useState<number>(0);
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
   const [isSinglePreviewOpen, setSinglePreviewOpen] = useState(false);
+  const [isSponsorModalOpen, setSponsorModalOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [areYouSureModalOpen, setAreYouSureModalOpen] = useState(false);
   const [currentItemId, setCurrentItemId] = useState<string>("");
@@ -38,24 +41,29 @@ const ManageEvents = () => {
   const [endMonth, setEndMonth] = useState(0);
   const [endDay, setEndDay] = useState(0);
   const [endYear, setEndYear] = useState(0);
+  const [rainDateDay, setRainDateDay] = useState(0);
+  const [rainDateMonth, setRainDateMonth] = useState(0);
+  const [rainDateYear, setRainDateYear] = useState(0);
   const [startHour, setStartHour] = useState("");
   const [startMinute, setStartMinute] = useState("");
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
   const [multiDay, setMultiDay] = useState(false);
+  const [rainDate, setRainDate] = useState(false);
   const [submitError, setSubmitError] = useState<string>("");
-  const [displayUploader, setDisplayUploader] = useState(false);
   const [updateEventData, setUpdateEventData] = useState<UpdateEventReq>({
     _id: "",
     title: "",
     description: "",
     descriptionShort: "",
     date: "",
+    rainDate: "",
     endDate: "",
     startTime: "",
     endTime: "",
     allDay: false,
     urlPhoto: "",
+    tiers: []
   });
   const months = [
     "Jan",
@@ -94,6 +102,7 @@ const ManageEvents = () => {
     description: "",
     descriptionShort: "",
     date: "",
+    rainDate: "",
     endDate: "",
     startTime: "",
     endTime: "",
@@ -101,17 +110,12 @@ const ManageEvents = () => {
     urlPhoto: "",
   });
 
-  useEffect(() => {
-    console.log("Start Hour:", startHour, typeof startHour);
-    console.log("Start Minute:", startMinute, typeof startMinute);
-    console.log("End Hour:", endHour, typeof endHour);
-    console.log("End Minute:", endMinute, typeof endMinute);
-  }, [startHour, startMinute, endHour, endMinute]);
-
   // Modals
 
   const openPreviewModal = () => setPreviewModalOpen(true);
   const closePreviewModal = () => setPreviewModalOpen(false);
+  const openSponsorModal = () => setSponsorModalOpen(true);
+  const closeSponsorModal = () => setSponsorModalOpen(false);
   const openPostModal = () => {
     setPostEventData({
       title: "",
@@ -119,6 +123,7 @@ const ManageEvents = () => {
       descriptionShort: "",
       date: "",
       endDate: "",
+      rainDate: "",
       startTime: "",
       endTime: "",
       allDay: false,
@@ -134,6 +139,7 @@ const ManageEvents = () => {
       descriptionShort: "",
       date: "",
       endDate: "",
+      rainDate: "",
       startTime: "",
       endTime: "",
       allDay: false,
@@ -158,6 +164,7 @@ const ManageEvents = () => {
       descriptionShort: "",
       date: "",
       endDate: "",
+      rainDate: "",
       startTime: "",
       endTime: "",
       allDay: false,
@@ -176,9 +183,11 @@ const ManageEvents = () => {
       descriptionShort: currentEvent.descriptionShort,
       date: currentEvent.date,
       endDate: currentEvent.endDate,
+      rainDate: currentEvent.rainDate,
       startTime: currentEvent.startTime,
       endTime: currentEvent.endTime,
       allDay: currentEvent.allDay,
+      tiers: currentEvent.tiers,
     });
 
     // Validate existing descriptions when entering edit mode
@@ -193,7 +202,6 @@ const ManageEvents = () => {
     setDay(new Date(currentEvent.date).getDate());
     setYear(new Date(currentEvent.date).getFullYear());
 
-    console.log(currentEvent);
     if (currentEvent.endDate) {
       setMultiDay(true);
       setEndMonth(new Date(currentEvent.endDate).getMonth() + 1);
@@ -205,8 +213,19 @@ const ManageEvents = () => {
       setEndDay(0);
       setEndYear(0);
     }
-    console.log(currentEvent.startTime);
-    console.log(currentEvent.endTime);
+
+    if (currentEvent.rainDate) {
+      setRainDate(true);
+      setRainDateMonth(new Date(currentEvent.rainDate).getMonth() + 1);
+      setRainDateDay(new Date(currentEvent.rainDate).getDate());
+      setRainDateYear(new Date(currentEvent.rainDate).getFullYear());
+    } else {
+      setRainDate(false);
+      setRainDateMonth(0);
+      setRainDateDay(0);
+      setRainDateYear(0);
+    }
+
     if (currentEvent.startTime) {
       setStartHour(currentEvent.startTime.split(":")[0]);
       setStartMinute(currentEvent.startTime.split(":")[1]);
@@ -226,14 +245,25 @@ const ManageEvents = () => {
   const handleMultiDayChange = (isChecked: any) => {
     setMultiDay(isChecked);
     if (!isChecked) {
-      // Reset the endDate state fields
       setEndMonth(0);
       setEndDay(0);
       setEndYear(0);
-      // Also reset the endDate in the updateEventData state to ensure it's not submitted
       setUpdateEventData((prev) => ({
         ...prev,
         endDate: "",
+      }));
+    }
+  };
+
+  const handleRainDateChange = (isChecked: any) => {
+    setRainDate(isChecked);
+    if (!isChecked) {
+      setRainDateMonth(0);
+      setRainDateDay(0);
+      setRainDateYear(0);
+      setUpdateEventData((prev) => ({
+        ...prev,
+        rainDate: "",
       }));
     }
   };
@@ -247,6 +277,11 @@ const ManageEvents = () => {
       const endDate = new Date(endYear, endMonth - 1, endDay);
       if (endDate <= startDate) {
         return "End date must be after the start date.";
+      }
+    }
+    if (rainDate) {
+      if (!rainDateMonth || !rainDateDay || !rainDateYear) {
+        return "Rain date is required.";
       }
     }
     return "";
@@ -286,12 +321,36 @@ const ManageEvents = () => {
       updatedEndDateISO = new Date(formattedEndDate).toISOString();
     }
 
-    // Update the event data with the new date
+    // Update the event data with the new date and ensure the tiers are included
     const updatedUpdateEventData: UpdateEventReq = {
       ...updateEventData,
       date: updatedDateISO,
       ...(formattedEndDate ? { endDate: updatedEndDateISO } : {}),
+      tiers: updateEventData.tiers || [], // Ensure tiers are preserved
     };
+
+    let formattedRainDate = "";
+    if (rainDateMonth && rainDateDay && rainDateYear) {
+      // Adjust the month index to 0-based for JavaScript Date compatibility
+      const adjustedRainMonth = rainDateMonth;
+
+      // Construct a date string using the adjusted month
+      formattedRainDate = `${rainDateYear}-${adjustedRainMonth
+        .toString()
+        .padStart(2, "0")}-${rainDateDay.toString().padStart(2, "0")}T00:00:00`;
+    }
+
+    // Convert the string to a Date object and format it to ISO string
+    const updatedRainDateISO = formattedRainDate
+      ? new Date(formattedRainDate).toISOString()
+      : "";
+
+    // Update the event data with the new date
+    if (rainDate) {
+      updatedUpdateEventData.rainDate = updatedRainDateISO;
+    } else {
+      updatedUpdateEventData.rainDate = "";
+    }
 
     if (!updateEventData.allDay) {
       const formattedStartTime = `${startHour.padStart(
@@ -318,11 +377,7 @@ const ManageEvents = () => {
       updatedUpdateEventData.endTime = "";
     }
 
-    dispatch(
-      updateEvent({
-        ...updatedUpdateEventData,
-      })
-    );
+    dispatch(updateEvent(updatedUpdateEventData));
     setEditModeIndex(null);
     setSubmitError("");
   };
@@ -353,13 +408,18 @@ const ManageEvents = () => {
     return <div dangerouslySetInnerHTML={sanitizedData()} />;
   };
 
+  const handleSponsorUpdate = (updatedTiers: Tier[]) => {
+    setUpdateEventData(prev => ({
+      ...prev,
+      tiers: updatedTiers,
+    }));
+  };
+
   if (!isLoggedIn) {
     return <SorryDave />;
   }
 
   if (error) return <div>Error: {error}</div>;
-
-  console.log(events);
 
   return (
     <div className="admin">
@@ -593,6 +653,66 @@ const ManageEvents = () => {
                             </select>
                           </div>
                         )}
+                        <div className="d-flex flex-column flex-md-row justify-content-end">
+                          <p className="flex-grow-2 w-100">Rain Date:</p>
+                          <input
+                            type="checkbox"
+                            checked={rainDate}
+                            onChange={(e) =>
+                              handleRainDateChange(e.target.checked)
+                            }
+                          ></input>
+                        </div>
+                        {rainDate && (
+                          <div
+                            className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
+                          >
+                            <p>Select: </p>
+                            <select
+                              value={rainDateMonth}
+                              onChange={(e) =>
+                                setRainDateMonth(+e.target.value)
+                              }
+                            >
+                              <option value="">Month</option>
+                              {[...Array(12)].map((_, index) => (
+                                <option key={index} value={index + 1}>
+                                  {new Date(0, index).toLocaleString(
+                                    "default",
+                                    {
+                                      month: "long",
+                                    }
+                                  )}
+                                </option>
+                              ))}
+                            </select>
+                            <select
+                              value={rainDateDay}
+                              onChange={(e) => setRainDateDay(+e.target.value)}
+                            >
+                              <option value="">Day</option>
+                              {[...Array(31)].map((_, index) => (
+                                <option key={index} value={index + 1}>
+                                  {index + 1}
+                                </option>
+                              ))}
+                            </select>
+                            <select
+                              value={rainDateYear}
+                              onChange={(e) => setRainDateYear(+e.target.value)}
+                            >
+                              <option value="">Year</option>
+                              {[...Array(10)].map((_, index) => {
+                                const year = new Date().getFullYear() + index;
+                                return (
+                                  <option key={year} value={year}>
+                                    {year}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        )}
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
@@ -665,14 +785,26 @@ const ManageEvents = () => {
                             ))}
                           </select>
                         </div>
+                        {!isSponsorModalOpen && (
+                          <div className="float-end">
+                            <div className="justify-self-end w-100 flex-grow-2">
+                              <ImageUploader
+                                data={updateEventData}
+                                setData={setUpdateEventData}
+                                buttonText="Upload New Image"
+                              />
+                            </div>
+                          </div>
+                        )}
 
-                        <div className="float-end">
+                        <div className="">
                           <div className="justify-self-end w-100 flex-grow-2">
-                            <ImageUploader
-                              data={updateEventData}
-                              setData={setUpdateEventData}
-                              buttonText="Upload New Image"
-                            />
+                            <button
+                              onClick={openSponsorModal}
+                              className="btn-admin"
+                            >
+                              Manage Sponsors
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -703,6 +835,17 @@ const ManageEvents = () => {
                             ).getFullYear()}`}</p>
                           </div>
                         )}
+                        {item.rainDate && (
+                          <div className="d-flex flex-column flex-md-row justify-content-between">
+                            {" "}
+                            <p>Rain Date:</p>
+                            <p className="text-white">{`${
+                              months[new Date(item.rainDate!).getMonth()]
+                            } ${new Date(item.rainDate!).getDate()}, ${new Date(
+                              item.rainDate!
+                            ).getFullYear()}`}</p>
+                          </div>
+                        )}
                         <div className="d-flex flex-column flex-md-row justify-content-between">
                           {" "}
                           <p>All Day Event:</p>
@@ -723,6 +866,24 @@ const ManageEvents = () => {
                               <p className="text-white">{item.endTime}</p>
                             </div>
                           </>
+                        )}
+                        {item.tiers.length > 0 && (
+                          <div className="d-flex flex-column flex-md-row justify-content-between">
+                            <div>
+                              <p>Sponsors:</p>
+                            </div>
+                            <div>
+                              {item.tiers.map((tier: any, index: number) => (
+                                <div className="d-flex flex-column" key={index}>
+                                  {tier.sponsors.map(
+                                    (sponsor: any, sponsorIndex: number) => (
+                                      <p key={sponsorIndex}>-{sponsor.name}</p>
+                                    )
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         )}
                       </div>
                     )}
@@ -859,6 +1020,12 @@ const ManageEvents = () => {
           </Link>
         </div>
       </div>
+      <ManageSponsors
+        isSponsorModalOpen={isSponsorModalOpen}
+        closeSponsorModal={closeSponsorModal}
+        eventId={updateEventData._id}
+        onSponsorUpdate={handleSponsorUpdate}
+      />
     </div>
   );
 };

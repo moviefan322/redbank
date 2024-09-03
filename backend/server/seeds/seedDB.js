@@ -24,8 +24,6 @@ const seedDB = async () => {
   await Business.insertMany(businesses);
   await Lodging.deleteMany({});
   await Lodging.insertMany(lodging);
-
-  console.log("Database seeded!");
 };
 
 seedDB().then(() => mongoose.connection.close());

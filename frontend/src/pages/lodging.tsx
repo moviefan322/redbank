@@ -40,10 +40,6 @@ const LodgingPage = () => {
 
   if (!lodging) return <h1>Loading...</h1>;
 
-  console.log(lodging);
-
-  //https://res.cloudinary.com/dnaj4dehf/image/upload/v1709604640/hotel_avt7th.webp
-
   return (
     <>
       <div className={styles.imageBG}>

@@ -22,7 +22,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      console.log("logging out");
       state.loading = false;
       state.username = null;
       state.token = null;
@@ -30,7 +29,6 @@ const authSlice = createSlice({
       state.isNewData = true;
     },
     setCredentials: (state, { payload }) => {
-      console.log("setcredent", payload);
       if (payload) {
         state.loading = false;
         state.username = payload.username;

@@ -21,7 +21,6 @@ const GiftCard = () => {
     fetchGiftCards();
   }, []);
 
-  console.log(giftCards);
   return (
     <div>
       <div className="d-flex flex-column flex-md-row justify-content-center align-items-center bg-dark p-5">

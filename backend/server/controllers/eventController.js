@@ -59,6 +59,7 @@ const createEvent = asyncHandler(async (req, res) => {
     title,
     date,
     endDate,
+    rainDate,
     startTime,
     endTime,
     allDay,
@@ -77,6 +78,7 @@ const createEvent = asyncHandler(async (req, res) => {
     urlPhoto,
     description,
     descriptionShort,
+    rainDate
   });
 
   const createdEvent = await event.save();
@@ -98,6 +100,8 @@ const updateEvent = asyncHandler(async (req, res) => {
     urlPhoto,
     description,
     descriptionShort,
+    tiers,
+    rainDate
   } = req.body;
 
   const event = await Event.findById(req.params._id);
@@ -113,6 +117,8 @@ const updateEvent = asyncHandler(async (req, res) => {
     if (description !== undefined) event.description = description;
     if (descriptionShort !== undefined)
       event.descriptionShort = descriptionShort;
+    if (tiers !== undefined) event.tiers = tiers;
+    if (rainDate !== undefined) event.rainDate = rainDate;
 
     const updatedEvent = await event.save();
     res.json(updatedEvent);
@@ -133,6 +139,34 @@ const deleteAllEvents = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    add tiers to an event
+// @route   PUT /api/:id/tiers
+// @access  Private/Admin
+
+const updateTiers = asyncHandler(async (req, res) => {
+  const { tiers } = req.body; // Expecting an array of tier objects with name and sponsors
+  const event = await Event.findById(req.params._id);
+
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+
+  // Update the event's tiers with the new data
+  event.tiers = tiers.map(tier => ({
+    name: tier.name,
+    sponsors: tier.sponsors.map(sponsor => ({
+      name: sponsor.name,
+      image: sponsor.image,
+      url: sponsor.url
+    }))
+  }));
+
+  const updatedEvent = await event.save();
+  res.json(updatedEvent);
+});
+
+
 export {
   getEvents,
   getEventById,
@@ -140,4 +174,5 @@ export {
   createEvent,
   updateEvent,
   deleteAllEvents,
+  updateTiers,
 };

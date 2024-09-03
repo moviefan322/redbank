@@ -5,6 +5,15 @@
   word-break: break-word;
 }
 
+.big {
+  font-size: 5.5rem;
+}
+
+.big2 {
+    font-size: 3.5rem;
+    
+}
+
 @media screen and (min-width: 768px) {
   .eventDetail {
     width: 80%;

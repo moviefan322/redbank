@@ -1,5 +1,49 @@
 import mongoose from "mongoose";
 
+const ImageSpecsSchema = mongoose.Schema({
+  imageUrl: {
+    type: String,
+    required: [true, "Image URL is required"],
+  },
+  height: {
+    type: Number,
+    required: [true, "Height is required"],
+    min: [50, "Height must be at least 50px"],
+    max: [350, "Height must be no more than 350px"],
+  },
+  width: {
+    type: Number,
+    required: [true, "Width is required"],
+    min: [50, "Width must be at least 50px"],
+    max: [350, "Width must be no more than 350px"],
+  },
+  borderRadius: {
+    type: Number,
+    required: [true, "Border radius is required"],
+    min: [0, "Border radius must be at least 0%"],
+    max: [100, "Border radius must be no more than 100%"],
+  },
+});
+
+const SponsorSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    image: {
+      type: ImageSpecsSchema,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const EventSchema = mongoose.Schema(
   {
     title: {
@@ -11,6 +55,10 @@ const EventSchema = mongoose.Schema(
       required: true,
     },
     endDate: {
+      type: String,
+      required: false,
+    },
+    rainDate: {
       type: String,
       required: false,
     },
@@ -38,6 +86,12 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    tiers: [
+      {
+        name: String,
+        sponsors: [SponsorSchema],
+      },
+    ],
   },
   {
     timestamps: true,

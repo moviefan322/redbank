@@ -51,15 +51,16 @@ const Foot = () => {
           </p>
         </div>
         <div className="mx-3">
-          <Image
-            src="/MSNJ.jpeg"
-            height={75}
-            width={150}
-            alt="logo"
+          <div
             style={{
+              backgroundImage: "url(/MSNJ.jpeg)",
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              width: "150px",
+              height: "75px",
               maxWidth: "100%",
-              height: "auto",
             }}
+            aria-label="logo"
           />
         </div>
       </div>

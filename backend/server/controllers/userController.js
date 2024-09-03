@@ -30,7 +30,6 @@ const getUsers = asyncHandler(async (req, res) => {
 // @access  Public
 
 const authUser = asyncHandler(async (req, res) => {
-  console.log(req.body);
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -45,7 +44,6 @@ const authUser = asyncHandler(async (req, res) => {
   }
 
   const checkPassword = await bcrypt.compare(password, user.password);
-  console.log(password, user.password)
 
   if (!checkPassword) {
     res.status(400);

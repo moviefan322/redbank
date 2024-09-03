@@ -6,7 +6,6 @@ import { resetUploadState } from "@/features/upload/uploadSlice";
 import ImageUploader from "../ImageUploader";
 import PostEventReq from "@/types/PostEventReq";
 import styles from "./PostNewCarouselItem.module.css";
-import { start } from "repl";
 
 interface PostNewEventProps {
   postModalOpen: boolean;
@@ -27,17 +26,20 @@ const PostNewEvent = ({
   const [endMonth, setEndMonth] = useState("");
   const [endDay, setEndDay] = useState("");
   const [endYear, setEndYear] = useState("");
+  const [rainDateMonth, setRainDateMonth] = useState("");
+  const [rainDateDay, setRainDateDay] = useState("");
+  const [rainDateYear, setRainDateYear] = useState("");
   const [startHour, setStartHour] = useState("");
   const [startMinute, setStartMinute] = useState("");
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
   const [multiDay, setMultiDay] = useState(false);
+  const [rainDate, setRainDate] = useState(false);
 
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
   const validateData = () => {
-    console.log("validation triggered");
     if (!postEventData.title.trim()) return "Title is required.";
     if (year === "" || month === "" || day === "") return "Date is required.";
 
@@ -53,7 +55,36 @@ const PostNewEvent = ({
   };
 
   const handleCloseModal = () => {
+    setPostEventData({
+      title: "",
+      description: "",
+      descriptionShort: "",
+      date: "",
+      rainDate: "",
+      endDate: "",
+      startTime: "",
+      endTime: "",
+      allDay: false,
+      urlPhoto: "",
+    });
+    setMonth("");
+    setDay("");
+    setYear("");
+    setEndMonth("");
+    setEndDay("");
+    setEndYear("");
+    setRainDateMonth("");
+    setRainDateDay("");
+    setRainDateYear("");
+    setStartHour("");
+    setStartMinute("");
+    setEndHour("");
+    setEndMinute("");
+    setMultiDay(false);
+    setRainDate(false);
+
     setError("");
+
     dispatch(resetUploadState());
     closePostModal();
   };
@@ -83,9 +114,30 @@ const PostNewEvent = ({
       )}-${endDay.padStart(2, "0")}T00:00:00`;
     }
 
-    const updatedPostEventData = {
+    let formattedRainDate = "";
+    if (
+      rainDate &&
+      (rainDateMonth === "" || rainDateDay === "" || rainDateYear === "")
+    ) {
+      return setError("Rain date is required.");
+    }
+
+    if (rainDate) {
+      formattedRainDate = `${rainDateYear}-${rainDateMonth.padStart(
+        2,
+        "0"
+      )}-${rainDateDay.padStart(2, "0")}T00:00:00`;
+    }
+
+    const updatedPostEventData: PostEventReq = {
       ...postEventData,
       date: new Date(formattedDate).toISOString(),
+      ...(multiDay
+        ? { endDate: new Date(formattedEndDate).toISOString() }
+        : {}),
+      ...(rainDate
+        ? { rainDate: new Date(formattedRainDate).toISOString() }
+        : {}),
     };
 
     if (!postEventData.allDay) {
@@ -103,8 +155,6 @@ const PostNewEvent = ({
         updatedPostEventData.endTime = formattedEndTime;
 
         if (+startHour > +endHour) {
-          console.log(startHour, endHour, +startHour > +endHour);
-          console.log(typeof startHour, typeof endHour);
           return setError("End time must be later than start time.");
         }
       } else {
@@ -119,13 +169,11 @@ const PostNewEvent = ({
       if (new Date(formattedEndDate) < new Date(updatedPostEventData.date)) {
         return setError("End date must be after the start date.");
       }
-      updatedPostEventData.endDate = new Date(formattedEndDate).toISOString();
     }
 
     dispatch(postEvent(updatedPostEventData));
     handleCloseModal();
     setError("");
-    console.log(updatedPostEventData);
   };
 
   return (
@@ -237,6 +285,57 @@ const PostNewEvent = ({
                     <select
                       value={endYear}
                       onChange={(e) => setEndYear(e.target.value)}
+                    >
+                      <option value="">Year</option>
+                      {[...Array(10)].map((_, index) => {
+                        const year = new Date().getFullYear() + index;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                )}
+                <div className="d-flex flex-column flex-md-row justify-content-end">
+                  <p className="flex-grow-2 w-100">Set Rain Date:</p>
+                  <input
+                    type="checkbox"
+                    checked={rainDate}
+                    onChange={(e) => setRainDate(e.target.checked)}
+                  ></input>
+                </div>
+                {rainDate && (
+                  <div className="d-flex flex-column flex-md-row justify-content-between">
+                    <p>Select: </p>
+                    <select
+                      value={rainDateMonth}
+                      onChange={(e) => setRainDateMonth(e.target.value)}
+                    >
+                      <option value="">Month</option>
+                      {[...Array(12)].map((_, index) => (
+                        <option key={index} value={index + 1}>
+                          {new Date(0, index).toLocaleString("default", {
+                            month: "long",
+                          })}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={rainDateDay}
+                      onChange={(e) => setRainDateDay(e.target.value)}
+                    >
+                      <option value="">Day</option>
+                      {[...Array(31)].map((_, index) => (
+                        <option key={index} value={index + 1}>
+                          {index + 1}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={rainDateYear}
+                      onChange={(e) => setRainDateYear(e.target.value)}
                     >
                       <option value="">Year</option>
                       {[...Array(10)].map((_, index) => {
