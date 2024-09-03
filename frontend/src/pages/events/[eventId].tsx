@@ -95,24 +95,24 @@ function EventDetail(props: Props) {
           }}
         ></div>
         <h6>{event.descriptionShort}</h6>
-        <div dangerouslySetInnerHTML={{ __html: event.description }} />
+        <div className='mb-5' dangerouslySetInnerHTML={{ __html: event.description }} />
         {event.tiers.length > 0 && (
           <div>
-            <h3 className="mt-5">Thank You To Our Sponsors!</h3>
+            <h2 className="mt-5 text-center">Thank You To Our Sponsors!</h2>
             <div className="d-flex flex-column mx-auto align-items-center justify-content-center mt-5">
               {event.tiers.map((tier, tierIndex) => (
                 <div key={tierIndex} className="mb-5 mx-auto w-100 text-center">
-                  <h5 className="mx-auto">{tier.name}</h5>
+                  <h3 className="mx-auto">{tier.name}</h3>
                   <div className="d-flex flex-row justify-content-around w-100">
                     {tier.sponsors.map((sponsor, sponsorIndex) => (
                       <div
                         key={sponsorIndex}
-                        className="d-flex flex-column align-items-center"
+                        className="d-flex flex-column align-content-between justify-content-center w-100 p-3"
                       >
                         {sponsor.url ? (
                           <Link href={sponsor.url} passHref>
                             <div
-                              className="imagePreview mx-auto"
+                              className="imagePreview p-4 mx-auto"
                               style={{
                                 width: `${sponsor.image.width}px`,
                                 height: `${sponsor.image.height}px`,

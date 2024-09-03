@@ -667,7 +667,7 @@ const ManageEvents = () => {
                           <div
                             className={`d-flex flex-column flex-md-row justify-content-between ${styles.timeSelect}`}
                           >
-                            <p>Rain Date:</p>
+                            <p>Select: </p>
                             <select
                               value={rainDateMonth}
                               onChange={(e) =>

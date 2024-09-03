@@ -3,15 +3,8 @@ import Carousel from "@/components/Carousel";
 import News from "@/components/News";
 import Upcoming from "@/components/Upcoming";
 import Newsletter from "@/components/Newsletter";
-import Spinner from "@/components/modals/Spinner";
-import {
-  useAppSelector as useSelector,
-} from "../hooks/reduxHooks";
 
 export default function Home() {
-  const events = useSelector((state) => state.events);
-
-  const { loading } = events;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,10 +21,6 @@ export default function Home() {
 
     fetchData();
   }, []);
-
-  if (loading) {
-    return <Spinner />;
-  }
 
   return (
     <>

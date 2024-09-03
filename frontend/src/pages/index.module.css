@@ -1,0 +1,37 @@
+.pageContainer {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .pageContainer.slide {
+    transform: translateX(-55%);
+  }
+  
+  .admin {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    font-family: monospace;
+    color: rgb(64, 255, 47);
+    overflow-y: scroll;
+  }
+  
+  .desktopNav {
+    display: none;
+  }
+  
+  .mobileNav {
+    display: block;
+  }
+  
+  @media (min-width: 1000px) {
+    .desktopNav {
+      display: block;
+    }
+  
+    .mobileNav {
+      display: none;
+    }
+  }
+  

@@ -308,7 +308,7 @@ const PostNewEvent = ({
                 </div>
                 {rainDate && (
                   <div className="d-flex flex-column flex-md-row justify-content-between">
-                    <p>Rain Date:</p>
+                    <p>Select: </p>
                     <select
                       value={rainDateMonth}
                       onChange={(e) => setRainDateMonth(e.target.value)}
