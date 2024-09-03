@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fontsource/oldenburg": "^5.0.21",
-    "@next/font": "^14.2.7"
+    "@next/font": "^14.2.7",
+    "react-spinners": "^0.14.1"
   }
 }
