@@ -104,7 +104,7 @@ function OktoberFest(props: Props) {
         {event.tiers.length > 0 && (
           <div>
             <h3
-              className={`${germaniaOne.className} ${styles.big2} mx-auto mt-5`}
+              className={`${germaniaOne.className} ${styles.big2} mx-auto mt-5 text-center`}
             >
               Thank You To Our Sponsors!
             </h3>
@@ -120,12 +120,12 @@ function OktoberFest(props: Props) {
                     {tier.sponsors.map((sponsor, sponsorIndex) => (
                       <div
                         key={sponsorIndex}
-                        className="d-flex flex-column align-items-center"
+                        className="d-flex flex-column align-content-between justify-content-center w-100 p-3"
                       >
                         {sponsor.url ? (
                           <Link href={sponsor.url}>
                             <div
-                              className="imagePreview mx-auto"
+                              className="imagePreview p-4 mx-auto"
                               style={{
                                 width: `${sponsor.image.width}px`,
                                 height: `${sponsor.image.height}px`,
@@ -139,7 +139,7 @@ function OktoberFest(props: Props) {
                           </Link>
                         ) : (
                           <div
-                            className="imagePreview mx-auto"
+                            className="imagePreview p-4 mx-auto"
                             style={{
                               width: `${sponsor.image.width}px`,
                               height: `${sponsor.image.height}px`,

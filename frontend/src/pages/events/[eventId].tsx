@@ -126,7 +126,7 @@ function EventDetail(props: Props) {
                           </Link>
                         ) : (
                           <div
-                            className="imagePreview mx-auto"
+                            className="imagePreview p-4 mx-auto"
                             style={{
                               width: `${sponsor.image.width}px`,
                               height: `${sponsor.image.height}px`,
