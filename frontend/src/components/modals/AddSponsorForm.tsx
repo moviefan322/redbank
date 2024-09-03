@@ -40,13 +40,20 @@ const AddSponsorForm = ({
       return;
     }
 
+    // Close the add sponsor form before updating the state
+    toggleAddSponsorForm(index);
+
+    // Add the sponsor
     addSponsor(index, sponsorData);
 
+    // Reset form fields
     setSponsorName("");
     setImage("");
     setUrl("");
+    setHeight(75); // Reset to default values
+    setWidth(75); // Reset to default values
+    setBorderRadius(0); // Reset to default values
     setValidationErrors([]);
-    toggleAddSponsorForm(index);
   };
 
   const validateSponsorData = (sponsor: Sponsor): ValidationResponse => {
@@ -79,7 +86,7 @@ const AddSponsorForm = ({
   };
 
   return (
-    <div className="d-flex flex-column">
+    <div className="d-flex flex-column borderLime">
       {validationErrors.length > 0 && (
         <div className="alert alert-danger">
           <ul>
@@ -178,7 +185,9 @@ const AddSponsorForm = ({
             </div>
           </div>
         ) : (
-          <SponsorImageUploader setImage={setImage} />
+          <div className="mx-auto">
+            <SponsorImageUploader setImage={setImage} />
+          </div>
         )}
       </div>
       <div className="d-flex flex-row w-100 justify-content-around">

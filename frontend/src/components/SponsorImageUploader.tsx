@@ -58,7 +58,7 @@ const SponsorImageUploader = ({ setImage }: SponsorImageUploaderProps) => {
           <button
             type="button"
             onClick={() => document.getElementById("file")!.click()}
-            className={`${styles.chooseFile} btn-admin`}
+            className={`${styles.chooseFile} btn-admin mx-auto`}
             style={imageUrl ? { display: "none" } : {}}
           >
             Select Image

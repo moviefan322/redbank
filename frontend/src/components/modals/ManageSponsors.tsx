@@ -25,12 +25,14 @@ const ManageSponsors = ({
 }: ManageSponsorsProps) => {
   const [error, setError] = useState("");
   const [editTierIndex, setEditTierIndex] = useState<number | null>(null);
-  const [visibleAddSponsorForms, setVisibleAddSponsorForms] = useState<
-    boolean[]
-  >([]);
-  const [visibleEditSponsorForms, setVisibleEditSponsorForms] = useState<
-    boolean[][]
-  >([]);
+  const [activeAddSponsorForm, setActiveAddSponsorForm] = useState<
+    number | null
+  >(null);
+  const [activeEditSponsorForm, setActiveEditSponsorForm] = useState<{
+    tierIndex: number;
+    sponsorIndex: number;
+  } | null>(null);
+
   const { events } = useAppSelector((state: any) => state.events, shallowEqual);
   const eventData = events.find((event: any) => event._id === eventId);
   const [postTierData, setPostTierData] = useState<UpdateEventTiersReq>({
@@ -43,17 +45,13 @@ const ManageSponsors = ({
 
   useEffect(() => {
     if (eventData) {
+      if (!eventData.tiers) {
+        eventData.tiers = [];
+      }
       setPostTierData({
         _id: eventId,
         tiers: eventData.tiers,
       });
-
-      const initialVisibility = eventData.tiers.map((tier: any) =>
-        new Array(tier.sponsors.length).fill(false)
-      );
-
-      setVisibleAddSponsorForms(new Array(eventData.tiers.length).fill(false));
-      setVisibleEditSponsorForms(initialVisibility);
     }
   }, [eventData, eventId]);
 
@@ -62,16 +60,20 @@ const ManageSponsors = ({
     dispatch(resetUploadState());
     closeSponsorModal();
 
-    setVisibleAddSponsorForms([]);
-    setVisibleEditSponsorForms([]);
+    setActiveAddSponsorForm(null);
+    setActiveEditSponsorForm(null);
   };
 
   const handleSubmitTiers = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (postTierData.tiers.length === 0) {
-      setError("Please add at least one tier");
-      return;
+      const confirmDelete = window.confirm(
+        "You have removed all tiers. Are you sure you want to submit with no tiers?"
+      );
+      if (!confirmDelete) {
+        return;
+      }
     }
 
     dispatch(updateTiers(postTierData));
@@ -112,6 +114,12 @@ const ManageSponsors = ({
 
   const handleAddTier = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (!postTierData.tiers) {
+      setError("Tiers not initialized. Please try again.");
+      return;
+    }
+
     const newTiers = [
       ...postTierData.tiers,
       {
@@ -124,11 +132,8 @@ const ManageSponsors = ({
 
     setPostTierData({ ...postTierData, tiers: newTiers });
 
-    setVisibleAddSponsorForms((prevState) => [...prevState, false]);
-    setVisibleEditSponsorForms((prevState) => [
-      ...prevState,
-      new Array(newTiers[newTiers.length - 1].sponsors.length).fill(false),
-    ]);
+    setActiveAddSponsorForm(null);
+    setActiveEditSponsorForm(null);
   };
 
   const deleteLastTier = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,8 +142,15 @@ const ManageSponsors = ({
 
     setPostTierData({ ...postTierData, tiers: newTiers });
 
-    setVisibleAddSponsorForms((prevState) => prevState.slice(0, -1));
-    setVisibleEditSponsorForms((prevState) => prevState.slice(0, -1));
+    if (activeAddSponsorForm === postTierData.tiers.length - 1) {
+      setActiveAddSponsorForm(null);
+    }
+    if (
+      activeEditSponsorForm &&
+      activeEditSponsorForm.tierIndex === postTierData.tiers.length - 1
+    ) {
+      setActiveEditSponsorForm(null);
+    }
   };
 
   const clearEventTiers = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -147,12 +159,15 @@ const ManageSponsors = ({
   };
 
   const toggleAddSponsorForm = (index: number) => {
-    setVisibleAddSponsorForms((prevState) =>
-      prevState.map((visible, i) => (i === index ? !visible : visible))
-    );
+    setActiveAddSponsorForm((prev) => (prev === index ? null : index));
   };
 
   const addSponsor = (index: number, sponsor: Sponsor) => {
+    if (!postTierData.tiers || postTierData.tiers.length <= index) {
+      setError("Unable to add sponsor. Please try again.");
+      return;
+    }
+
     setPostTierData((prevData) => {
       const newTiers = prevData.tiers.map((tier, i) =>
         i === index ? { ...tier, sponsors: [...tier.sponsors, sponsor] } : tier
@@ -160,9 +175,8 @@ const ManageSponsors = ({
       return { ...prevData, tiers: newTiers };
     });
 
-    setVisibleEditSponsorForms((prevState) =>
-      prevState.map((tier, i) => (i === index ? [...tier, false] : tier))
-    );
+    setActiveAddSponsorForm(null);
+    setActiveEditSponsorForm(null);
   };
 
   const deleteSponsor = (tierIndex: number, sponsorIndex: number) => {
@@ -179,27 +193,31 @@ const ManageSponsors = ({
       return { ...prevData, tiers: newTiers };
     });
 
-    setVisibleEditSponsorForms((prevState) =>
-      prevState.map((tier, i) => {
-        if (i === tierIndex) {
-          return tier.filter((_, j) => j !== sponsorIndex);
-        }
-        return tier;
-      })
-    );
+    // If the deleted sponsor was the active edit sponsor, reset the active edit form
+    if (
+      activeEditSponsorForm &&
+      activeEditSponsorForm.tierIndex === tierIndex &&
+      activeEditSponsorForm.sponsorIndex === sponsorIndex
+    ) {
+      setActiveEditSponsorForm(null);
+    } else if (
+      activeEditSponsorForm &&
+      activeEditSponsorForm.tierIndex === tierIndex &&
+      activeEditSponsorForm.sponsorIndex > sponsorIndex
+    ) {
+      // Adjust the sponsor index after deletion
+      setActiveEditSponsorForm((prev) =>
+        prev ? { ...prev, sponsorIndex: prev.sponsorIndex - 1 } : null
+      );
+    }
   };
 
   const toggleEditSponsorForm = (tierIndex: number, sponsorIndex: number) => {
-    setVisibleEditSponsorForms((prevState) => {
-      return prevState.map((tier, i) => {
-        if (i === tierIndex) {
-          return tier.map((visible, j) =>
-            j === sponsorIndex ? !visible : visible
-          );
-        }
-        return tier;
-      });
-    });
+    setActiveEditSponsorForm((prev) =>
+      prev && prev.tierIndex === tierIndex && prev.sponsorIndex === sponsorIndex
+        ? null
+        : { tierIndex, sponsorIndex }
+    );
   };
 
   const updateSponsorData = (
@@ -262,6 +280,8 @@ const ManageSponsors = ({
       </Modal>
     );
   }
+
+  console.log(activeAddSponsorForm, activeEditSponsorForm);
 
   return (
     <Modal isOpen={isSponsorModalOpen} onClose={handleCloseModal}>
@@ -336,10 +356,9 @@ const ManageSponsors = ({
                                       }}
                                     ></div>
                                   )}
-                                  {visibleEditSponsorForms[index] &&
-                                  visibleEditSponsorForms[index][
-                                    sponsorIndex
-                                  ] ? (
+                                  {activeEditSponsorForm?.tierIndex === index &&
+                                  activeEditSponsorForm?.sponsorIndex ===
+                                    sponsorIndex ? (
                                     <EditSponsorForm
                                       sponsorIndex={sponsorIndex}
                                       tierIndex={index}
@@ -381,7 +400,7 @@ const ManageSponsors = ({
                               ))}
                             </div>
                           )}
-                          {!visibleAddSponsorForms[index] && (
+                          {activeAddSponsorForm !== index && (
                             <button
                               className="btn-admin mx-auto"
                               onClick={(e) => {
@@ -393,7 +412,7 @@ const ManageSponsors = ({
                             </button>
                           )}
                           <div>
-                            {visibleAddSponsorForms[index] && (
+                            {activeAddSponsorForm === index && (
                               <AddSponsorForm
                                 index={index}
                                 addSponsor={addSponsor}
