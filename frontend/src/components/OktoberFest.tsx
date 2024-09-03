@@ -5,11 +5,13 @@ import DOMPurify from "dompurify";
 import Event from "../types/Event";
 import styles from "./OktoberFest.module.css";
 import { formatTime } from "@/utils/formatTime";
-import { Germania_One } from "@next/font/google";
+import { Germania_One } from "next/font/google";
 
 const germaniaOne = Germania_One({
-  weight: "400", // You can specify other options here
-  subsets: ["latin"], // Specify the subsets you want to load
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
 });
 
 const months = [
