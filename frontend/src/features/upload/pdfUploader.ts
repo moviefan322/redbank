@@ -28,7 +28,7 @@ export const uploadPDF = createAsyncThunk<
   async (formData, { rejectWithValue, getState }) => {
     try {
       const token = getState().auth.token;
-      const response = await axios.post(`${backendUrl}/api/upload`, formData, {
+      const response = await axios.post(`${backendUrl}/api/upload/pdf`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -80,8 +80,8 @@ export const pdfUploaderSlice = createSlice({
 export const { resetUploadState } = pdfUploaderSlice.actions;
 
 // Selectors
-export const selectPDFUrl = (state: any) => state.pdfUploader.pdfUrl;
-export const selectUploading = (state: any) => state.pdfUploader.uploading;
-export const selectError = (state: any) => state.pdfUploader.error;
+export const selectPDFUrl = (state: RootState) => state.pdfUploader.pdfUrl;
+export const selectUploading = (state: RootState) => state.pdfUploader.uploading;
+export const selectError = (state: RootState) => state.pdfUploader.error;
 
 export default pdfUploaderSlice.reducer;

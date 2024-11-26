@@ -78,6 +78,9 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    urlPDF: {
+      type: String,
+    },
     descriptionShort: {
       type: String,
       required: true,

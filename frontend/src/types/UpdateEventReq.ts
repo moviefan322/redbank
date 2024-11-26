@@ -10,6 +10,7 @@ export default interface UpdateEventReq {
   endTime?: string;
   allDay: boolean;
   urlPhoto?: string;
+  urlPDF?: string;
   description?: string;
   descriptionShort?: string;
   tiers?: Tier[];

@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import DOMPurify from "dompurify";
 import Event from "../../types/Event";
 import OktoberFest from "@/components/OktoberFest";
 import styles from "./eventDetail.module.css";
@@ -28,13 +27,6 @@ type Props = {
 
 function EventDetail(props: Props) {
   const event: Event | undefined = props.event;
-
-  const sanitizeData = (data: string) => {
-    const sanitizedData = () => ({
-      __html: DOMPurify.sanitize(data),
-    });
-    return <div dangerouslySetInnerHTML={sanitizedData()} />;
-  };
 
   if (!event) {
     return (
@@ -95,7 +87,20 @@ function EventDetail(props: Props) {
           }}
         ></div>
         <h6>{event.descriptionShort}</h6>
-        <div className='mb-5' dangerouslySetInnerHTML={{ __html: event.description }} />
+        <div
+          className="mb-5"
+          dangerouslySetInnerHTML={{ __html: event.description }}
+        />
+        {event.urlPDF && (
+          <a
+            className="btn btn-primary"
+            href={event.urlPDF}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View PDF
+          </a>
+        )}
         {event.tiers.length > 0 && (
           <div>
             <h2 className="mt-5 text-center">Thank You To Our Sponsors!</h2>

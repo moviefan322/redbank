@@ -80,7 +80,7 @@ const PDFUploader = <T extends {}>({
           </code>
         )}
         <input
-          id="file"
+          id="file-pdf"
           type="file"
           onChange={handleSelectFile}
           multiple={false}
@@ -89,7 +89,7 @@ const PDFUploader = <T extends {}>({
         {!file ? (
           <button
             type="button"
-            onClick={() => document.getElementById("file")!.click()}
+            onClick={() => document.getElementById("file-pdf")!.click()}
             className={`${styles.chooseFile} btn-admin`}
             style={pdfUrl ? { display: "none" } : {}}
           >

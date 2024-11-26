@@ -73,7 +73,7 @@ const ImageUploader = <T extends {}>({
           </code>
         )}
         <input
-          id="file"
+          id="file-image"
           type="file"
           onChange={handleSelectFile}
           multiple={false}
@@ -82,7 +82,7 @@ const ImageUploader = <T extends {}>({
         {!file ? (
           <button
             type="button"
-            onClick={() => document.getElementById("file")!.click()}
+            onClick={() => document.getElementById("file-image")!.click()}
             className={`${styles.chooseFile} btn-admin`}
             style={imageUrl ? { display: "none" } : {}}
           >

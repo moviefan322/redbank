@@ -64,6 +64,7 @@ const createEvent = asyncHandler(async (req, res) => {
     endTime,
     allDay,
     urlPhoto,
+    urlPDF,
     description,
     descriptionShort,
   } = req.body;
@@ -76,6 +77,7 @@ const createEvent = asyncHandler(async (req, res) => {
     endTime,
     allDay,
     urlPhoto,
+    urlPDF,
     description,
     descriptionShort,
     rainDate
@@ -98,6 +100,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     endTime,
     allDay,
     urlPhoto,
+    urlPDF,
     description,
     descriptionShort,
     tiers,
@@ -114,6 +117,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     if (endTime !== undefined) event.endTime = endTime;
     if (allDay !== undefined) event.allDay = allDay;
     if (urlPhoto !== undefined) event.urlPhoto = urlPhoto;
+    if (urlPDF !== undefined) event.urlPDF = urlPDF;
     if (description !== undefined) event.description = description;
     if (descriptionShort !== undefined)
       event.descriptionShort = descriptionShort;

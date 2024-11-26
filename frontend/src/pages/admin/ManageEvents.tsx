@@ -17,6 +17,7 @@ import Upcoming from "@/components/Upcoming";
 import SorryDave from "@/components/SorryDave";
 import EventDetail from "../events/[eventId]";
 import ImageUploader from "@/components/ImageUploader";
+import PDFUploader from "@/components/PDFUploader";
 import ManageSponsors from "@/components/modals/ManageSponsors";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import PostEventReq from "@/types/PostEventReq";
@@ -63,7 +64,8 @@ const ManageEvents = () => {
     endTime: "",
     allDay: false,
     urlPhoto: "",
-    tiers: []
+    urlPDF: "",
+    tiers: [],
   });
   const months = [
     "Jan",
@@ -409,9 +411,16 @@ const ManageEvents = () => {
   };
 
   const handleSponsorUpdate = (updatedTiers: Tier[]) => {
-    setUpdateEventData(prev => ({
+    setUpdateEventData((prev) => ({
       ...prev,
       tiers: updatedTiers,
+    }));
+  };
+
+  const clearPDFurl = () => {
+    setUpdateEventData((prev) => ({
+      ...prev,
+      urlPDF: "",
     }));
   };
 
@@ -790,10 +799,34 @@ const ManageEvents = () => {
                             <div className="justify-self-end w-100 flex-grow-2">
                               <ImageUploader
                                 data={updateEventData}
-                                setData={setUpdateEventData}
+                                setData={(newData) =>
+                                  setUpdateEventData((prev) => ({
+                                    ...prev,
+                                    ...newData,
+                                  }))
+                                }
                                 buttonText="Upload New Image"
                               />
                             </div>
+                            {updateEventData.urlPDF === "" ? (
+                              <div className="justify-self-end w-100 flex-grow-2">
+                                <PDFUploader
+                                  data={updateEventData}
+                                  setData={(newData) =>
+                                    setUpdateEventData((prev) => ({
+                                      ...prev,
+                                      ...newData,
+                                    }))
+                                  }
+                                  buttonText="Upload PDF Document"
+                                />
+                              </div>
+                            ) : (
+                              <div className="justify-self-end w-100 flex-grow-2">
+                                <div>PDF Uploaded!</div>
+                                <button onClick={clearPDFurl}>X</button>
+                              </div>
+                            )}
                           </div>
                         )}
 
