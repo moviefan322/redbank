@@ -822,9 +822,9 @@ const ManageEvents = () => {
                                 />
                               </div>
                             ) : (
-                              <div className="justify-self-end w-100 flex-grow-2">
+                              <div className="justify-self-end w-100 flex-grow-2 d-flex flex-row justify-content-between align-items-center">
                                 <div>PDF Uploaded!</div>
-                                <button onClick={clearPDFurl}>X</button>
+                                <button className="bg-danger text-white fw-bold border border-1 border-white" onClick={clearPDFurl}>X</button>
                               </div>
                             )}
                           </div>
