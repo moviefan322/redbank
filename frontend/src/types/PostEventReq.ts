@@ -7,6 +7,8 @@ export default interface PostEventReq {
   endTime?: string;
   allDay: boolean;
   urlPhoto: string;
+  urlPDF?: string;
+  pdfButtonText?: string;
   description: string;
   descriptionShort: string;
 }

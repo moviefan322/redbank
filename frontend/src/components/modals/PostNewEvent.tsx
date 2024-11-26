@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { FaCheckCircle } from "react-icons/fa";
 import { postEvent } from "@/features/events/eventActions";
 import { resetUploadState } from "@/features/upload/uploadSlice";
 import ImageUploader from "../ImageUploader";
+import PDFUploader from "../PDFUploader";
 import PostEventReq from "@/types/PostEventReq";
 import styles from "./PostNewCarouselItem.module.css";
 
@@ -66,6 +68,8 @@ const PostNewEvent = ({
       endTime: "",
       allDay: false,
       urlPhoto: "",
+      urlPDF: "",
+      pdfButtonText: "",
     });
     setMonth("");
     setDay("");
@@ -419,14 +423,77 @@ const PostNewEvent = ({
                 </div>
 
                 <div className="d-flex flex-row justify-content-between align-items-center">
-                  <p className="w-100 my-auto">Upload Image:</p>{" "}
-                  <div className="justify-self-end w-100 flex-grow-2">
-                    <ImageUploader
-                      data={postEventData}
-                      setData={setPostEventData}
-                    />
+                  <p className="w-100 my-auto">Upload Image:</p>
+                  <div className="justify-self-end w-100 m-0 p-0">
+                    {postEventData.urlPhoto === "" ? (
+                      <ImageUploader
+                        data={postEventData}
+                        setData={setPostEventData}
+                      />
+                    ) : (
+                      <div>
+                        <div>
+                          <FaCheckCircle /> Success{" "}
+                          <button
+                            className="bg-danger text-white fw-bold border border-1 border-white"
+                            onClick={() =>
+                              setPostEventData({
+                                ...postEventData,
+                                urlPhoto: "",
+                              })
+                            }
+                          >
+                            X
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
+                <div className="d-flex flex-row justify-content-between align-items-center">
+                  <p className="w-100 my-auto">Upload PDF:</p>
+                  <div className="justify-self-end w-100 m-0 p-0">
+                    {postEventData.urlPDF === undefined ||
+                    postEventData.urlPDF === "" ? (
+                      <PDFUploader
+                        data={postEventData}
+                        setData={setPostEventData}
+                      />
+                    ) : (
+                      <div className="">
+                        <div>
+                          <FaCheckCircle /> Success{" "}
+                          <button
+                            className="bg-danger text-white fw-bold border border-1 border-white"
+                            onClick={() =>
+                              setPostEventData({
+                                ...postEventData,
+                                urlPDF: "",
+                              })
+                            }
+                          >
+                            X
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {postEventData.urlPDF !== "" && (
+                  <div className="d-flex flex-column flex-md-row justify-content-between">
+                    <p>PDF Text:</p>
+                    <input
+                      placeholder="Title"
+                      value={postEventData.pdfButtonText}
+                      onChange={(e) =>
+                        setPostEventData({
+                          ...postEventData,
+                          title: e.target.value,
+                        })
+                      }
+                    ></input>
+                  </div>
+                )}
               </div>
             </div>
             <div className="w-75">

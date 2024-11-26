@@ -66,6 +66,7 @@ const ManageEvents = () => {
     urlPhoto: "",
     urlPDF: "",
     tiers: [],
+    pdfButtonText: "View PDF",
   });
   const months = [
     "Jan",
@@ -110,7 +111,10 @@ const ManageEvents = () => {
     endTime: "",
     allDay: false,
     urlPhoto: "",
+    urlPDF: "",
+    pdfButtonText: "",
   });
+  
 
   // Modals
 
@@ -146,6 +150,8 @@ const ManageEvents = () => {
       endTime: "",
       allDay: false,
       urlPhoto: "",
+      urlPDF: "",
+      pdfButtonText: "View PDF",
     });
   };
   const closeSinglePreviewModal = () => setSinglePreviewOpen(false);
@@ -171,6 +177,9 @@ const ManageEvents = () => {
       endTime: "",
       allDay: false,
       urlPhoto: "",
+      urlPDF: "",
+      tiers: [],
+      pdfButtonText: "View PDF",
     });
   };
 
@@ -190,6 +199,8 @@ const ManageEvents = () => {
       endTime: currentEvent.endTime,
       allDay: currentEvent.allDay,
       tiers: currentEvent.tiers,
+      urlPDF: currentEvent.urlPDF,
+      pdfButtonText: currentEvent.pdfButtonText,
     });
 
     // Validate existing descriptions when entering edit mode
@@ -423,6 +434,8 @@ const ManageEvents = () => {
       urlPDF: "",
     }));
   };
+
+  console.log(updateEventData, "updateEventData");
 
   if (!isLoggedIn) {
     return <SorryDave />;
@@ -808,7 +821,8 @@ const ManageEvents = () => {
                                 buttonText="Upload New Image"
                               />
                             </div>
-                            {updateEventData.urlPDF === "" ? (
+                            {updateEventData.urlPDF === undefined ||
+                            updateEventData.urlPDF === "" ? (
                               <div className="justify-self-end w-100 flex-grow-2">
                                 <PDFUploader
                                   data={updateEventData}
@@ -822,10 +836,32 @@ const ManageEvents = () => {
                                 />
                               </div>
                             ) : (
-                              <div className="justify-self-end w-100 flex-grow-2 d-flex flex-row justify-content-between align-items-center">
-                                <div>PDF Uploaded!</div>
-                                <button className="bg-danger text-white fw-bold border border-1 border-white" onClick={clearPDFurl}>X</button>
-                              </div>
+                              <>
+                                <div className="justify-self-end w-100 flex-grow-2 d-flex flex-row justify-content-between align-items-center">
+                                  <div>PDF Uploaded!</div>
+                                  <button
+                                    className="bg-danger text-white fw-bold border border-1 border-white"
+                                    onClick={clearPDFurl}
+                                  >
+                                    X
+                                  </button>
+                                </div>
+                                <div className="d-flex flex-column flex-md-row justify-content-between">
+                                  <p className="flex-grow-2 w-100">
+                                    PDF Button Text:
+                                  </p>
+                                  <input
+                                    type="text"
+                                    value={updateEventData.pdfButtonText}
+                                    onChange={(e) =>
+                                      setUpdateEventData((prev) => ({
+                                        ...prev,
+                                        pdfButtonText: e.target.value,
+                                      }))
+                                    }
+                                  ></input>
+                                </div>
+                              </>
                             )}
                           </div>
                         )}

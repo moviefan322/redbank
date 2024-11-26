@@ -14,4 +14,5 @@ export default interface UpdateEventReq {
   description?: string;
   descriptionShort?: string;
   tiers?: Tier[];
+  pdfButtonText?: string;
 }

@@ -62,8 +62,8 @@ const ImageUploader = <T extends {}>({
   };
 
   return (
-    <div className="d-flex flex-column align-items-end">
-      <div className="d-flex flex-row align-items-center justify-content-end">
+    <div className="d-flex flex-column align-items-end m-0 p-0">
+      <div className="d-flex flex-row align-items-center justify-content-end m-0 p-0">
         {file && (
           <code
             className={`${styles.filename}`}
