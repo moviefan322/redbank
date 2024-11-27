@@ -20,6 +20,7 @@ import ImageUploader from "@/components/ImageUploader";
 import PDFUploader from "@/components/PDFUploader";
 import ManageSponsors from "@/components/modals/ManageSponsors";
 import { FaCircleArrowLeft } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
 import PostEventReq from "@/types/PostEventReq";
 import UpdateEventReq from "@/types/UpdateEventReq";
 import Event from "@/types/Event";
@@ -114,7 +115,6 @@ const ManageEvents = () => {
     urlPDF: "",
     pdfButtonText: "",
   });
-  
 
   // Modals
 
@@ -810,20 +810,43 @@ const ManageEvents = () => {
                         {!isSponsorModalOpen && (
                           <div className="float-end">
                             <div className="justify-self-end w-100 flex-grow-2">
-                              <ImageUploader
-                                data={updateEventData}
-                                setData={(newData) =>
-                                  setUpdateEventData((prev) => ({
-                                    ...prev,
-                                    ...newData,
-                                  }))
-                                }
-                                buttonText="Upload New Image"
-                              />
+                              {updateEventData.urlPhoto === "" ||
+                              updateEventData.urlPhoto === undefined ? (
+                                <ImageUploader
+                                  data={updateEventData}
+                                  setData={(newData) =>
+                                    setUpdateEventData((prev) => ({
+                                      ...prev,
+                                      ...newData,
+                                    }))
+                                  }
+                                  buttonText="Upload New Image"
+                                />
+                              ) : (
+                                <div className="d-flex flex-row align-items-center justify-content-end">
+                                  <p className="my-0 mx-3">Image Upload:</p>
+                                  <div className="d-flex justify-content-end align-items-center mx-3">
+                                    <FaCheckCircle /> <div className="ms-2">Success!</div>
+                                  </div>
+                                  <button
+                                    className="bg-danger text-white fw-bold border border-1 border-white"
+                                    onClick={() =>
+                                      setUpdateEventData((prev) => ({
+                                        ...prev,
+                                        urlPhoto: "",
+                                      }))
+                                    }
+                                  >
+                                    X
+                                  </button>
+                                </div>
+                              )}
                             </div>
-                            {updateEventData.urlPDF === undefined ||
-                            updateEventData.urlPDF === "" ? (
-                              <div className="justify-self-end w-100 flex-grow-2">
+
+                            {/* PDF Upload Section */}
+                            <div className="justify-self-end w-100 flex-grow-2">
+                              {updateEventData.urlPDF === "" ||
+                              updateEventData.urlPDF === undefined ? (
                                 <PDFUploader
                                   data={updateEventData}
                                   setData={(newData) =>
@@ -834,35 +857,45 @@ const ManageEvents = () => {
                                   }
                                   buttonText="Upload PDF Document"
                                 />
-                              </div>
-                            ) : (
-                              <>
-                                <div className="justify-self-end w-100 flex-grow-2 d-flex flex-row justify-content-between align-items-center">
-                                  <div>PDF Uploaded!</div>
-                                  <button
-                                    className="bg-danger text-white fw-bold border border-1 border-white"
-                                    onClick={clearPDFurl}
-                                  >
-                                    X
-                                  </button>
-                                </div>
-                                <div className="d-flex flex-column flex-md-row justify-content-between">
-                                  <p className="flex-grow-2 w-100">
-                                    PDF Button Text:
-                                  </p>
-                                  <input
-                                    type="text"
-                                    value={updateEventData.pdfButtonText}
-                                    onChange={(e) =>
-                                      setUpdateEventData((prev) => ({
-                                        ...prev,
-                                        pdfButtonText: e.target.value,
-                                      }))
-                                    }
-                                  ></input>
-                                </div>
-                              </>
-                            )}
+                              ) : (
+                                <>
+                                  <div className="d-flex flex-row align-items-center justify-content-end">
+                                  <p className="my-0 mx-3">PDF Upload:</p>
+                                  <div className="d-flex justify-content-end align-items-center mx-3">
+                                    <FaCheckCircle /> <div className="ms-2">Success!</div>
+                                  </div>
+                                    <button
+                                      className="bg-danger text-white fw-bold border border-1 border-white"
+                                      onClick={() =>
+                                        setUpdateEventData((prev) => ({
+                                          ...prev,
+                                          urlPDF: "",
+                                        }))
+                                      }
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                  <div className="d-flex flex-column flex-md-row justify-content-between mt-2">
+                                    <p className="flex-grow-2 w-100 mx-3">
+                                      PDF Button Text:
+                                    </p>
+                                    <input
+                                      type="text"
+                                      value={
+                                        updateEventData.pdfButtonText || ""
+                                      }
+                                      onChange={(e) =>
+                                        setUpdateEventData((prev) => ({
+                                          ...prev,
+                                          pdfButtonText: e.target.value,
+                                        }))
+                                      }
+                                    ></input>
+                                  </div>
+                                </>
+                              )}
+                            </div>
                           </div>
                         )}
 

@@ -431,9 +431,10 @@ const PostNewEvent = ({
                         setData={setPostEventData}
                       />
                     ) : (
-                      <div>
-                        <div>
-                          <FaCheckCircle /> Success{" "}
+                      <div className="m-0 p-0">
+                        <div className="m-0 p-0 d-flex justify-content-end align-items-center">
+                          <FaCheckCircle />{" "}
+                          <p className="my-0 mx-3">Success!</p>
                           <button
                             className="bg-danger text-white fw-bold border border-1 border-white"
                             onClick={() =>
@@ -460,9 +461,10 @@ const PostNewEvent = ({
                         setData={setPostEventData}
                       />
                     ) : (
-                      <div className="">
-                        <div>
-                          <FaCheckCircle /> Success{" "}
+                      <div className="m-0 p-0">
+                        <div className="m-0 p-0 d-flex justify-content-end align-items-center">
+                          <FaCheckCircle />
+                          <p className="my-0 mx-3">Success!</p>
                           <button
                             className="bg-danger text-white fw-bold border border-1 border-white"
                             onClick={() =>
@@ -479,7 +481,7 @@ const PostNewEvent = ({
                     )}
                   </div>
                 </div>
-                {postEventData.urlPDF !== "" && (
+                {postEventData.urlPDF && postEventData.urlPDF !== "" && (
                   <div className="d-flex flex-column flex-md-row justify-content-between">
                     <p>PDF Text:</p>
                     <input
