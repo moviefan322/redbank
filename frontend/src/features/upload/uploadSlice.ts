@@ -82,7 +82,7 @@ export const imageUploaderSlice = createSlice({
 export const { resetUploadState } = imageUploaderSlice.actions;
 
 export const selectImageUrl = (state: RootState) => state.imageUploader.imageUrl;
-export const selectUploading = (state: RootState) => state.imageUploader.uploading;
+export const selectUploading = (state: any) => state.imageUploader.uploading;
 export const selectError = (state: RootState) => state.imageUploader.error;
 
 export default imageUploaderSlice.reducer;

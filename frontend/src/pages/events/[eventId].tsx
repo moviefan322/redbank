@@ -65,7 +65,9 @@ function EventDetail(props: Props) {
               ).getDate()}`
             : ""}
           {!event.allDay! &&
-            `@ ${formatTime(event.startTime!)}-${formatTime(event.endTime!)}`}
+            `@ ${formatTime(event.startTime!)}${
+              event.endTime && `-${formatTime(event.endTime)}`
+            }`}
         </h4>
         {event.rainDate && (
           <h5>
@@ -94,7 +96,12 @@ function EventDetail(props: Props) {
         {event.urlPDF && (
           <a
             className="btn btn-primary border border-1 border-dark"
-            style={{ backgroundColor: "#c41f35", color: "white", fontWeight: "bold", fontSize: 18 }}
+            style={{
+              backgroundColor: "#c41f35",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
             href={event.urlPDF}
             target="_blank"
             rel="noreferrer"
