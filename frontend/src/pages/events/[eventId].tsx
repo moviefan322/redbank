@@ -99,7 +99,7 @@ function EventDetail(props: Props) {
             target="_blank"
             rel="noreferrer"
           >
-            View PDF
+            {event.pdfButtonText}
           </a>
         )}
         {event.tiers.length > 0 && (

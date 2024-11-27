@@ -82,8 +82,12 @@ const createEvent = asyncHandler(async (req, res) => {
     pdfButtonText,
     description,
     descriptionShort,
-    rainDate
+    rainDate,
   });
+
+  if (event.pdfButtonText === "") {
+    event.pdfButtonText = "View PDF";
+  }
 
   const createdEvent = await event.save();
   res.status(201).json(createdEvent);
@@ -107,7 +111,7 @@ const updateEvent = asyncHandler(async (req, res) => {
     description,
     descriptionShort,
     tiers,
-    rainDate
+    rainDate,
   } = req.body;
 
   const event = await Event.findById(req.params._id);
@@ -121,7 +125,11 @@ const updateEvent = asyncHandler(async (req, res) => {
     if (allDay !== undefined) event.allDay = allDay;
     if (urlPhoto !== undefined) event.urlPhoto = urlPhoto;
     if (urlPDF !== undefined) event.urlPDF = urlPDF;
-    if (pdfButtonText !== undefined) event.pdfButtonText = pdfButtonText;
+    if (pdfButtonText !== undefined && pdfButtonText !== "") {
+      event.pdfButtonText = pdfButtonText;
+    } else {
+      event.pdfButtonText = "View PDF";
+    }
     if (description !== undefined) event.description = description;
     if (descriptionShort !== undefined)
       event.descriptionShort = descriptionShort;
@@ -161,19 +169,18 @@ const updateTiers = asyncHandler(async (req, res) => {
   }
 
   // Update the event's tiers with the new data
-  event.tiers = tiers.map(tier => ({
+  event.tiers = tiers.map((tier) => ({
     name: tier.name,
-    sponsors: tier.sponsors.map(sponsor => ({
+    sponsors: tier.sponsors.map((sponsor) => ({
       name: sponsor.name,
       image: sponsor.image,
-      url: sponsor.url
-    }))
+      url: sponsor.url,
+    })),
   }));
 
   const updatedEvent = await event.save();
   res.json(updatedEvent);
 });
-
 
 export {
   getEvents,

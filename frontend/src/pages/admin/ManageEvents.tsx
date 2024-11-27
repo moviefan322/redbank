@@ -113,7 +113,7 @@ const ManageEvents = () => {
     allDay: false,
     urlPhoto: "",
     urlPDF: "",
-    pdfButtonText: "",
+    pdfButtonText: "View PDF",
   });
 
   // Modals
@@ -134,6 +134,8 @@ const ManageEvents = () => {
       endTime: "",
       allDay: false,
       urlPhoto: "",
+      urlPDF: "",
+      pdfButtonText: "View PDF",
     });
     setPostModalOpen(true);
   };
@@ -559,7 +561,7 @@ const ManageEvents = () => {
                             onChange={(e) => setYear(+e.target.value)}
                           >
                             <option value="">Year</option>
-                            {[...Array(10)].map((_, index) => {
+                            {[...Array(3)].map((_, index) => {
                               const year = new Date().getFullYear() + index;
                               return (
                                 <option key={year} value={year}>
@@ -616,7 +618,7 @@ const ManageEvents = () => {
                               onChange={(e) => setEndYear(+e.target.value)}
                             >
                               <option value="">Year</option>
-                              {[...Array(10)].map((_, index) => {
+                              {[...Array(3)].map((_, index) => {
                                 const year = new Date().getFullYear() + index;
                                 return (
                                   <option key={year} value={year}>

@@ -16,6 +16,7 @@ export default interface Event {
   allDay: boolean;
   urlPhoto: string;
   urlPDF: string;
+  pdfButtonText: string;
   description: string;
   descriptionShort: string;
   tiers: Tier[];

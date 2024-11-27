@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
             menuOpen ? `${styles.slide}` : ""
           }`}
         >
-          <div className="d-none d-md-block">
+          <div className="d-none d-md-block mx-3 py-1">
             <DesktopNavBar />
           </div>
 

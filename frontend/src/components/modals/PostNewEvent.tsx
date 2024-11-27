@@ -69,7 +69,7 @@ const PostNewEvent = ({
       allDay: false,
       urlPhoto: "",
       urlPDF: "",
-      pdfButtonText: "",
+      pdfButtonText: "View PDF",
     });
     setMonth("");
     setDay("");
@@ -180,6 +180,8 @@ const PostNewEvent = ({
     setError("");
   };
 
+  console.log(postEventData);
+
   return (
     <Modal isOpen={postModalOpen} onClose={handleCloseModal}>
       <form onSubmit={handleSubmit}>
@@ -203,7 +205,7 @@ const PostNewEvent = ({
                   {" "}
                   <p>title:</p>
                   <input
-                    placeholder="Title"
+                    placeholder="Event Name"
                     value={postEventData.title}
                     onChange={(e) =>
                       setPostEventData({
@@ -241,7 +243,7 @@ const PostNewEvent = ({
                     onChange={(e) => setYear(e.target.value)}
                   >
                     <option value="">Year</option>
-                    {[...Array(10)].map((_, index) => {
+                    {[...Array(3)].map((_, index) => {
                       const year = new Date().getFullYear() + index;
                       return (
                         <option key={year} value={year}>
@@ -291,7 +293,7 @@ const PostNewEvent = ({
                       onChange={(e) => setEndYear(e.target.value)}
                     >
                       <option value="">Year</option>
-                      {[...Array(10)].map((_, index) => {
+                      {[...Array(3)].map((_, index) => {
                         const year = new Date().getFullYear() + index;
                         return (
                           <option key={year} value={year}>
@@ -485,7 +487,7 @@ const PostNewEvent = ({
                   <div className="d-flex flex-column flex-md-row justify-content-between">
                     <p>PDF Text:</p>
                     <input
-                      placeholder="Title"
+                      placeholder="View PDF"
                       value={postEventData.pdfButtonText}
                       onChange={(e) =>
                         setPostEventData({
