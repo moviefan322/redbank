@@ -93,7 +93,8 @@ function EventDetail(props: Props) {
         />
         {event.urlPDF && (
           <a
-            className="btn btn-primary"
+            className="btn btn-primary border border-1 border-dark"
+            style={{ backgroundColor: "#c41f35", color: "white", fontWeight: "bold", fontSize: 18 }}
             href={event.urlPDF}
             target="_blank"
             rel="noreferrer"
